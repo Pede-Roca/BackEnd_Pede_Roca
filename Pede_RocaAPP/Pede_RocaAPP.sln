@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Domain", "Pede_RocaAPP.Domain\Pede_RocaAPP.Domain.csproj", "{514324A3-6EB5-4E06-AABE-72FE27B65741}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.API", "Pede_RocaAPP.API\Pede_RocaAPP.API.csproj", "{110B3DF9-DC2B-48F1-9172-FAF329970CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Infra.Data", "Pede_RocaAPP.Infra.Data\Pede_RocaAPP.Infra.Data.csproj", "{AEA63719-980B-41E7-A97B-50488274A6D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Infra.IoC", "Pede_RocaAPP.Infra.IoC\Pede_RocaAPP.Infra.IoC.csproj", "{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Application", "Pede_RocaAPP.Application\Pede_RocaAPP.Application.csproj", "{58B066C6-8943-47CC-B744-232BE88FA4FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Domain.Test", "Pede_RocaAPP.Domain.Test\Pede_RocaAPP.Domain.Test.csproj", "{80D59D7D-C146-41A6-842C-AF99B384277F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{514324A3-6EB5-4E06-AABE-72FE27B65741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514324A3-6EB5-4E06-AABE-72FE27B65741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514324A3-6EB5-4E06-AABE-72FE27B65741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514324A3-6EB5-4E06-AABE-72FE27B65741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110B3DF9-DC2B-48F1-9172-FAF329970CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110B3DF9-DC2B-48F1-9172-FAF329970CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110B3DF9-DC2B-48F1-9172-FAF329970CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110B3DF9-DC2B-48F1-9172-FAF329970CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA63719-980B-41E7-A97B-50488274A6D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA63719-980B-41E7-A97B-50488274A6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA63719-980B-41E7-A97B-50488274A6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA63719-980B-41E7-A97B-50488274A6D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B066C6-8943-47CC-B744-232BE88FA4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B066C6-8943-47CC-B744-232BE88FA4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B066C6-8943-47CC-B744-232BE88FA4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B066C6-8943-47CC-B744-232BE88FA4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80D59D7D-C146-41A6-842C-AF99B384277F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80D59D7D-C146-41A6-842C-AF99B384277F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80D59D7D-C146-41A6-842C-AF99B384277F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80D59D7D-C146-41A6-842C-AF99B384277F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB9C10CB-60E5-4EDC-9150-15185CF03D3A}
+	EndGlobalSection
+EndGlobal
