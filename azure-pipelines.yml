@@ -1,45 +1,43 @@
 name: 'Build de Artefato de API em .Net Core'
-
+ 
 trigger:
-  branches:
-    include:
+  branches: 
+    include: 
       - main
-
+ 
 pool:
   vmImage: 'windows-latest'
-
+ 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
+ 
 jobs:
   - job: BuildTestProd
-    displayName: 'Teste de Produção em Artefato' 
-
+    displayName: 'Teste de Produção em Artefato'
     steps:
     - task: NuGetToolInstaller@1
-
+ 
     - task: NuGetCommand@2
       inputs:
         restoreSolution: '$(solution)'
-
+ 
     - task: VSBuild@1
       inputs:
         solution: '$(solution)'
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-
+ 
     - task: VSTest@2
       inputs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-        
-    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
-    
+ 
     - task: PublishBuildArtifacts@1
       inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-        artifact: 'dotnet-core'
+        targetPath: '$(Build.ArtifactStagingDiretory)'
+        artifact: 'dotnet-core-pedeRoca'
         publishLocation: 'pipeline-prod'
+ 
