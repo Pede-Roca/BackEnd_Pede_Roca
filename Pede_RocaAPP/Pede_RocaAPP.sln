@@ -3,17 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Domain", "Pede_RocaAPP.Domain\Pede_RocaAPP.Domain.csproj", "{514324A3-6EB5-4E06-AABE-72FE27B65741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.Domain", "Pede_RocaAPP.Domain\Pede_RocaAPP.Domain.csproj", "{514324A3-6EB5-4E06-AABE-72FE27B65741}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.API", "Pede_RocaAPP.API\Pede_RocaAPP.API.csproj", "{110B3DF9-DC2B-48F1-9172-FAF329970CDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.API", "Pede_RocaAPP.API\Pede_RocaAPP.API.csproj", "{110B3DF9-DC2B-48F1-9172-FAF329970CDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E} = {E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Infra.Data", "Pede_RocaAPP.Infra.Data\Pede_RocaAPP.Infra.Data.csproj", "{AEA63719-980B-41E7-A97B-50488274A6D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.Infra.Data", "Pede_RocaAPP.Infra.Data\Pede_RocaAPP.Infra.Data.csproj", "{AEA63719-980B-41E7-A97B-50488274A6D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{514324A3-6EB5-4E06-AABE-72FE27B65741} = {514324A3-6EB5-4E06-AABE-72FE27B65741}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Infra.IoC", "Pede_RocaAPP.Infra.IoC\Pede_RocaAPP.Infra.IoC.csproj", "{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.Infra.IoC", "Pede_RocaAPP.Infra.IoC\Pede_RocaAPP.Infra.IoC.csproj", "{E8B9C4FC-29B7-447A-8A71-67F1FDC7304E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{514324A3-6EB5-4E06-AABE-72FE27B65741} = {514324A3-6EB5-4E06-AABE-72FE27B65741}
+		{58B066C6-8943-47CC-B744-232BE88FA4FC} = {58B066C6-8943-47CC-B744-232BE88FA4FC}
+		{AEA63719-980B-41E7-A97B-50488274A6D2} = {AEA63719-980B-41E7-A97B-50488274A6D2}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Application", "Pede_RocaAPP.Application\Pede_RocaAPP.Application.csproj", "{58B066C6-8943-47CC-B744-232BE88FA4FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.Application", "Pede_RocaAPP.Application\Pede_RocaAPP.Application.csproj", "{58B066C6-8943-47CC-B744-232BE88FA4FC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{514324A3-6EB5-4E06-AABE-72FE27B65741} = {514324A3-6EB5-4E06-AABE-72FE27B65741}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pede_RocaAPP.Domain.Test", "Pede_RocaAPP.Domain.Test\Pede_RocaAPP.Domain.Test.csproj", "{80D59D7D-C146-41A6-842C-AF99B384277F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pede_RocaAPP.Domain.Test", "Pede_RocaAPP.Domain.Test\Pede_RocaAPP.Domain.Test.csproj", "{80D59D7D-C146-41A6-842C-AF99B384277F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{514324A3-6EB5-4E06-AABE-72FE27B65741} = {514324A3-6EB5-4E06-AABE-72FE27B65741}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
