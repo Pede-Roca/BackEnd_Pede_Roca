@@ -18,32 +18,32 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task AdicionarAsync(CategoriaDTO categoriaDTO)
         {
-            var categoria = _mapper.Map<Categoria>(categoriaDTO);
-            await _categoriaRepository.AdicionarAsync(categoria);
+            var categoriaEntity = _mapper.Map<Categoria>(categoriaDTO);
+            await _categoriaRepository.AdicionarAsync(categoriaEntity);
         }
 
         public async Task AtualizarAsync(Guid id, CategoriaDTO categoriaDTO)
         {
-            var categoria = _mapper.Map<Categoria>(categoriaDTO);
-            await _categoriaRepository.AtualizarAsync(id, categoria);
+            var categoriaEntity = _mapper.Map<Categoria>(categoriaDTO);
+            await _categoriaRepository.AtualizarAsync(id, categoriaEntity);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var categoria = await _categoriaRepository.GetByIdAsync(id);
-            await _categoriaRepository.DeleteAsync(id);
+            var categoriaEntity = await _categoriaRepository.GetByIdAsync(id);
+            await _categoriaRepository.DeleteAsync(categoriaEntity);
         }
 
         public async Task<CategoriaDTO> GetByIdAsync(Guid id)
         {
-            var categoria = await _categoriaRepository.GetByIdAsync(id);
-            return _mapper.Map<CategoriaDTO>(categoria);
+            var categoriaEntity = await _categoriaRepository.GetByIdAsync(id);
+            return _mapper.Map<CategoriaDTO>(categoriaEntity);
         }
 
         public async Task<IEnumerable<CategoriaDTO>> GetAllAsync()
         {
-            var categorias = await _categoriaRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
+            var categoriaEntity = await _categoriaRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CategoriaDTO>>(categoriaEntity);
         }
 
     }
