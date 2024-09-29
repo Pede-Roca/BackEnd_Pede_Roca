@@ -28,7 +28,7 @@ namespace Pede_RocaAPP.API.Controllers
         [HttpPut(Name = "AtualizarAsync")]
         public async Task<ActionResult> Put(Guid id, [FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
         {
-            if (id != unidadeMedidaDTO.id)
+            if (id != unidadeMedidaDTO.Id)
             {
                 return BadRequest("Id não é válido");
             }
