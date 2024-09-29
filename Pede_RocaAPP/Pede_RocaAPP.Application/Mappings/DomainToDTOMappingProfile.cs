@@ -10,6 +10,7 @@ namespace Pede_RocaAPP.Application.Mappings
         { 
             //adicionar todas as categorias
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();
+            CreateMap<Endereco, EnderecoDTO>().ReverseMap();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Pede_RocaAPP.Application.Mappings
             //adicioanr todos os métodos
             CreateMap<CategoriaDTO, CategoriaCreateCommand>();
             CreateMap<CategoriaDTO, CategoriaUpdateCommand>();
+            // CreateMap<CategoriaDTO, CategoriaDeleteCommand>();
         }
     }
 }
