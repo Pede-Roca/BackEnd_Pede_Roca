@@ -12,7 +12,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<UnidadeMedida> AdicionarAsync(UnidadeMedida unidadeMedida);
         Task<UnidadeMedida> AtualizarAsync(Guid id, UnidadeMedida unidadeMedida);
         Task<UnidadeMedida> DeleteAsync(UnidadeMedida unidadeMedida);
-        Task<UnidadeMedida> GetByIsAsync(Guid id);
+        Task<UnidadeMedida> GetByIdAsync(Guid id);
         Task<IEnumerable<UnidadeMedida>> GetAllAsync();
     }
 }
