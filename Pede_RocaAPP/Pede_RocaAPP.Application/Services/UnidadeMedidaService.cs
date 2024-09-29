@@ -30,13 +30,13 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            var unidadeMedidaEntity = await _unidadeMedidaRepository.GetByIsAsync(id);
+            var unidadeMedidaEntity = await _unidadeMedidaRepository.GetByIdAsync(id);
             await _unidadeMedidaRepository.DeleteAsync(unidadeMedidaEntity);
         }
 
         public async Task<UnidadeMedidaDTO> getByIdAsync(Guid id)
         {
-            var unidadeMedidaEntity = await _unidadeMedidaRepository.GetByIsAsync(id);
+            var unidadeMedidaEntity = await _unidadeMedidaRepository.GetByIdAsync(id);
             return _mapper.Map<UnidadeMedidaDTO>(unidadeMedidaEntity);
         }
 
