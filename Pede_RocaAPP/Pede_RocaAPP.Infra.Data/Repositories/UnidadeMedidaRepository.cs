@@ -37,14 +37,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<UnidadeMedida> GetByIdAsync(Guid id)
         {
-            var unidadeMedida = await _unidadeMedidaContext.unidadeMedidas.FindAsync(id);
+            var unidadeMedida = await _unidadeMedidaContext.UnidadeMedidas.FindAsync(id);
             return unidadeMedida;
 
         }
 
         public async Task<IEnumerable<UnidadeMedida>> GetAllAsync()
         {
-            return await _unidadeMedidaContext.unidadeMedidas.OrderBy(c => c.NomeUnidade).ToListAsync();
+            return await _unidadeMedidaContext.UnidadeMedidas.OrderBy(c => c.NomeUnidade).ToListAsync();
         }
     }
 }

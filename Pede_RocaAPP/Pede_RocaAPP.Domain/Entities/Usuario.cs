@@ -15,6 +15,10 @@ namespace Pede_RocaAPP.Domain.Entities
         public DateTime CreateUserDate { get; set; }
         public List<Endereco> Enderecos { get; set; }
 
+        public Usuario()
+        {
+        }
+
         public Usuario(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string nivelAcesso, string uidFotoPerfil, bool status, DateTime createUserDate)
         {
             Id = Guid.NewGuid();

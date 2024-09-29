@@ -4,28 +4,31 @@ using Pede_RocaAPP.Application.Interface;
 
 namespace Pede_RocaAPP.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UnidadeMedidaController : ControllerBase
     {
         private readonly IUnidadeMedidaService _unidadeMedidaService;
 
-        public UnidadeMedidaController(IUnidadeMedidaService IunidadeMedidaService)
+        public UnidadeMedidaController(IUnidadeMedidaService unidadeMedidaService)
         {
-            _unidadeMedidaService = IunidadeMedidaService;
+            _unidadeMedidaService = unidadeMedidaService;
         }
 
-        [HttpPost(Name = "AdicionarAsync")]
+        [HttpPost(Name = "AdicionarUnidadeMedida")]
         public async Task<ActionResult> Post([FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
         {
             if (unidadeMedidaDTO == null)
             {
                 return BadRequest("Erro de dado inválido");
             }
+
             await _unidadeMedidaService.AdicionarAsync(unidadeMedidaDTO);
 
-            return new CreatedAtRouteResult("GetUnidadeMedida", new { id = unidadeMedidaDTO.Id }, unidadeMedidaDTO);
+            return CreatedAtRoute("GetUnidadeMedida", new { id = unidadeMedidaDTO.Id }, unidadeMedidaDTO);
         }
 
-        [HttpPut(Name = "AtualizarAsync")]
+        [HttpPut("{id}", Name = "AtualizarUnidadeMedida")]
         public async Task<ActionResult> Put(Guid id, [FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
         {
             if (id != unidadeMedidaDTO.Id)
@@ -42,37 +45,37 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(unidadeMedidaDTO);
         }
 
-        [HttpDelete("{id:Guid", Name = "DeleteAsync")]
+        [HttpDelete("{id:Guid}", Name = "DeleteUnidadeMedida")]
         public async Task<ActionResult<UnidadeMedidaDTO>> DeleteAsync(Guid id)
         {
             var unidadeMedidaDto = await _unidadeMedidaService.GetByIdAsync(id);
             if (unidadeMedidaDto == null)
             {
-                return NotFound("Unidade de medida não encontrado");
+                return NotFound("Unidade de medida não encontrada");
             }
-            await _unidadeMedidaService.DeletarAscyn(id);
+            await _unidadeMedidaService.DeletarAsync(id);
 
             return Ok(unidadeMedidaDto);
         }
 
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetUnidadeMedida")]
         public async Task<ActionResult<UnidadeMedidaDTO>> Get(Guid id)
         {
             var unidadeMedida = await _unidadeMedidaService.GetByIdAsync(id);
-            if(unidadeMedida == null)
+            if (unidadeMedida == null)
             {
                 return NotFound("Unidade de medida não encontrada");
             }
             return Ok(unidadeMedida);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UnidadeMedidaDTO>>> Get()
+        [HttpGet(Name = "GetAllUnidadesMedida")]
+        public async Task<ActionResult<IEnumerable<UnidadeMedidaDTO>>> GetAll()
         {
             var unidades = await _unidadeMedidaService.GetAllAsync();
-            if (unidades == null)
+            if (unidades == null || !unidades.Any())
             {
-                return NotFound("Erro de dado inválido");
+                return NotFound("Nenhuma unidade de medida encontrada");
             }
             return Ok(unidades);
         }
