@@ -13,6 +13,10 @@ namespace Pede_RocaAPP.Domain.Entities
         public int Numero { get; set; }
         public string Complemento { get; set; }
 
+        public Endereco()
+        {
+        }
+
         public Endereco(string cep, string cidade, string estado, string logradouro, int numero, string complemento)
         {
             Id = Guid.NewGuid();

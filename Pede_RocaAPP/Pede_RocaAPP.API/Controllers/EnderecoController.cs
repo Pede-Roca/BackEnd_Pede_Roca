@@ -4,16 +4,18 @@ using Pede_RocaAPP.Application.Interface;
 
 namespace Pede_RocaAPP.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class EnderecoController : ControllerBase
     {
         private readonly IEnderecoService _enderecoService;
 
-        public EnderecoController(IEnderecoService IEnderecoService)
+        public EnderecoController(IEnderecoService enderecoService)
         {
-            _enderecoService = IEnderecoService;
+            _enderecoService = enderecoService;
         }
 
-        [HttpPost(Name = "AdicionarAsync")]
+        [HttpPost(Name = "AdicionarEndereco")]
         public async Task<ActionResult> Post([FromBody] EnderecoDTO enderecoDTO)
         {
             if (enderecoDTO == null)
@@ -23,10 +25,10 @@ namespace Pede_RocaAPP.API.Controllers
             
             await _enderecoService.AdicionarAsync(enderecoDTO);
 
-            return new CreatedAtRouteResult("GetEndereco", new { id = enderecoDTO.Id }, enderecoDTO);
+            return CreatedAtRoute("GetEndereco", new { id = enderecoDTO.Id }, enderecoDTO);
         }
 
-        [HttpPut(Name = "AtualizarAsync")]
+        [HttpPut("{id}", Name = "AtualizarEndereco")]
         public async Task<ActionResult> Put(Guid id, [FromBody] EnderecoDTO enderecoDTO)
         {
             if (id != enderecoDTO.Id)
@@ -43,7 +45,7 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(enderecoDTO);
         }
 
-        [HttpDelete("{id:Guid", Name = "DeleteAsync")]
+        [HttpDelete("{id}", Name = "DeleteEndereco")]
         public async Task<ActionResult<EnderecoDTO>> DeleteAsync(Guid id)
         {
             var enderecoDto = await _enderecoService.GetByIdAsync(id);
@@ -68,13 +70,13 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(enderecoDto);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<EnderecoDTO>>> Get()
+        [HttpGet(Name = "GetAllEnderecos")]
+        public async Task<ActionResult<IEnumerable<EnderecoDTO>>> GetAll()
         {
             var enderecos = await _enderecoService.GetAllAsync();
-            if (enderecos == null)
+            if (enderecos == null || !enderecos.Any())
             {
-                return NotFound("Endereços não encontrados");
+                return NotFound("Nenhum endereço encontrado");
             }
 
             return Ok(enderecos);

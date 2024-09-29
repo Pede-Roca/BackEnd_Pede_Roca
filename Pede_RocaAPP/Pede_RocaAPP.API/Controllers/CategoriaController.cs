@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
-using Pede_RocaAPP.Domain.Interfaces;
 
 namespace Pede_RocaAPP.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;
 
-        public CategoriaController(ICategoriaService ICategoriaService)
+        public CategoriaController(ICategoriaService categoriaService)
         {
-            _categoriaService = ICategoriaService;
+            _categoriaService = categoriaService;
         }
 
-        [HttpPost(Name = "AdicionarAsync")]
+        [HttpPost(Name = "AdicionarCategoria")]
         public async Task<ActionResult> Post([FromBody] CategoriaDTO categoriaDTO)
         {
             if (categoriaDTO == null)
@@ -23,10 +24,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
             await _categoriaService.AdicionarAsync(categoriaDTO);
 
-            return new CreatedAtRouteResult("GetCategory", new { id = categoriaDTO.Id }, categoriaDTO);
+            return CreatedAtRoute("GetCategoria", new { id = categoriaDTO.Id }, categoriaDTO);
         }
 
-        [HttpPut(Name = "AtualizarAsync")]
+        [HttpPut("{id}", Name = "AtualizarCategoria")]
         public async Task<ActionResult> Put(Guid id, [FromBody] CategoriaDTO categoriaDTO)
         {
             if (id != categoriaDTO.Id)
@@ -39,11 +40,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
 
             await _categoriaService.AtualizarAsync(id, categoriaDTO);
-
             return Ok(categoriaDTO);
         }
 
-        [HttpDelete("{id:Guid", Name = "DeleteAsync")]
+        [HttpDelete("{id}", Name = "DeleteCategoria")]
         public async Task<ActionResult<CategoriaDTO>> DeleteAsync(Guid id)
         {
             var categoriaDto = await _categoriaService.GetByIdAsync(id);
@@ -56,23 +56,26 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(categoriaDto);
         }
 
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetCategoria")]
         public async Task<ActionResult<CategoriaDTO>> Get(Guid id)
         {
-            var produto = await _categoriaService.GetByIdAsync(id);
-            if (produto == null)
+            var categoria = await _categoriaService.GetByIdAsync(id);
+            if (categoria == null)
             {
-                return NotFound("produto não encontrado");
+                return NotFound("Categoria não encontrada");
             }
-            return Ok(produto);
+            return Ok(categoria);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> Get()
+        [HttpGet(Name = "GetAllCategorias")]
+        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetAll()
         {
-            var produtos = await _categoriaService.GetAllAsync();
-            if (produtos == null) { return NotFound("Erro de dado inválido"); }
-            return Ok(produtos);
+            var categorias = await _categoriaService.GetAllAsync();
+            if (categorias == null || !categorias.Any())
+            {
+                return NotFound("Erro de dado inválido");
+            }
+            return Ok(categorias);
         }
     }
 }
