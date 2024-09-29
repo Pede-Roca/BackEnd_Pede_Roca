@@ -9,6 +9,7 @@ namespace Pede_RocaAPP.Infra.Data.Context
         
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<UnidadeMedida> unidadeMedidas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
