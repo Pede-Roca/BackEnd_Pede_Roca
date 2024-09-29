@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.Application.DTOs
 {
@@ -52,6 +53,6 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data de Criação da Conta")]
         public DateTime CreateUserDate { get; set; }
 
-        public Guid IdEndereco { get; set; }
+        public List<Endereco> Enderecos { get; set; }
     }
 }
