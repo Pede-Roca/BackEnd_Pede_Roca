@@ -9,7 +9,7 @@ namespace Pede_RocaAPP.Domain.Entities
         public string NomeUnidade { get; set; }
         public string SiglaUnidade { get; set; }
 
-        public UnidadeMedida(Guid id, string nomeUnidade, string siglaUnidade)
+        public UnidadeMedida(string nomeUnidade, string siglaUnidade)
         {
             Id = Guid.NewGuid();
             NomeUnidade = nomeUnidade;
