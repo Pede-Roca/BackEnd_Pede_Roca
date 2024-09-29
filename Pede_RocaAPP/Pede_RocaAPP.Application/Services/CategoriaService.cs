@@ -22,16 +22,16 @@ namespace Pede_RocaAPP.Application.Services
             await _categoriaRepository.AdicionarAsync(categoria);
         }
 
-        public async Task AtualizarAsync(CategoriaDTO categoriaDTO)
+        public async Task AtualizarAsync(Guid id, CategoriaDTO categoriaDTO)
         {
             var categoria = _mapper.Map<Categoria>(categoriaDTO);
-            await _categoriaRepository.AdicionarAsync(categoria);
+            await _categoriaRepository.AtualizarAsync(id, categoria);
         }
 
         public async Task DeleteAsync(Guid id)
         {
             var categoria = await _categoriaRepository.GetByIdAsync(id);
-            await _categoriaRepository.DeleteAsync(categoria);
+            await _categoriaRepository.DeleteAsync(id);
         }
 
         public async Task<CategoriaDTO> GetByIdAsync(Guid id)

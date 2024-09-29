@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,8 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.8.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.8.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Pede_RocaAPP.Application\Pede_RocaAPP.Application.csproj" />
+		<ProjectReference Include="..\Pede_RocaAPP.Domain\Pede_RocaAPP.Domain.csproj" />
+		<ProjectReference Include="..\Pede_RocaAPP.Infra.Data\Pede_RocaAPP.Infra.Data.csproj" />
+	</ItemGroup>
 
 </Project>

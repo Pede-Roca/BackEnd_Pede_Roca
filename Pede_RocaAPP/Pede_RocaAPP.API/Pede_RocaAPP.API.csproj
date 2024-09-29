@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+	<PackageReference Include="Serilog" Version="4.0.0" />
+	<PackageReference Include="Serilog.AspNetCore" Version="6.0.0" />
+	<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Pede_RocaAPP.Infra.IoC\Pede_RocaAPP.Infra.IoC.csproj" />
+	</ItemGroup>
 
 </Project>
