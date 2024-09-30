@@ -12,6 +12,7 @@ namespace Pede_RocaAPP.Infra.Data.Context
         public DbSet<UnidadeMedida> UnidadeMedidas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Mensagem> Mensagems { get; set; }
+        public DbSet<PlanoAssinatura> planoAssinaturas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
