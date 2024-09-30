@@ -1,4 +1,6 @@
-﻿namespace Pede_RocaAPP.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Pede_RocaAPP.Domain.Entities
 {
     public class PlanoAssinatura
     {
