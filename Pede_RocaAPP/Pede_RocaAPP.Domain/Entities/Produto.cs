@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
 {
     public class Produto
     {
+        [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
