@@ -2,6 +2,7 @@ namespace Pede_RocaAPP.Domain.Entities
 {
     public class Mensagem
     {
+        [Key]
         public Guid Id { get; set; }
         public Usuario IdUsuario { get; set; }
         public DateTime Data { get; set; }

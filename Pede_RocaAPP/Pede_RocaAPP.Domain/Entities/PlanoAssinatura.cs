@@ -2,6 +2,7 @@
 {
     public class PlanoAssinatura
     {
+        [Key]
         public Guid Id { get; set; }
         public decimal Preco {  get; set; }
         public bool Ativo {  get; set; }
