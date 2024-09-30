@@ -65,7 +65,7 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(planoAssinaturaDto);
         }
 
-        [HttpGet(Name = "GetAllEnderecos")]
+        [HttpGet(Name = "GetAllPlanoAssinatura")]
         public async Task<ActionResult<IEnumerable<PlanoAssinaturaDTO>>> GetAll()
         {
             var planosAssinaturas = await _planoAssinaturaService.GetAllAsync();
