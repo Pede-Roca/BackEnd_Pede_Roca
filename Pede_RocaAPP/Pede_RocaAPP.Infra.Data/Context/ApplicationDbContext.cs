@@ -6,11 +6,12 @@ namespace Pede_RocaAPP.Infra.Data.Context
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        
+
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<UnidadeMedida> UnidadeMedidas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Mensagem> Mensagems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
