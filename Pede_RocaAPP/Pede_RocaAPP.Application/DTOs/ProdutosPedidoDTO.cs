@@ -15,6 +15,6 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [Required(ErrorMessage = "O ID do produto é obrigatório.")]
         [DisplayName("ID do Produto")]
-        public Produto IdProduto { get; set; }
+        public List<Produto> IdProduto { get; set; }
     }
 }
