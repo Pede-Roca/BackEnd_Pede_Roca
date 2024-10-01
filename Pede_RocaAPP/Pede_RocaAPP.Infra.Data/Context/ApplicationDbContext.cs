@@ -14,6 +14,7 @@ namespace Pede_RocaAPP.Infra.Data.Context
         public DbSet<Mensagem> Mensagems { get; set; }
         public DbSet<PlanoAssinatura> planoAssinaturas { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<ProdutosPedido> ProdutosPedidos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
