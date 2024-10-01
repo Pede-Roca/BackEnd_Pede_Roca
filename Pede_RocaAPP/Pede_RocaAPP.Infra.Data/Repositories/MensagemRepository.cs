@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pede_RocaAPP.Domain.Entities;
+using Pede_RocaAPP.Domain.Interfaces;
 using Pede_RocaAPP.Infra.Data.Context;
 
 namespace Pede_RocaAPP.Infra.Data.Repositories
 {
-    public class MensagemRepository
+    public class MensagemRepository : IMensagemRepository
     {
         private ApplicationDbContext _mensagemContext;
 
