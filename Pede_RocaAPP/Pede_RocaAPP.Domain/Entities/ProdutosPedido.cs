@@ -7,17 +7,17 @@ namespace Pede_RocaAPP.Domain.Entities
         [Key]
         public Guid Id { get; set; }
         public int QuantidadeProduto { get; set; }
-        public Produto IdProduto { get; set; }
+        public List<Produto> IdProduto { get; set; }
 
         public ProdutosPedido()
         {
         }
 
-        public ProdutosPedido(int quantidadeProduto, Produto idProduto)
+        public ProdutosPedido(int quantidadeProduto, List<Produto> idProdutos)
         {
             Id = Guid.NewGuid();
             QuantidadeProduto = quantidadeProduto;
-            IdProduto = idProduto;
+            IdProduto = idProdutos;
         }
     }
 }
