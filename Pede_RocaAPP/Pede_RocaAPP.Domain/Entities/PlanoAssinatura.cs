@@ -8,13 +8,15 @@ namespace Pede_RocaAPP.Domain.Entities
         public Guid Id { get; set; }
         public decimal Preco {  get; set; }
         public bool Ativo {  get; set; }
-        public Usuario IdUsuario { get; set; }
+
+        public Guid IdUsuario { get; set; }
+        public Usuario Usuario { get; set; }
 
         public PlanoAssinatura()
         {
         }
 
-        public PlanoAssinatura(Usuario idUsuario, decimal preco, bool ativo)
+        public PlanoAssinatura(Guid idUsuario, decimal preco, bool ativo)
         {
             Id = Guid.NewGuid();
             IdUsuario = idUsuario;

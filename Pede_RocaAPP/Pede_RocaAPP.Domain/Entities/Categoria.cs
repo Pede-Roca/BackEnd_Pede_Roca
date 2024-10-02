@@ -13,6 +13,8 @@ namespace Pede_RocaAPP.Domain.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Nome { get; set; }
 
+        public ICollection<Produto> Produtos { get; set; }
+
         public Categoria()
         {
         }

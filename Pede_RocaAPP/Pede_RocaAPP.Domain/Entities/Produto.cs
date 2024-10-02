@@ -13,14 +13,23 @@ namespace Pede_RocaAPP.Domain.Entities
         public int Estoque { get; set; }
         public decimal FatorPromocao { get; set; }
         public string UidFoto { get; set; }
-        public Categoria IdCategoria { get; set; }
-        public UnidadeMedida IdUnidade { get; set; }
+
+        public Guid IdCategoria { get; set; }
+        public Categoria Categoria { get; set; }
+
+        public Guid IdUnidade { get; set; }
+        public UnidadeMedida UnidadeMedida { get; set; }
+
+        public ICollection<ProdutosPedido> ProdutosPedidos { get; set; }
+
+        public ICollection<ProdutoFavorito> ProdutosFavoritos { get; set; }
+
 
         public Produto()
         {
         }
 
-        public Produto(string nome, string descricao, decimal preco, bool status, int estoque, decimal fatorPromocional, string uidFoto, Categoria idCategoria, UnidadeMedida idUnidade)
+        public Produto(string nome, string descricao, decimal preco, bool status, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)
         {
             Id = Guid.NewGuid();
             Nome = nome ?? throw new ArgumentNullException(nameof(nome));

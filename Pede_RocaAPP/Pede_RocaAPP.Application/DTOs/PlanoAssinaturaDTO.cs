@@ -18,8 +18,9 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [DisplayName("Preço")]
         public decimal preco { get; set; }
+        
         [Required(ErrorMessage = "O status do plano é obrigatório")]
         [DisplayName("Status")]
-        public bool Status { get; set; }
+        public bool Ativo { get; set; }
     }
 }

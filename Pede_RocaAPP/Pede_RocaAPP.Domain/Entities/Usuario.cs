@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
@@ -16,7 +18,24 @@ namespace Pede_RocaAPP.Domain.Entities
         public string UidFotoPerfil { get; set; }
         public bool Status { get; set; }
         public DateTime CreateUserDate { get; set; }
-        public List<Endereco> Enderecos { get; set; }
+
+        // Relacionamento com Endereco
+        public ICollection<Endereco> Enderecos { get; set; } = new List<Endereco>();
+
+        // Relacionamento com Avaliacao
+        public ICollection<Avaliacao> Avaliacoes { get; set; } = new List<Avaliacao>();
+
+        // Relacionamento com CarrinhoCompra
+        public ICollection<CarrinhoCompra> CarrinhoCompra { get; set; } = new List<CarrinhoCompra>(); // Correção aqui
+
+        // Relacionamento com Mensagem
+        public ICollection<Mensagem> Mensagens { get; set; } = new List<Mensagem>();
+
+        // Relacionamento com PlanoAssinatura
+        public ICollection<PlanoAssinatura> PlanosAssinatura { get; set; } = new List<PlanoAssinatura>();
+
+        // Relacionamento com ProdutoFavorito
+        public ICollection<ProdutoFavorito> ProdutosFavoritos { get; set; } = new List<ProdutoFavorito>();
 
         public Usuario()
         {
@@ -30,11 +49,11 @@ namespace Pede_RocaAPP.Domain.Entities
             Senha = senha ?? throw new ArgumentNullException(nameof(senha));
             Telefone = telefone ?? throw new ArgumentNullException(nameof(telefone));
             CPF = cpf ?? throw new ArgumentNullException(nameof(cpf));
-            DataNascimento = dataNascimento == null ? throw new ArgumentNullException(nameof(dataNascimento)) : dataNascimento;
+            DataNascimento = dataNascimento;
             NivelAcesso = nivelAcesso ?? throw new ArgumentNullException(nameof(nivelAcesso));
             UidFotoPerfil = uidFotoPerfil ?? throw new ArgumentNullException(nameof(uidFotoPerfil));
-            Status = status == null ? throw new ArgumentNullException(nameof(status)) : status;
-            CreateUserDate = createUserDate == null ? throw new ArgumentNullException(nameof(createUserDate)) : createUserDate;
+            Status = status;
+            CreateUserDate = createUserDate;
         }
     }
 }
