@@ -1,5 +1,7 @@
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Application.Services;
+using Pede_RocaAPP.Domain.Interfaces;
+using Pede_RocaAPP.Infra.Data.Repositories;
 using Pede_RocaAPP.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers();
+builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+builder.Services.AddScoped<IMensagemRepository, MensagemRepository>();
+builder.Services.AddScoped<IPlanoAssinaturaRepository, PlanoAssinaturaRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoFavoritoRepository, ProdutoFavoritoRepository>();
+builder.Services.AddScoped<IUnidadeMedidaRepository, UnidadeMedidaRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
 
 builder.Services.AddCors(options =>
 {

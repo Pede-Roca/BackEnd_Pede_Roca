@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pede_RocaAPP.Domain.Entities;
+using Pede_RocaAPP.Domain.Interfaces;
 using Pede_RocaAPP.Infra.Data.Context;
 
 namespace Pede_RocaAPP.Infra.Data.Repositories
 {
-    public class ProdutoFavoritoRepository
+    public class ProdutoFavoritoRepository : IProdutoFavoritoRepository
     {
         private ApplicationDbContext _produtoFavoritoContext;
 
