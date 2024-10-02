@@ -1,5 +1,3 @@
-using Pede_RocaAPP.Application.Interface;
-using Pede_RocaAPP.Application.Services;
 using Pede_RocaAPP.Domain.Interfaces;
 using Pede_RocaAPP.Infra.Data.Repositories;
 using Pede_RocaAPP.Infra.IoC;
@@ -8,11 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInfrastructure(builder.Configuration);
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
@@ -26,6 +19,10 @@ builder.Services.AddScoped<IProdutoFavoritoRepository, ProdutoFavoritoRepository
 builder.Services.AddScoped<IUnidadeMedidaRepository, UnidadeMedidaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
+builder.Services.AddInfrastructureAPI(builder.Configuration);
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
@@ -39,8 +36,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-builder.Services.AddInfrastructureAPI(builder.Configuration);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
