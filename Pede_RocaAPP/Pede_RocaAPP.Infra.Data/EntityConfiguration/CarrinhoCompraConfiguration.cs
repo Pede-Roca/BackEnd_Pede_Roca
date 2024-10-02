@@ -36,27 +36,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .WithOne(a => a.CarrinhoCompra) // Supondo que você tenha uma propriedade CarrinhoCompra na Avaliacao
                 .HasForeignKey(a => a.IdCarrinhoCompra) // Define a chave estrangeira
                 .IsRequired(); // Define que a chave estrangeira é obrigatória
-
-            // Exemplo de dados iniciais (seed data)
-            builder.HasData(
-                new CarrinhoCompra
-                {
-                    Id = Guid.NewGuid(),
-                    Data = DateTime.Now,
-                    Status = "Em Processamento",
-                    IdUsuario = Guid.NewGuid(), // Deve ser um Id de usuário existente
-                    ProdutosPedido = new List<ProdutosPedido>
-                    {
-                        new ProdutosPedido
-                        {
-                            Id = Guid.NewGuid(),
-                            QuantidadeProduto = 2,
-                            // A propriedade IdProduto deve ser do tipo Guid
-                            IdProduto = Guid.NewGuid() // Altere para um Id de produto existente
-                        }
-                    }
-                }
-            );
         }
     }
 }
