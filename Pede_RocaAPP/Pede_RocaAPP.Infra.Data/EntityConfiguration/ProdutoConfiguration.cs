@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pede_RocaAPP.Domain.Entities;
+using System;
 
 namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 {
@@ -38,15 +39,15 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasMaxLength(250);
 
             // Relacionamento com Categoria
-            builder.HasOne(p => p.IdCategoria)
-                .WithMany()
-                .HasForeignKey("IdCategoria")
+            builder.HasOne(p => p.Categoria)
+                .WithMany(c => c.Produtos)
+                .HasForeignKey(p => p.IdCategoria)
                 .IsRequired();
 
             // Relacionamento com Unidade de Medida
-            builder.HasOne(p => p.IdUnidade)
-                .WithMany()
-                .HasForeignKey("IdUnidade")
+            builder.HasOne(p => p.UnidadeMedida)
+                .WithMany(u => u.Produtos)
+                .HasForeignKey(p => p.IdUnidade)
                 .IsRequired();
 
             // Seed Data
@@ -61,8 +62,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Estoque = 100,
                     FatorPromocao = 1.0m,
                     UidFoto = "imagem_exemplo.jpg",
-                    IdCategoria = new Categoria { /* Dados da categoria */ },
-                    IdUnidade = new UnidadeMedida { /* Dados da unidade de medida */ }
+                    IdCategoria = Guid.NewGuid(),
+                    IdUnidade = Guid.NewGuid()
                 }
             );
         }

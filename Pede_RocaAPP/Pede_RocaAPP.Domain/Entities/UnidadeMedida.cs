@@ -9,6 +9,8 @@ namespace Pede_RocaAPP.Domain.Entities
         public string NomeUnidade { get; set; }
         public string SiglaUnidade { get; set; }
 
+        public ICollection<Produto> Produtos { get; set; }
+
         public UnidadeMedida()
         {
         }
