@@ -23,12 +23,14 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasOne(t => t.Usuario)
                 .WithMany(u => u.Avaliacoes)
                 .HasForeignKey(t => t.IdUsuario)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(t => t.CarrinhoCompra)
                 .WithMany(c => c.Avaliacoes)
                 .HasForeignKey(t => t.IdCarrinhoCompra)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Dados de Seed
             builder.HasData(

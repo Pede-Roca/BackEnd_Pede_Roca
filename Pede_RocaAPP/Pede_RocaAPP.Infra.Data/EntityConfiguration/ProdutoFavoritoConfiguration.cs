@@ -15,20 +15,23 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasOne(pf => pf.Produto)
                 .WithMany(p => p.ProdutosFavoritos) // Se um produto pode ter muitos favoritos, altere para `WithMany(p => p.ProdutosFavoritos)` se houver uma coleção na classe Produto
                 .HasForeignKey(pf => pf.IdProduto)
-                .IsRequired(); // Define que o IdProduto é obrigatório
+                .IsRequired() // Define que o IdProduto é obrigatório
+                .OnDelete(DeleteBehavior.NoAction); // Define que a ação de exclusão é NoAction
 
             // Configurando o relacionamento com Usuario
             builder.HasOne(pf => pf.Usuario)
                 .WithMany(u => u.ProdutosFavoritos) // Se um usuário pode ter muitos favoritos, altere para `WithMany(u => u.ProdutosFavoritos)` se houver uma coleção na classe Usuario
                 .HasForeignKey(pf => pf.IdUsuario)
-                .IsRequired(); // Define que o IdUsuario é obrigatório
+                .IsRequired() // Define que o IdUsuario é obrigatório
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Se desejar adicionar dados iniciais (opcional)
             builder.HasData(
                 // Exemplo de dados iniciais
-                new ProdutoFavorito { 
-                    Id = Guid.NewGuid(), 
-                    IdProduto = Guid.NewGuid(), 
+                new ProdutoFavorito
+                {
+                    Id = Guid.NewGuid(),
+                    IdProduto = Guid.NewGuid(),
                     IdUsuario = Guid.NewGuid()
                 }
             );

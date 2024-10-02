@@ -42,23 +42,27 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasOne(p => p.Categoria)
                 .WithMany(c => c.Produtos)
                 .HasForeignKey(p => p.IdCategoria)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Relacionamento com Unidade de Medida
             builder.HasOne(p => p.UnidadeMedida)
                 .WithMany(u => u.Produtos)
                 .HasForeignKey(p => p.IdUnidade)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(p => p.ProdutosPedidos)
                 .WithOne(pp => pp.Produto)
                 .HasForeignKey(pp => pp.IdProduto)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(p => p.ProdutosFavoritos)
                 .WithOne(pf => pf.Produto)
                 .HasForeignKey(pf => pf.IdProduto)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Seed Data
             builder.HasData(

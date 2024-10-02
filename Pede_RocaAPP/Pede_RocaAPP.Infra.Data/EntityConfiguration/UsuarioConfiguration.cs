@@ -48,27 +48,33 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             builder.HasMany(t => t.Enderecos)
                 .WithOne(e => e.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction); // Altere conforme necessário
 
             builder.HasMany(t => t.Avaliacoes)
                 .WithOne(a => a.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(t => t.CarrinhoCompra)
                 .WithOne(cc => cc.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(t => t.Mensagens)
                 .WithOne(m => m.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(t => t.PlanosAssinatura)
                 .WithOne(pa => pa.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(t => t.ProdutosFavoritos)
                 .WithOne(pf => pf.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Dados iniciais de exemplo (ajuste conforme necessário)
             builder.HasData(

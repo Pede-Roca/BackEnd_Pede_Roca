@@ -35,7 +35,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasOne(m => m.Usuario)
                 .WithMany(u => u.Mensagens)
                 .HasForeignKey(m => m.IdUsuario)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Exemplo de Seed Data (dados iniciais)
             builder.HasData(

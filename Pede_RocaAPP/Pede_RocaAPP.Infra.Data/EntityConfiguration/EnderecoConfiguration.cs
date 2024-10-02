@@ -39,7 +39,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasOne(e => e.Usuario)
                 .WithMany(u => u.Enderecos) // Um Usuario pode ter muitos Enderecos
                 .HasForeignKey(e => e.IdUsuario) // Chave estrangeira na Endereco
-                .IsRequired(); // O relacionamento é obrigatório
+                .IsRequired() // O relacionamento é obrigatório
+                .OnDelete(DeleteBehavior.NoAction); // Ação de exclusão: não faz nada
 
             // Exemplo de Seed Data (dados iniciais)
             builder.HasData(
