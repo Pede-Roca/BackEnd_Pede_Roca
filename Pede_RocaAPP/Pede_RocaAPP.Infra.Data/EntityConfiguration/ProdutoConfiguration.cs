@@ -68,7 +68,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasData(
                 new Produto
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("999999999-9999-9999-9999-999999999999"),
                     Nome = "Produto Exemplo",
                     Descricao = "Descrição do Produto Exemplo",
                     Preco = 49.99m,
@@ -76,8 +76,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Estoque = 100,
                     FatorPromocao = 1.0m,
                     UidFoto = "imagem_exemplo.jpg",
-                    IdCategoria = Guid.NewGuid(),
-                    IdUnidade = Guid.NewGuid()
+                    IdCategoria = Guid.Parse("22222222-2222-2222-2222-2222222222222"),
+                    IdUnidade = Guid.Parse("12345678-1234-1234-1234-123456789012")
                 }
             );
         }

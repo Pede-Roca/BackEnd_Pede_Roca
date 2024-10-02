@@ -46,13 +46,14 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasData(
                 new Endereco
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("333333-3333-3333-3333-333333333333"),
                     CEP = "12345-678",
                     Cidade = "São Paulo",
                     Estado = "SP",
                     Logradouro = "Rua Exemplo",
                     Numero = 123,
-                    Complemento = "Apartamento 45"
+                    Complemento = "Apartamento 45",
+                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555") // Exemplo: deve ser o ID do usuário existente
                 }
             );
         }

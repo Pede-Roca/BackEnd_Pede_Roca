@@ -48,7 +48,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Conteudo = "Esta é uma mensagem de exemplo.",
                     Status = "Enviado",
                     UidAnexo = "anexo-123",
-                    IdUsuario = Guid.NewGuid()
+                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
                 }
             );
         }

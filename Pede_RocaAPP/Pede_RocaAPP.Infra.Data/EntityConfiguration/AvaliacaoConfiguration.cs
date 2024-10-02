@@ -36,7 +36,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasData(
                 new Avaliacao
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
                     Nota = 5,
                     Descricao = "Excelente produto",
                     IdUsuario = Guid.NewGuid(), // Exemplo: deve ser o ID do usuário existente

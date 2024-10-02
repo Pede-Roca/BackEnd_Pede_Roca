@@ -20,12 +20,12 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.HasData(
                 new Categoria
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("22222222-2222-2222-2222-2222222222222"),
                     Nome = "Eletrônicos"
                 },
                 new Categoria
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("22222222-2222-2222-3333-2222222222222"),
                     Nome = "Material Escolar"
                 }
             );

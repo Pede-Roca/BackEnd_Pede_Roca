@@ -31,8 +31,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 new ProdutoFavorito
                 {
                     Id = Guid.NewGuid(),
-                    IdProduto = Guid.NewGuid(),
-                    IdUsuario = Guid.NewGuid()
+                    IdProduto = Guid.Parse("999999999-9999-9999-9999-999999999999"),
+                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
                 }
             );
         }

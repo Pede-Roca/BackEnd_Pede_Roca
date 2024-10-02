@@ -78,8 +78,20 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Dados iniciais de exemplo (ajuste conforme necessário)
             builder.HasData(
-                new Usuario("John Doe", "john.doe@example.com", "senha123", "123456789", "12345678900", new DateTime(1990, 1, 1), "Admin", "uidFotoPerfil1", true, DateTime.Now),
-                new Usuario("Jane Smith", "jane.smith@example.com", "senha456", "987654321", "09876543210", new DateTime(1995, 5, 5), "User", "uidFotoPerfil2", true, DateTime.Now)
+                new Usuario
+                {
+                    Id = Guid.Parse("5555555-5555-5555-5555-555555555555"),
+                    Nome = "Usuário Exemplo",
+                    Email = "usuario@exemplo.com",
+                    Senha = "123456",
+                    Telefone = "11999999999",
+                    CPF = "12345678901",
+                    DataNascimento = DateTime.Now.AddYears(-20),
+                    NivelAcesso = "Cliente",
+                    UidFotoPerfil = "123456",
+                    Status = true,
+                    CreateUserDate = DateTime.Now
+                }
             );
         }
     }

@@ -30,8 +30,8 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 {
                     Id = Guid.NewGuid(),
                     QuantidadeProduto = 1,
-                    IdProduto = Guid.NewGuid(),
-                    IdCarrinhoCompra = Guid.NewGuid()
+                    IdProduto = Guid.Parse("999999999-9999-9999-9999-999999999999"),
+                    IdCarrinhoCompra = Guid.Parse("98765432-1234-5678-9876-543210987654")
                 }
             );
         }

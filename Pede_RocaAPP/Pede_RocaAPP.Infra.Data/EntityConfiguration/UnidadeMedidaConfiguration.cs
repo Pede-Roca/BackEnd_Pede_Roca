@@ -20,9 +20,12 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Se você quiser adicionar dados iniciais, pode usar HasData
             builder.HasData(
-                new UnidadeMedida("Kilograma", "kg"),
-                new UnidadeMedida("Litro", "L"),
-                new UnidadeMedida("Metro", "m")
+                new UnidadeMedida
+                {
+                    Id = Guid.Parse("12345678-1234-1234-1234-123456789012"),
+                    NomeUnidade = "Quilograma",
+                    SiglaUnidade = "Kg"
+                }
             );
         }
     }

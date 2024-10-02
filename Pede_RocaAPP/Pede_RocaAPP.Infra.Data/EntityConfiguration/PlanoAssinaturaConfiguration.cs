@@ -33,7 +33,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Id = Guid.NewGuid(),
                     Preco = 99.99m,
                     Ativo = true,
-                    IdUsuario = Guid.NewGuid()
+                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
                 }
             );
         }
