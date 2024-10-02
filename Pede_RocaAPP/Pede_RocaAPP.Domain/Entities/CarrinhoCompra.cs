@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
@@ -14,10 +16,10 @@ namespace Pede_RocaAPP.Domain.Entities
         public Usuario Usuario { get; set; } // Propriedade de navegação
 
         // Propriedade de navegação para ProdutosPedido
-        public List<ProdutosPedido> ProdutosPedido { get; set; }
+        public List<ProdutosPedido> ProdutosPedido { get; set; } = new List<ProdutosPedido>(); // Inicializando a lista
 
         // Propriedade de navegação para Avaliacao
-        public ICollection<Avaliacao> Avaliacoes { get; set; }
+        public ICollection<Avaliacao> Avaliacoes { get; set; } = new List<Avaliacao>(); // Inicializando a coleção
 
         public CarrinhoCompra()
         {
@@ -29,7 +31,7 @@ namespace Pede_RocaAPP.Domain.Entities
             Data = data;
             Status = status;
             IdUsuario = idUsuario;
-            ProdutosPedido = produtosPedido;
+            ProdutosPedido = produtosPedido ?? new List<ProdutosPedido>(); // Garantindo que a lista não seja nula
         }
     }
 }

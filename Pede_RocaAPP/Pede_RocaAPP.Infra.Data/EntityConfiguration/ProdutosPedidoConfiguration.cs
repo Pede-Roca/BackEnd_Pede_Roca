@@ -9,19 +9,28 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<ProdutosPedido> builder)
         {
             builder.HasKey(t => t.Id);
-            
+
             builder.Property(t => t.QuantidadeProduto)
                 .IsRequired();
 
-            // Aqui você pode configurar um relacionamento se necessário.
-            builder.HasMany(t => t.IdProduto)
-                .WithOne() // Altere isso se houver uma navegação de volta em Produto.
-                .HasForeignKey("ProdutoId"); // Altere se o nome da chave estrangeira for diferente.
+            builder.HasOne(pp => pp.Produto)
+                .WithMany(p => p.ProdutosPedidos) // Assumindo que um produto pode estar em muitos pedidos
+                .HasForeignKey(p => p.IdProduto) // Chave estrangeira na ProdutosPedido
+                .IsRequired(); // O relacionamento é obrigatório
 
-            // Se você quiser adicionar dados iniciais, pode usar HasData
-            // Aqui está um exemplo fictício, ajuste conforme necessário
+            builder.HasOne(p => p.CarrinhoCompra)
+                .WithMany(c => c.ProdutosPedido) // Um CarrinhoCompra pode ter muitos ProdutosPedido
+                .HasForeignKey(p => p.IdCarrinhoCompra) // Chave estrangeira na ProdutosPedido
+                .IsRequired(); // O relacionamento é obrigatório
+
             builder.HasData(
-                new ProdutosPedido(2, new List<Produto>()) // Altere para incluir objetos Produto válidos
+                new ProdutosPedido
+                {
+                    Id = Guid.NewGuid(),
+                    QuantidadeProduto = 1,
+                    IdProduto = Guid.NewGuid(),
+                    IdCarrinhoCompra = Guid.NewGuid()
+                }
             );
         }
     }

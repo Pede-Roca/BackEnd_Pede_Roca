@@ -35,6 +35,12 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(e => e.Complemento)
                 .HasMaxLength(150);  // Campo opcional
 
+            // Configuração da chave estrangeira
+            builder.HasOne(e => e.Usuario)
+                .WithMany(u => u.Enderecos) // Um Usuario pode ter muitos Enderecos
+                .HasForeignKey(e => e.IdUsuario) // Chave estrangeira na Endereco
+                .IsRequired(); // O relacionamento é obrigatório
+
             // Exemplo de Seed Data (dados iniciais)
             builder.HasData(
                 new Endereco

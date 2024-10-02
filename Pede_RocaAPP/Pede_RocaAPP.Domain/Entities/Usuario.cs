@@ -19,11 +19,14 @@ namespace Pede_RocaAPP.Domain.Entities
         public bool Status { get; set; }
         public DateTime CreateUserDate { get; set; }
 
-        // Propriedade de navegação para Endereco
-        List<Endereco> Enderecos { get; set; }
+        // Relacionamento com Endereco
+        public ICollection<Endereco> Enderecos { get; set; } = new List<Endereco>();
 
         // Relacionamento com Avaliacao
-        public ICollection<Avaliacao> Avaliacoes { get; set; }
+        public ICollection<Avaliacao> Avaliacoes { get; set; } = new List<Avaliacao>();
+
+        // Relacionamento com CarrinhoCompra
+        public ICollection<CarrinhoCompra> CarrinhoCompra { get; set; } = new List<CarrinhoCompra>(); // Correção aqui
 
         public Usuario()
         {

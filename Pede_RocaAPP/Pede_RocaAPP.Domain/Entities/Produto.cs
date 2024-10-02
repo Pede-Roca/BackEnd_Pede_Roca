@@ -16,6 +16,9 @@ namespace Pede_RocaAPP.Domain.Entities
         public Categoria IdCategoria { get; set; }
         public UnidadeMedida IdUnidade { get; set; }
 
+        public ICollection<ProdutosPedido> ProdutosPedidos { get; set; }
+
+
         public Produto()
         {
         }
