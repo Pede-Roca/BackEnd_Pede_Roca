@@ -8,8 +8,10 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Avaliacao> builder)
         {
+            // Definindo a chave primária
             builder.HasKey(t => t.Id);
-            
+
+            // Definindo propriedades
             builder.Property(t => t.Nota)
                 .IsRequired()
                 .HasDefaultValue(1);
@@ -17,24 +19,26 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.Descricao)
                 .HasMaxLength(500);
 
-            builder.HasOne(t => t.IdUsuario)
-                .WithMany()
-                .HasForeignKey("IdUsuario")
+            // Configurando corretamente as chaves estrangeiras e as propriedades de navegação
+            builder.HasOne(t => t.Usuario)
+                .WithMany(u => u.Avaliacoes)
+                .HasForeignKey(t => t.IdUsuario)
                 .IsRequired();
 
-            builder.HasOne(t => t.IdCarrinhoCompra)
-                .WithMany()
-                .HasForeignKey("IdCarrinhoCompra")
+            builder.HasOne(t => t.CarrinhoCompra)
+                .WithMany(c => c.Avaliacoes)
+                .HasForeignKey(t => t.IdCarrinhoCompra)
                 .IsRequired();
-            
+
+            // Dados de Seed
             builder.HasData(
                 new Avaliacao
                 {
                     Id = Guid.NewGuid(),
                     Nota = 5,
                     Descricao = "Excelente produto",
-                    IdUsuario = new Usuario { /* Dados do usuário */ },
-                    IdCarrinhoCompra = new CarrinhoCompra { /* Dados do carrinho */ }
+                    IdUsuario = Guid.NewGuid(), // Exemplo: deve ser o ID do usuário existente
+                    IdCarrinhoCompra = Guid.NewGuid() // Exemplo: deve ser o ID do carrinho existente
                 }
             );
         }

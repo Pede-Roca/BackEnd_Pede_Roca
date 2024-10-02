@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
@@ -16,7 +18,12 @@ namespace Pede_RocaAPP.Domain.Entities
         public string UidFotoPerfil { get; set; }
         public bool Status { get; set; }
         public DateTime CreateUserDate { get; set; }
-        public List<Endereco> Enderecos { get; set; }
+
+        // Propriedade de navegação para Endereco
+        List<Endereco> Enderecos { get; set; }
+
+        // Relacionamento com Avaliacao
+        public ICollection<Avaliacao> Avaliacoes { get; set; }
 
         public Usuario()
         {
@@ -30,11 +37,11 @@ namespace Pede_RocaAPP.Domain.Entities
             Senha = senha ?? throw new ArgumentNullException(nameof(senha));
             Telefone = telefone ?? throw new ArgumentNullException(nameof(telefone));
             CPF = cpf ?? throw new ArgumentNullException(nameof(cpf));
-            DataNascimento = dataNascimento == null ? throw new ArgumentNullException(nameof(dataNascimento)) : dataNascimento;
+            DataNascimento = dataNascimento;
             NivelAcesso = nivelAcesso ?? throw new ArgumentNullException(nameof(nivelAcesso));
             UidFotoPerfil = uidFotoPerfil ?? throw new ArgumentNullException(nameof(uidFotoPerfil));
-            Status = status == null ? throw new ArgumentNullException(nameof(status)) : status;
-            CreateUserDate = createUserDate == null ? throw new ArgumentNullException(nameof(createUserDate)) : createUserDate;
+            Status = status;
+            CreateUserDate = createUserDate;
         }
     }
 }
