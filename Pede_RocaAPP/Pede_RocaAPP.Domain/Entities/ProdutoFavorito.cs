@@ -8,11 +8,11 @@ namespace Pede_RocaAPP.Domain.Entities
         [Key]
         public Guid Id { get; set; }
 
-        // Relacionamento com Produto
+        [Required(ErrorMessage = "O produto é obrigatório.")]
         public Guid IdProduto { get; set; }
         public Produto Produto { get; set; }
 
-        // Relacionamento com Usuario
+        [Required(ErrorMessage = "O usuário é obrigatório.")]
         public Guid IdUsuario { get; set; }
         public Usuario Usuario { get; set; }
 
@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Domain.Entities
         public ProdutoFavorito(Guid idProduto, Guid idUsuario)
         {
             Id = Guid.NewGuid();
-            IdProduto = idProduto;
-            IdUsuario = idUsuario;
+            ValidateDomain(idProduto, idUsuario);
+        }
+
+        private void ValidateDomain(Guid idProduto, Guid idUsuario)
+        {
+            if (idProduto == Guid.Empty)
+                throw new ArgumentException("Id do Produto inválido.");
+
+            if (idUsuario == Guid.Empty)
+                throw new ArgumentException("Id do Usuário inválido.");
         }
     }
 }
