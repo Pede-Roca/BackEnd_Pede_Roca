@@ -32,7 +32,7 @@ namespace Pede_RocaAPP.Application.DTOs
         public string Conteudo { get; set; }
 
         [DisplayName("Anexo")]
-        public string Anexo { get; set; }
+        public string UidAnexo { get; set; }
 
         [Required(ErrorMessage = "Status é obrigatório.")]
         [MinLength(4, ErrorMessage = "O Status deve ter no mínimo 4 caracteres.")]
