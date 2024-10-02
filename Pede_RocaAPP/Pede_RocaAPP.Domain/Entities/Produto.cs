@@ -22,6 +22,8 @@ namespace Pede_RocaAPP.Domain.Entities
 
         public ICollection<ProdutosPedido> ProdutosPedidos { get; set; }
 
+        public ICollection<ProdutoFavorito> ProdutosFavoritos { get; set; }
+
 
         public Produto()
         {

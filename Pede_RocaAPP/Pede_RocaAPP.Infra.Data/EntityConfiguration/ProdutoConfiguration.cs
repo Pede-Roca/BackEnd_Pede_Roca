@@ -50,6 +50,16 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(p => p.IdUnidade)
                 .IsRequired();
 
+            builder.HasMany(p => p.ProdutosPedidos)
+                .WithOne(pp => pp.Produto)
+                .HasForeignKey(pp => pp.IdProduto)
+                .IsRequired();
+
+            builder.HasMany(p => p.ProdutosFavoritos)
+                .WithOne(pf => pf.Produto)
+                .HasForeignKey(pf => pf.IdProduto)
+                .IsRequired();
+
             // Seed Data
             builder.HasData(
                 new Produto

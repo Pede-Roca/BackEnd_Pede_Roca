@@ -32,9 +32,9 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasMaxLength(7);
 
             // Relacionamento
-            builder.HasOne(m => m.IdUsuario)
-                .WithMany()
-                .HasForeignKey("IdUsuario")
+            builder.HasOne(m => m.Usuario)
+                .WithMany(u => u.Mensagens)
+                .HasForeignKey(m => m.IdUsuario)
                 .IsRequired();
 
             // Exemplo de Seed Data (dados iniciais)
@@ -47,7 +47,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Conteudo = "Esta é uma mensagem de exemplo.",
                     Status = "Enviado",
                     UidAnexo = "anexo-123",
-                    IdUsuario = new Usuario { /* Dados do usuário de exemplo */ }
+                    IdUsuario = Guid.NewGuid()
                 }
             );
         }

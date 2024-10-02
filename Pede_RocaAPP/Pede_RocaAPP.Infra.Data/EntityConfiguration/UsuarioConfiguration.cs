@@ -46,10 +46,29 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.CreateUserDate)
                 .IsRequired();
 
-            // Relacionamento com Endereco (se houver)
             builder.HasMany(t => t.Enderecos)
-                .WithOne() // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey("UsuarioId"); // Altere se o nome da chave estrangeira for diferente
+                .WithOne(e => e.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+
+            builder.HasMany(t => t.Avaliacoes)
+                .WithOne(a => a.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+
+            builder.HasMany(t => t.CarrinhoCompra)
+                .WithOne(cc => cc.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+
+            builder.HasMany(t => t.Mensagens)
+                .WithOne(m => m.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+
+            builder.HasMany(t => t.PlanosAssinatura)
+                .WithOne(pa => pa.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
+
+            builder.HasMany(t => t.ProdutosFavoritos)
+                .WithOne(pf => pf.Usuario) // Ajuste se houver uma propriedade de navegação de volta
+                .HasForeignKey(u => u.IdUsuario); // Altere se o nome da chave estrangeira for diferente
 
             // Dados iniciais de exemplo (ajuste conforme necessário)
             builder.HasData(

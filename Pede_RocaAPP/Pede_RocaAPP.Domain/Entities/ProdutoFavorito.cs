@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
 {
@@ -6,17 +7,23 @@ namespace Pede_RocaAPP.Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public List<Produto> IdProduto { get; set; }
-        public Usuario IdUsuario { get; set; }
+
+        // Relacionamento com Produto
+        public Guid IdProduto { get; set; }
+        public Produto Produto { get; set; }
+
+        // Relacionamento com Usuario
+        public Guid IdUsuario { get; set; }
+        public Usuario Usuario { get; set; }
 
         public ProdutoFavorito()
         {
         }
 
-        public ProdutoFavorito(Guid id, List<Produto> idProdutos, Usuario idUsuario)
+        public ProdutoFavorito(Guid idProduto, Guid idUsuario)
         {
             Id = Guid.NewGuid();
-            IdProduto = idProdutos;
+            IdProduto = idProduto;
             IdUsuario = idUsuario;
         }
     }

@@ -20,9 +20,9 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .IsRequired();
 
             // Relacionamento
-            builder.HasOne(p => p.IdUsuario)
-                .WithMany()
-                .HasForeignKey("IdUsuario")
+            builder.HasOne(p => p.Usuario)
+                .WithMany(u => u.PlanosAssinatura)
+                .HasForeignKey(pa => pa.IdUsuario)
                 .IsRequired();
 
             // Exemplo de dados iniciais (seed data)
@@ -32,7 +32,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                     Id = Guid.NewGuid(),
                     Preco = 99.99m,
                     Ativo = true,
-                    IdUsuario = new Usuario { /* Dados do usuário de exemplo */ }
+                    IdUsuario = Guid.NewGuid()
                 }
             );
         }
