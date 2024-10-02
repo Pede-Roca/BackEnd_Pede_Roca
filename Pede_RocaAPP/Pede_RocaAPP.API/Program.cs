@@ -25,6 +25,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+builder.Services.AddInfrastructureAPI(builder.Configuration);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
