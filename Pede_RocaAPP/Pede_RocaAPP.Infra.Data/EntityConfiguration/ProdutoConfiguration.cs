@@ -63,23 +63,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(pf => pf.IdProduto)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Seed Data
-            builder.HasData(
-                new Produto
-                {
-                    Id = Guid.Parse("999999999-9999-9999-9999-999999999999"),
-                    Nome = "Produto Exemplo",
-                    Descricao = "Descrição do Produto Exemplo",
-                    Preco = 49.99m,
-                    Status = true,
-                    Estoque = 100,
-                    FatorPromocao = 1.0m,
-                    UidFoto = "imagem_exemplo.jpg",
-                    IdCategoria = Guid.Parse("22222222-2222-2222-2222-2222222222222"),
-                    IdUnidade = Guid.Parse("12345678-1234-1234-1234-123456789012")
-                }
-            );
         }
     }
 }

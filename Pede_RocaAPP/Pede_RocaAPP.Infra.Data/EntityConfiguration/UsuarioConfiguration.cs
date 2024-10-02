@@ -75,24 +75,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .WithOne(pf => pf.Usuario) // Ajuste se houver uma propriedade de navegação de volta
                 .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Dados iniciais de exemplo (ajuste conforme necessário)
-            builder.HasData(
-                new Usuario
-                {
-                    Id = Guid.Parse("5555555-5555-5555-5555-555555555555"),
-                    Nome = "Usuário Exemplo",
-                    Email = "usuario@exemplo.com",
-                    Senha = "123456",
-                    Telefone = "11999999999",
-                    CPF = "12345678901",
-                    DataNascimento = DateTime.Now.AddYears(-20),
-                    NivelAcesso = "Cliente",
-                    UidFotoPerfil = "123456",
-                    Status = true,
-                    CreateUserDate = DateTime.Now
-                }
-            );
         }
     }
 }

@@ -31,18 +31,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(t => t.IdCarrinhoCompra)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Dados de Seed
-            builder.HasData(
-                new Avaliacao
-                {
-                    Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-                    Nota = 5,
-                    Descricao = "Excelente produto",
-                    IdUsuario = Guid.NewGuid(), // Exemplo: deve ser o ID do usuário existente
-                    IdCarrinhoCompra = Guid.NewGuid() // Exemplo: deve ser o ID do carrinho existente
-                }
-            );
         }
     }
 }

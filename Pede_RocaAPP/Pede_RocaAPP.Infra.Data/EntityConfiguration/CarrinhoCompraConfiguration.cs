@@ -39,17 +39,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(a => a.IdCarrinhoCompra) // Define a chave estrangeira
                 .IsRequired() // Define que a chave estrangeira é obrigatória
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Dados de Seed
-            builder.HasData(
-                new CarrinhoCompra
-                {
-                    Id = Guid.Parse("98765432-1234-5678-9876-543210987654"),
-                    Data = DateTime.Now,
-                    Status = "Em andamento",
-                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
-                }
-            );
         }       
     }
 }

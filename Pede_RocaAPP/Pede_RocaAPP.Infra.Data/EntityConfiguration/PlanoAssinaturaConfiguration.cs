@@ -25,17 +25,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(pa => pa.IdUsuario)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Exemplo de dados iniciais (seed data)
-            builder.HasData(
-                new PlanoAssinatura
-                {
-                    Id = Guid.NewGuid(),
-                    Preco = 99.99m,
-                    Ativo = true,
-                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
-                }
-            );
         }
     }
 }

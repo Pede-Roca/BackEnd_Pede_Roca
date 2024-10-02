@@ -37,20 +37,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(m => m.IdUsuario)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Exemplo de Seed Data (dados iniciais)
-            builder.HasData(
-                new Mensagem
-                {
-                    Id = Guid.NewGuid(),
-                    Data = DateTime.Now,
-                    Email = "usuario@example.com",
-                    Conteudo = "Esta é uma mensagem de exemplo.",
-                    Status = "Enviado",
-                    UidAnexo = "anexo-123",
-                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
-                }
-            );
         }
     }
 }

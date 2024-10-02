@@ -24,17 +24,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(pf => pf.IdUsuario)
                 .IsRequired() // Define que o IdUsuario é obrigatório
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // Se desejar adicionar dados iniciais (opcional)
-            builder.HasData(
-                // Exemplo de dados iniciais
-                new ProdutoFavorito
-                {
-                    Id = Guid.NewGuid(),
-                    IdProduto = Guid.Parse("999999999-9999-9999-9999-999999999999"),
-                    IdUsuario = Guid.Parse("5555555-5555-5555-5555-555555555555")
-                }
-            );
         }
     }
 }
