@@ -33,7 +33,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Relacionamento
             builder.HasOne(m => m.Usuario)
-                .WithMany(u => u.Mensagens)
+                .WithMany()
                 .HasForeignKey(m => m.IdUsuario)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);

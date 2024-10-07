@@ -53,6 +53,6 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data de Criação da Conta")]
         public DateTime CreateUserDate { get; set; }
 
-        public List<Endereco> Enderecos { get; set; }
+        // public List<Endereco> Enderecos { get; set; }
     }
 }

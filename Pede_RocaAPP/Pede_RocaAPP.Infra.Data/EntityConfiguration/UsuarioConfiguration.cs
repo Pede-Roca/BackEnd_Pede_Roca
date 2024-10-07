@@ -9,36 +9,36 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder.HasKey(t => t.Id);
-            
+
             builder.Property(t => t.Nome)
                 .IsRequired()
-                .HasMaxLength(100); // Ajuste o tamanho máximo conforme necessário
+                .HasMaxLength(100);
 
             builder.Property(t => t.Email)
                 .IsRequired()
-                .HasMaxLength(100); // Ajuste o tamanho máximo conforme necessário
-            
+                .HasMaxLength(100);
+
             builder.Property(t => t.Senha)
                 .IsRequired()
-                .HasMaxLength(200); // Ajuste o tamanho máximo conforme necessário
+                .HasMaxLength(200);
 
             builder.Property(t => t.Telefone)
-                .HasMaxLength(15); // Ajuste o tamanho máximo conforme necessário
-            
+                .HasMaxLength(15);
+
             builder.Property(t => t.CPF)
                 .IsRequired()
-                .HasMaxLength(11); // Ajuste o tamanho máximo conforme necessário
+                .HasMaxLength(11);
 
             builder.Property(t => t.DataNascimento)
                 .IsRequired();
 
             builder.Property(t => t.NivelAcesso)
                 .IsRequired()
-                .HasMaxLength(50); // Ajuste o tamanho máximo conforme necessário
+                .HasMaxLength(50);
 
             builder.Property(t => t.UidFotoPerfil)
                 .IsRequired()
-                .HasMaxLength(200); // Ajuste o tamanho máximo conforme necessário
+                .HasMaxLength(200);
 
             builder.Property(t => t.Status)
                 .IsRequired();
@@ -46,35 +46,27 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.CreateUserDate)
                 .IsRequired();
 
-            builder.HasMany(t => t.Enderecos)
-                .WithOne(e => e.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction); // Altere conforme necessário
+            // Chaves estrangeiras:
 
-            builder.HasMany(t => t.Avaliacoes)
-                .WithOne(a => a.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction);
+            // builder.HasMany(t => t.CarrinhoCompra)
+            //     .WithOne(cc => cc.Usuario)
+            //     .HasForeignKey(u => u.IdUsuario)
+            //     .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(t => t.CarrinhoCompra)
-                .WithOne(cc => cc.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction);
+            // builder.HasMany(t => t.Mensagens)
+            //     .WithOne(m => m.Usuario)
+            //     .HasForeignKey(u => u.IdUsuario)
+            //     .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(t => t.Mensagens)
-                .WithOne(m => m.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction);
+            // builder.HasMany(t => t.PlanosAssinatura)
+            //     .WithOne(pa => pa.Usuario)
+            //     .HasForeignKey(u => u.IdUsuario)
+            //     .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(t => t.PlanosAssinatura)
-                .WithOne(pa => pa.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasMany(t => t.ProdutosFavoritos)
-                .WithOne(pf => pf.Usuario) // Ajuste se houver uma propriedade de navegação de volta
-                .HasForeignKey(u => u.IdUsuario) // Altere se o nome da chave estrangeira for diferente
-                .OnDelete(DeleteBehavior.NoAction);
+            // builder.HasMany(t => t.ProdutosFavoritos)
+            //     .WithOne(pf => pf.Usuario)
+            //     .HasForeignKey(u => u.IdUsuario)
+            //     .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

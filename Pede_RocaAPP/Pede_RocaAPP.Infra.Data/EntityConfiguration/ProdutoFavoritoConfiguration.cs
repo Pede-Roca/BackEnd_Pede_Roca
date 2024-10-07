@@ -20,7 +20,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Configurando o relacionamento com Usuario
             builder.HasOne(pf => pf.Usuario)
-                .WithMany(u => u.ProdutosFavoritos) // Se um usuário pode ter muitos favoritos, altere para `WithMany(u => u.ProdutosFavoritos)` se houver uma coleção na classe Usuario
+                .WithMany() // Se um usuário pode ter muitos favoritos, altere para `WithMany(u => u.ProdutosFavoritos)` se houver uma coleção na classe Usuario
                 .HasForeignKey(pf => pf.IdUsuario)
                 .IsRequired() // Define que o IdUsuario é obrigatório
                 .OnDelete(DeleteBehavior.NoAction);

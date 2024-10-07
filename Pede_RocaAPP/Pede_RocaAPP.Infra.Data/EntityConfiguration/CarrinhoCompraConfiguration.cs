@@ -21,7 +21,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Configurando o relacionamento com Usuario
             builder.HasOne(cc => cc.Usuario) // Define a propriedade de navegação para Usuario
-                .WithMany(u => u.CarrinhoCompra) // Supondo que você tenha uma coleção de CarrinhosCompra no Usuario
+                .WithMany() // Supondo que você tenha uma coleção de CarrinhosCompra no Usuario
                 .HasForeignKey(cc => cc.IdUsuario) // Define a chave estrangeira
                 .IsRequired() // Define que a chave estrangeira é obrigatória
                 .OnDelete(DeleteBehavior.NoAction);

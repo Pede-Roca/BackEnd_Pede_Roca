@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Pede_RocaAPP.Application.DTOs;
+using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
 using Pede_RocaAPP.Domain.Interfaces;
 
 namespace Pede_RocaAPP.Application.Services
 {
-    public class ProdutoFavoritoService
+    public class ProdutoFavoritoService : IProdutoFavoritoService
     {
         private readonly IProdutoFavoritoRepository _produtoFavoritoRepository;
 

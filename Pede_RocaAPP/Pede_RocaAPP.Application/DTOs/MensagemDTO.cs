@@ -9,12 +9,8 @@ using Pede_RocaAPP.Domain.Entities;
 namespace Pede_RocaAPP.Application.DTOs
 {
     public class MensagemDTO
-{
+    {
         public Guid Id { get; set; }
-
-        [Required(ErrorMessage = "O ID do usuário é obrigatório.")]
-        [DisplayName("ID do Usuário")]
-        public Usuario IdUsuario { get; set; }
 
         [Required(ErrorMessage = "A Data de envio é obrigatória.")]
         [DisplayName("Data de Envio")]
@@ -39,6 +35,10 @@ namespace Pede_RocaAPP.Application.DTOs
         [MaxLength(7, ErrorMessage = "O Status deve ter no máximo 7 caracteres.")]
         [DisplayName("Status")]
         public string Status { get; set; }
+
+        [Required(ErrorMessage = "O ID do usuário é obrigatório.")]
+        [DisplayName("ID do Usuário")]
+        public Guid IdUsuario { get; set; }
 
     }
 }

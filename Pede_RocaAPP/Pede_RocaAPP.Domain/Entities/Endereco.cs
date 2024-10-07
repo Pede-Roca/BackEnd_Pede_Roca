@@ -42,7 +42,13 @@ namespace Pede_RocaAPP.Domain.Entities
         {
             Id = Guid.NewGuid();
             ValidateDomain(cep, cidade, estado, logradouro, numero, idUsuario);
+            CEP = cep;
+            Cidade = cidade;
+            Estado = estado;
+            Logradouro = logradouro;
+            Numero = numero;
             Complemento = complemento;
+            IdUsuario = idUsuario;
         }
 
         private void ValidateDomain(string cep, string cidade, string estado, string logradouro, int numero, Guid idUsuario)

@@ -40,5 +40,9 @@ namespace Pede_RocaAPP.Application.DTOs
         [MaxLength(150, ErrorMessage = "O Complemento deve ter no máximo 150 caracteres.")]
         [DisplayName("Complemento")]
         public string Complemento { get; set; }
+
+        [Required(ErrorMessage = "O ID do usuário é obrigatório.")]
+        [DisplayName("Id do Usuario")]
+        public Guid IdUsuario { get; set; }
     }
 }

@@ -19,12 +19,13 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.Descricao)
                 .HasMaxLength(500);
 
-            // Configurando corretamente as chaves estrangeiras e as propriedades de navegação
-            builder.HasOne(t => t.Usuario)
-                .WithMany(u => u.Avaliacoes)
-                .HasForeignKey(t => t.IdUsuario)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+            // Configuração da chave estrangeira
+            
+            builder.HasOne(e => e.Usuario)
+                .WithMany() // Não é necessário que Usuario tenha a coleção de endereços
+                .HasForeignKey(e => e.IdUsuario) // Chave estrangeira de Endereco para Usuario
+                .IsRequired() // Relacionamento obrigatório
+                .OnDelete(DeleteBehavior.NoAction); // Não remover em cascata
 
             builder.HasOne(t => t.CarrinhoCompra)
                 .WithMany(c => c.Avaliacoes)
