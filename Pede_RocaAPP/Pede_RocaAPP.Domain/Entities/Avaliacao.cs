@@ -1,3 +1,4 @@
+using Pede_RocaAPP.Domain.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -36,20 +37,14 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(int nota, string descricao, Guid idUsuario, Guid idCarrinhoCompra)
         {
-            if (nota < 1 || nota > 5)
-                throw new ArgumentException("Nota inválida, deve estar entre 1 e 5.");
+            DomainExceptionValidation.When(nota < 1 || nota > 5, "Nota inválida, deve estar entre 1 e 5.");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao), "A descrição é obrigatória.");
 
-            if (string.IsNullOrWhiteSpace(descricao))
-                throw new ArgumentException("A descrição é obrigatória.");
+            DomainExceptionValidation.When(descricao.Length < 10 || descricao.Length > 500, "A descrição deve ter entre 10 e 500 caracteres.");
 
-            if (descricao.Length < 10 || descricao.Length > 500)
-                throw new ArgumentException("A descrição deve ter entre 10 e 500 caracteres.");
+            DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
 
-            if (idUsuario == Guid.Empty)
-                throw new ArgumentException("ID de usuário inválido.");
-
-            if (idCarrinhoCompra == Guid.Empty)
-                throw new ArgumentException("ID de carrinho de compras inválido.");
+            DomainExceptionValidation.When(idCarrinhoCompra == Guid.Empty, "ID de carrinho de compras inválido.");
         }
     }
 }
