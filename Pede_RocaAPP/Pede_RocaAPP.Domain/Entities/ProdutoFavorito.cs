@@ -31,11 +31,8 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(Guid idProduto, Guid idUsuario)
         {
-            if (idProduto == Guid.Empty)
-                throw new ArgumentException("Id do Produto inválido.");
-
-            if (idUsuario == Guid.Empty)
-                throw new ArgumentException("Id do Usuário inválido.");
+            DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
+            DomainExceptionValidation.When(idProduto == Guid.Empty, "ID do produto inválido.");
         }
     }
 }
