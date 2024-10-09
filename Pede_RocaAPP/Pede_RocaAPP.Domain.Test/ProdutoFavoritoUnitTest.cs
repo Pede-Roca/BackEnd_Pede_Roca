@@ -26,9 +26,9 @@ namespace Pede_RocaAPP.Domain.Test
         [Fact(DisplayName = "Valore inválido de Produto")]
         public void CreateProdutoFavorito_ParametroInválido_idUsuario()
         {
-            var idUsuario = Guid.NewGuid();
-            Action action = () => new ProdutoFavorito(idUsuario, Guid.Empty);
-            action.Should().Throw<DomainExceptionValidation>().WithMessage("ID do produto inválido.");
+            var idProduto = Guid.NewGuid();
+            Action action = () => new ProdutoFavorito(idProduto, Guid.Empty);
+            action.Should().Throw<DomainExceptionValidation>().WithMessage("ID de usuário inválido.");
         }
     }
 }
