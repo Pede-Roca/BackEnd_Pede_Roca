@@ -1,4 +1,5 @@
 ﻿using Pede_RocaAPP.Application.DTOs;
+using Pede_RocaAPP.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface IProdutoService
     {
-        Task AdicionarAsync(ProdutoDTO produtoDTO);
-        Task AtualizarAsync(Guid id, ProdutoDTO produtoDTO);
+        Task<Guid> AdicionarAsync(ProdutoCreateDTO produtoDTO);
+        Task AtualizarAsync(Guid id, ProdutoCreateDTO produtoDTO);
         Task DeleteAsync(Guid id);
         Task<ProdutoDTO> GetByIdAsync(Guid id);
+        Task<ProdutoCreateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<ProdutoDTO>> GetAllAsync();
     }
 }

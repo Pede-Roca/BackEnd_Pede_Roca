@@ -41,6 +41,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return produto;
         }
 
+        public async Task<Produto> GetByIdUpdateAsync(Guid id)
+        {
+            return await _produtoContext.Produtos
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
             return await _produtoContext.Produtos.OrderBy(p => p.Nome).ToListAsync();

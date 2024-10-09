@@ -52,6 +52,15 @@ namespace Pede_RocaAPP.Domain.Entities
         {
             Id = Guid.NewGuid();
             ValidateDomain(nome, descricao, preco, estoque, fatorPromocional, uidFoto, idCategoria, idUnidade);
+            Nome = nome;
+            Descricao = descricao;
+            Preco = preco;
+            Status = status;
+            Estoque = estoque;
+            FatorPromocao = fatorPromocional;
+            UidFoto = uidFoto;
+            IdCategoria = idCategoria;
+            IdUnidade = idUnidade;
         }
 
         private void ValidateDomain(string nome, string descricao, decimal preco, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)

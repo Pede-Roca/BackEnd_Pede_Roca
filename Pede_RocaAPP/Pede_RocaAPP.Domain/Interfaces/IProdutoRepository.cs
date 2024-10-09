@@ -13,6 +13,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Produto> AtualizarAsync(Guid id, Produto produto);
         Task<Produto> DeleteAsync(Produto produto);
         Task<Produto> GetByIdAsync(Guid id);
+        Task<Produto> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<Produto>> GetAllAsync();
     }
 }
