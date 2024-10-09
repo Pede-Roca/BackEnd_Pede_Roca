@@ -81,7 +81,7 @@ namespace Pede_RocaAPP.Domain.Entities
         private void ValidateDomain(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string nivelAcesso)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(nome), "O nome é obrigatório.");
-            DomainExceptionValidation.When(nome.Length < 2 || nome.Length > 100, "O nome deve ter entre 2 e 100 caracteres.");
+            DomainExceptionValidation.When(nome.Length < 3 || nome.Length > 100, "O nome deve ter entre 3 e 100 caracteres.");
 
             DomainExceptionValidation.When(string.IsNullOrEmpty(email), "O e-mail é obrigatório.");
             DomainExceptionValidation.When(!new EmailAddressAttribute().IsValid(email), "E-mail inválido.");
