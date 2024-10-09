@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<ProdutosPedido> AtualizarAsync(Guid id, ProdutosPedido produtosPedido)
         {
-            _produtosPedidoContext.Update(produtosPedido);
+            var existingEntity = await _produtosPedidoContext.ProdutosPedidos.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _produtosPedidoContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _produtosPedidoContext.Entry(produtosPedido).State = EntityState.Modified;
             await _produtosPedidoContext.SaveChangesAsync();
+
             return produtosPedido;
         }
 
@@ -39,6 +47,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var produtosPedido = await _produtosPedidoContext.ProdutosPedidos.FindAsync(id);
             return produtosPedido;
+        }
+
+        public async Task<ProdutosPedido> GetByIdUpdateAsync(Guid id)
+        {
+            return await _produtosPedidoContext.ProdutosPedidos
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<ProdutosPedido>> GetAllAsync()

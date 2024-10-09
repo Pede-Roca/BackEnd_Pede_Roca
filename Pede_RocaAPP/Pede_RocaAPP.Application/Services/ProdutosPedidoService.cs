@@ -18,13 +18,14 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(ProdutosPedidoDTO produtosPedidoDTO)
+        public async Task<Guid> AdicionarAsync(ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
             var produtosPedido = _mapper.Map<ProdutosPedido>(produtosPedidoDTO);
             await _produtosPedidoRepository.AdicionarAsync(produtosPedido);
+            return produtosPedido.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, ProdutosPedidoDTO produtosPedidoDTO)
+        public async Task AtualizarAsync(Guid id, ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
             var produtosPedido = _mapper.Map<ProdutosPedido>(produtosPedidoDTO);
             await _produtosPedidoRepository.AtualizarAsync(id, produtosPedido);
@@ -40,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var produtosPedidos = await _produtosPedidoRepository.GetByIdAsync(id);
             return _mapper.Map<ProdutosPedidoDTO>(produtosPedidos);
+        }
+
+        public async Task<ProdutosPedidoCreateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var produtosPedido = await _produtosPedidoRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<ProdutosPedidoCreateDTO>(produtosPedido);
         }
 
         public async Task<IEnumerable<ProdutosPedidoDTO>> GetAllAsync()

@@ -17,53 +17,59 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarProdutosPedido")]
-        public async Task<ActionResult> Post([FromBody] ProdutosPedidoDTO produtosPedidoDTO)
+        public async Task<ActionResult> Post([FromBody] ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
             if (produtosPedidoDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _produtosPedidoService.AdicionarAsync(produtosPedidoDTO);
+            var produtosPedidoId = await _produtosPedidoService.AdicionarAsync(produtosPedidoDTO);
 
-            return CreatedAtRoute("GetProdutosPedido", new { id = produtosPedidoDTO.Id }, produtosPedidoDTO);
+            return CreatedAtRoute("GetProdutosPedido", new { id = produtosPedidoId }, new
+            {
+                id = produtosPedidoId,
+                message = "Produtos pedido criado com sucesso"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarProdutosPedido")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] ProdutosPedidoDTO produtosPedidoDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
-            var produtosPedidoExistente = await _produtosPedidoService.GetByIdAsync(id);
-
-            
-            // Busca o produto pedido atual do banco de dados sem rastreamento
-            if (produtosPedidoExistente == null)
-            {
-                return NotFound("Produto Pedido não encontrado");
-            }
-
-            if (id != produtosPedidoExistente.Id)
-            {
-                return BadRequest("Id não válido");
-            }
+            var produtosPedidoExistente = await _produtosPedidoService.GetByIdUpdateAsync(id);
 
             if (produtosPedidoDTO == null)
             {
-                return BadRequest("Dados inválidos");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            produtosPedidoExistente.QuantidadeProduto = produtosPedidoDTO.QuantidadeProduto > 0 ? produtosPedidoDTO.QuantidadeProduto : produtosPedidoDTO.QuantidadeProduto;
-            produtosPedidoExistente.IdProduto = produtosPedidoDTO.IdProduto != Guid.Empty ? produtosPedidoDTO.IdProduto : produtosPedidoExistente.IdProduto;
+            // Busca o produto pedido atual do banco de dados sem rastreamento
+            if (produtosPedidoExistente == null)
+            {
+                return NotFound($"Produto pedido com ID {id} não encontrada. Verifique o ID e tente novamente!");
+            }
+
+            if(produtosPedidoExistente.IdProduto != produtosPedidoDTO.IdProduto)
+            {
+                produtosPedidoExistente.IdProduto = produtosPedidoDTO.IdProduto;
+            }
+
+            if (produtosPedidoExistente.QuantidadeProduto != produtosPedidoDTO.QuantidadeProduto)
+            {
+                produtosPedidoExistente.QuantidadeProduto = produtosPedidoDTO.QuantidadeProduto;
+            }
 
             await _produtosPedidoService.AtualizarAsync(id, produtosPedidoExistente);
 
-            return Ok(produtosPedidoExistente);
-            
+            return Ok(new
+            {
+                mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso"
+            });
+
         }
 
-
-
-
         [HttpDelete("{id}", Name = "DeleteProdutosPedido")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<ProdutosPedidoDTO>> DeleteAsync(Guid id)
         {
             var produtosPedidoDTO = await _produtosPedidoService.GetByIdAsync(id);
@@ -73,7 +79,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
             await _produtosPedidoService.DeleteAsync(id);
 
-            return Ok(produtosPedidoDTO);
+            return Ok(new
+            {
+                message = "Produto Pedidos removido com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetProdutosPedido")]
