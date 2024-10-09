@@ -23,6 +23,7 @@ namespace Pede_RocaAPP.Domain.Entities
         {
             Id = Guid.NewGuid();
             ValidateDomain(nome);
+            Nome = nome;
         }
 
         private void ValidateDomain(string nome)

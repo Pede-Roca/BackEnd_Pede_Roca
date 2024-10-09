@@ -18,13 +18,14 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(EnderecoDTO enderecoDTO)
+        public async Task<Guid> AdicionarAsync(EnderecoCreateDTO enderecoDTO)
         {
             var endereco = _mapper.Map<Endereco>(enderecoDTO);
             await _enderecoRepository.AdicionarAsync(endereco);
+            return endereco.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, EnderecoDTO enderecoDTO)
+        public async Task AtualizarAsync(Guid id, EnderecoUpdateDTO enderecoDTO)
         {
             var endereco = _mapper.Map<Endereco>(enderecoDTO);
             await _enderecoRepository.AtualizarAsync(id, endereco);
@@ -40,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var endereco = await _enderecoRepository.GetByIdAsync(id);
             return _mapper.Map<EnderecoDTO>(endereco);
+        }
+
+        public async Task<EnderecoUpdateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var endereco = await _enderecoRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<EnderecoUpdateDTO>(endereco);
         }
 
         public async Task<IEnumerable<EnderecoDTO>> GetAllAsync()

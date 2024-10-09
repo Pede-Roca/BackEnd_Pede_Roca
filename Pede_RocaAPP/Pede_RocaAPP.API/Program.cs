@@ -31,6 +31,9 @@ builder.Services.AddScoped<IPlanoAssinaturaRepository, PlanoAssinaturaRepository
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
+builder.Services.AddScoped<IProdutosPedidoService, ProdutosPedidoService>();
+builder.Services.AddScoped<IProdutosPedidoRepository, ProdutosPedidoRepository>();
+
 builder.Services.AddScoped<IProdutoFavoritoService, ProdutoFavoritoService>();
 builder.Services.AddScoped<IProdutoFavoritoRepository, ProdutoFavoritoRepository>();
 

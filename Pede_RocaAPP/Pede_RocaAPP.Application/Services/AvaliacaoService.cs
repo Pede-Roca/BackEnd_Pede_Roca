@@ -17,13 +17,15 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(AvaliacaoDTO avaliacaoDTO)
+        public async Task<Guid> AdicionarAsync(AvaliacaoCreateDTO avaliacaoDTO)
         {
             var avaliacao = _mapper.Map<Avaliacao>(avaliacaoDTO);
             await _avaliacaoRepository.AdicionarAsync(avaliacao);
+
+            return avaliacao.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, AvaliacaoDTO avaliacaoDTO)
+        public async Task AtualizarAsync(Guid id, AvaliacaoUpdateDTO avaliacaoDTO)
         {
             var avaliacao = _mapper.Map<Avaliacao>(avaliacaoDTO);
             await _avaliacaoRepository.AtualizarAsync(id, avaliacao);
@@ -39,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
             return _mapper.Map<AvaliacaoDTO>(avaliacao);
+        }
+
+        public async Task<AvaliacaoUpdateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var avaliacao = await _avaliacaoRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<AvaliacaoUpdateDTO>(avaliacao);
         }
 
         public async Task<IEnumerable<AvaliacaoDTO>> GetAllAsync()

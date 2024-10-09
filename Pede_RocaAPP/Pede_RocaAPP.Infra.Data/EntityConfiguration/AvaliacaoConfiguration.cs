@@ -28,7 +28,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .OnDelete(DeleteBehavior.NoAction); // Não remover em cascata
 
             builder.HasOne(t => t.CarrinhoCompra)
-                .WithMany(c => c.Avaliacoes)
+                .WithMany()
                 .HasForeignKey(t => t.IdCarrinhoCompra)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);

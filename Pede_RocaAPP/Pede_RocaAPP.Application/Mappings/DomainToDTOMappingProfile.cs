@@ -10,10 +10,24 @@ namespace Pede_RocaAPP.Application.Mappings
         { 
             // adicionar todas as categorias
             CreateMap<Avaliacao, AvaliacaoDTO>().ReverseMap();
+            CreateMap<Avaliacao, AvaliacaoCreateDTO>().ReverseMap();
+            CreateMap<Avaliacao, AvaliacaoUpdateDTO>().ReverseMap();
+
             CreateMap<CarrinhoCompra, CarrinhoCompraDTO>().ReverseMap();
+            CreateMap<CarrinhoCompra, CarrinhoCompraCreateDTO>().ReverseMap();
+            CreateMap<CarrinhoCompra, CarrinhoComprUpdateDTO>().ReverseMap();
+
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();
+            CreateMap<Categoria, CategoriaCreateDTO>().ReverseMap();
+
             CreateMap<Endereco, EnderecoDTO>().ReverseMap();
+            CreateMap<Endereco, EnderecoCreateDTO>().ReverseMap();
+            CreateMap<Endereco, EnderecoUpdateDTO>().ReverseMap();
+
             CreateMap<Mensagem, MensagemDTO>().ReverseMap();
+            CreateMap<Mensagem, MensagemCreateDTO>().ReverseMap();
+            CreateMap<Mensagem, MensagemUpdateDTO>().ReverseMap();
+
             CreateMap<PlanoAssinatura, PlanoAssinaturaDTO>().ReverseMap();
             CreateMap<Produto, ProdutoDTO>().ReverseMap();
             CreateMap<ProdutoFavorito, ProdutoFavoritoDTO>().ReverseMap();

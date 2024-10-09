@@ -26,9 +26,29 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task AtualizarAsync(Guid id, UsuarioDTO usuarioDTO)
         {
-            var usuario = _mapper.Map<Usuario>(usuarioDTO);
-            await _usuarioRepository.AtualizarAsync(id, usuario);
+            // Primeiro, buscar o usuário existente no banco de dados
+            var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
+
+            if (usuarioExistente == null)
+            {
+                throw new Exception("Usuário não encontrado");
+            }
+
+            // Atualize os campos do usuário existente com os dados do DTO
+            usuarioExistente.Nome = usuarioDTO.Nome;
+            usuarioExistente.Email = usuarioDTO.Email;
+            usuarioExistente.Senha = usuarioDTO.Senha;
+            usuarioExistente.DataNascimento = usuarioDTO.DataNasc;
+            usuarioExistente.Telefone = usuarioDTO.Telefone;
+            usuarioExistente.CPF = usuarioDTO.Cpf;
+            usuarioExistente.UidFotoPerfil = usuarioDTO.UidFotoPerfil;
+
+            // Outros campos que precisem ser atualizados
+
+            // Agora que o objeto está atualizado, envie para o repositório
+            await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
+
 
         public async Task DeleteAsync(Guid id)
         {

@@ -4,10 +4,11 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface IMensagemService
     {
-        Task AdicionarAsync(MensagemDTO mensagemDTO);
-        Task AtualizarAsync(Guid id, MensagemDTO mensagemDTO);
+        Task<Guid> AdicionarAsync(MensagemCreateDTO mensagemDTO);
+        Task AtualizarAsync(Guid id, MensagemUpdateDTO mensagemDTO);
         Task DeleteAsync(Guid id);
         Task<MensagemDTO> GetByIdAsync(Guid id);
+        Task<MensagemUpdateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<MensagemDTO>> GetAllAsync();
     }
 }

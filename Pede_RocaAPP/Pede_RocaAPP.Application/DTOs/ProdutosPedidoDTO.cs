@@ -1,11 +1,13 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.Application.DTOs
 {
     public class ProdutosPedidoDTO
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "A quantidade do produto é obrigatória.")]
@@ -15,6 +17,6 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [Required(ErrorMessage = "O ID do produto é obrigatório.")]
         [DisplayName("ID do Produto")]
-        public List<Produto> IdProduto { get; set; }
+        public Guid IdProduto { get; set; }
     }
 }

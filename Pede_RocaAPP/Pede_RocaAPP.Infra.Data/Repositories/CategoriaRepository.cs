@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Categoria> AtualizarAsync(Guid id, Categoria categoria)
         {
-            _categoriaContext.Update(categoria);
+            var existingEntity = await _categoriaContext.Categorias.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _categoriaContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _categoriaContext.Entry(categoria).State = EntityState.Modified;
             await _categoriaContext.SaveChangesAsync();
+
             return categoria;
         }
 
@@ -39,6 +47,19 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var categoria = await _categoriaContext.Categorias.FindAsync(id);
             return categoria;
+        }
+
+        public async Task<Categoria> GetByIdUpdateAsync(Guid id)
+        {
+            var categoria = await _categoriaContext.Categorias.FindAsync(id);
+            return categoria;
+        }
+
+        public async Task<IEnumerable<Produto>> GetByCategoriaIdAsync(Guid categoriaId)
+        {
+            return await _categoriaContext.Produtos
+                .Where(p => p.IdCategoria == categoriaId)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Categoria>> GetAllAsync()

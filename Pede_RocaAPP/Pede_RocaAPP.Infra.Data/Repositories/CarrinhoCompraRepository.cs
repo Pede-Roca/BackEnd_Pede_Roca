@@ -27,8 +27,17 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<CarrinhoCompra> AtualizarAsync(Guid id, CarrinhoCompra carrinhoCompra)
         {
-            _carrinhoCompraContext.Update(carrinhoCompra);
+            var existingEntity = await _carrinhoCompraContext.CarrinhoCompras.FindAsync(id);
+
+
+            if (existingEntity != null)
+            {
+                _carrinhoCompraContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _carrinhoCompraContext.Entry(carrinhoCompra).State = EntityState.Modified;
             await _carrinhoCompraContext.SaveChangesAsync();
+
             return carrinhoCompra;
         }
 
@@ -43,6 +52,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var carrinhoCompra = await _carrinhoCompraContext.CarrinhoCompras.FindAsync(id);
             return carrinhoCompra;
+        }
+
+        public async Task<CarrinhoCompra> GetByIdUpdateAsync(Guid id)
+        {
+
+            return await _carrinhoCompraContext.CarrinhoCompras
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<CarrinhoCompra>> GetAllAsync()

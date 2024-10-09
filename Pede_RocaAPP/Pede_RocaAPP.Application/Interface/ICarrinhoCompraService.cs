@@ -8,10 +8,12 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface ICarrinhoCompraService
     {
-        Task AdicionarAsync(CarrinhoCompraDTO carrinhoCompraDTO);
+        Task<Guid> AdicionarAsync(CarrinhoCompraCreateDTO carrinhoCompraDTO);
         Task AtualizarAsync(Guid id, CarrinhoCompraDTO carrinhoCompraDTO);
         Task DeleteAsync(Guid id);
         Task<CarrinhoCompraDTO> GetByIdAsync(Guid id);
+        Task<CarrinhoCompraDTO> GetByIdUpdateAsync(Guid id);
+
         Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync();
     }
 }

@@ -8,6 +8,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Avaliacao> AtualizarAsync(Guid id, Avaliacao avaliacao);
         Task<Avaliacao> DeleteAsync(Avaliacao avaliacao);
         Task<Avaliacao> GetByIdAsync(Guid id);
+        Task<Avaliacao> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<Avaliacao>> GetAllAsync();
     }
 }

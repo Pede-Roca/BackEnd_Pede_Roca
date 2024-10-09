@@ -18,12 +18,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .HasForeignKey(p => p.IdProduto) // Chave estrangeira na ProdutosPedido
                 .IsRequired() // O relacionamento é obrigatório
                 .OnDelete(DeleteBehavior.NoAction); // Ação de exclusão
-
-            builder.HasOne(p => p.CarrinhoCompra)
-                .WithMany(c => c.ProdutosPedido) // Um CarrinhoCompra pode ter muitos ProdutosPedido
-                .HasForeignKey(p => p.IdCarrinhoCompra) // Chave estrangeira na ProdutosPedido
-                .IsRequired() // O relacionamento é obrigatório
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

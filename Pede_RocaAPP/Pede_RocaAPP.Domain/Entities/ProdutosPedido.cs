@@ -17,18 +17,12 @@ namespace Pede_RocaAPP.Domain.Entities
         public Guid IdProduto { get; set; }
         public Produto Produto { get; set; } // Propriedade de navegação para Produto
 
-        [Required(ErrorMessage = "O Id do carrinho de compra é obrigatório.")]
-        public Guid IdCarrinhoCompra { get; set; }
-        public CarrinhoCompra CarrinhoCompra { get; set; } // Propriedade de navegação
-
-        public ProdutosPedido()
-        {
-        }
+        public ProdutosPedido() { }
 
         public ProdutosPedido(int quantidadeProduto, Guid idProduto)
         {
-            ValidateDomain(quantidadeProduto, idProduto);
             Id = Guid.NewGuid();
+            ValidateDomain(quantidadeProduto, idProduto);
             QuantidadeProduto = quantidadeProduto;
             IdProduto = idProduto;
         }

@@ -17,10 +17,11 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(CarrinhoCompraDTO carrinhoCompraDTO)
+        public async Task<Guid> AdicionarAsync(CarrinhoCompraCreateDTO carrinhoCompraDTO)
         {
             var carrinhoCompraEntity = _mapper.Map<CarrinhoCompra>(carrinhoCompraDTO);
             await _carrinhoCompraRepository.AdicionarAsync(carrinhoCompraEntity);
+            return carrinhoCompraEntity.Id;
         }
 
         public async Task AtualizarAsync(Guid id, CarrinhoCompraDTO carrinhoCompraDTO)
@@ -38,6 +39,12 @@ namespace Pede_RocaAPP.Application.Services
         public async Task<CarrinhoCompraDTO> GetByIdAsync(Guid id)
         {
             var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdAsync(id);
+            return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
+        }
+
+        public async Task<CarrinhoCompraDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdUpdateAsync(id);
             return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
         }
 

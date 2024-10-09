@@ -45,28 +45,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             builder.Property(t => t.CreateUserDate)
                 .IsRequired();
-
-            // Chaves estrangeiras:
-
-            // builder.HasMany(t => t.CarrinhoCompra)
-            //     .WithOne(cc => cc.Usuario)
-            //     .HasForeignKey(u => u.IdUsuario)
-            //     .OnDelete(DeleteBehavior.NoAction);
-
-            // builder.HasMany(t => t.Mensagens)
-            //     .WithOne(m => m.Usuario)
-            //     .HasForeignKey(u => u.IdUsuario)
-            //     .OnDelete(DeleteBehavior.NoAction);
-
-            // builder.HasMany(t => t.PlanosAssinatura)
-            //     .WithOne(pa => pa.Usuario)
-            //     .HasForeignKey(u => u.IdUsuario)
-            //     .OnDelete(DeleteBehavior.NoAction);
-
-            // builder.HasMany(t => t.ProdutosFavoritos)
-            //     .WithOne(pf => pf.Usuario)
-            //     .HasForeignKey(u => u.IdUsuario)
-            //     .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

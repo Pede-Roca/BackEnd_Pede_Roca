@@ -37,6 +37,7 @@ namespace Pede_RocaAPP.Domain.Entities
 
         public Mensagem(DateTime data, string email, string conteudo, string uidAnexo, string status, Guid idUsuario)
         {
+
             Id = Guid.NewGuid();
             ValidateDomain(data, email, conteudo, uidAnexo, status, idUsuario);
             Data = data;
@@ -44,6 +45,7 @@ namespace Pede_RocaAPP.Domain.Entities
             Conteudo = conteudo;
             UidAnexo = uidAnexo;
             Status = status;
+            IdUsuario = idUsuario;
         }
 
         private void ValidateDomain(DateTime data, string email, string conteudo, string uidAnexo, string status, Guid idUsuario)
