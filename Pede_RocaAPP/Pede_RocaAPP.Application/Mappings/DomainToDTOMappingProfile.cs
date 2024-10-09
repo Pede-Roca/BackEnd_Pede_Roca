@@ -29,6 +29,9 @@ namespace Pede_RocaAPP.Application.Mappings
             CreateMap<Mensagem, MensagemUpdateDTO>().ReverseMap();
 
             CreateMap<PlanoAssinatura, PlanoAssinaturaDTO>().ReverseMap();
+            CreateMap<PlanoAssinatura, PlanoAssinaturaCreateDTO>().ReverseMap();
+            CreateMap<PlanoAssinatura, PlanoAssinaturaUpdateDTO>().ReverseMap();
+
             CreateMap<Produto, ProdutoDTO>().ReverseMap();
             CreateMap<ProdutoFavorito, ProdutoFavoritoDTO>().ReverseMap();
             CreateMap<ProdutosPedido, ProdutosPedidoDTO>().ReverseMap();

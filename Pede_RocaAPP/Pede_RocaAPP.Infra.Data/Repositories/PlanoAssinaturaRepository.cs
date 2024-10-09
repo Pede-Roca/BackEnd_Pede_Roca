@@ -41,6 +41,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return planoAssinatura;
         }
 
+        public async Task<PlanoAssinatura> GetByIdUpdateAsync(Guid id)
+        {
+            return await _planoAssinaturaContext.planoAssinaturas
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
         public async Task<IEnumerable<PlanoAssinatura>> GetAllAsync()
         {
             return await _planoAssinaturaContext.planoAssinaturas.OrderBy(c => c.Id).ToListAsync();

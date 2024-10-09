@@ -1,13 +1,15 @@
 ﻿using Pede_RocaAPP.Application.DTOs;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.Application.Interface
 {
     public interface IPlanoAssinaturaService
     {
-        Task AdicionarAsync(PlanoAssinaturaDTO planoAssinaturaDTO);
-        Task AtualizarAsync(Guid id, PlanoAssinaturaDTO planoAssinaturaDTO);
+        Task<Guid> AdicionarAsync(PlanoAssinaturaCreateDTO planoAssinaturaDTO);
+        Task AtualizarAsync(Guid id, PlanoAssinaturaUpdateDTO planoAssinaturaDTO);
         Task DeleteAsync(Guid id);
         Task<PlanoAssinaturaDTO> GetByIdAsync(Guid id);
+        Task<PlanoAssinaturaUpdateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<PlanoAssinaturaDTO>> GetAllAsync();
     }
 }

@@ -31,7 +31,6 @@ namespace Pede_RocaAPP.API.Controllers
                 id = avaliacaoId,
                 message = "Avaliação criada com sucesso"
             });
-
         }
         
         [HttpPut("{id}", Name = "AtualizarAvaliacao")]

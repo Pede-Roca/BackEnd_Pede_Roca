@@ -26,6 +26,9 @@ namespace Pede_RocaAPP.Domain.Entities
         {
             Id = Guid.NewGuid();
             ValidateDomain(idUsuario, preco, ativo);
+            Preco = preco;
+            Ativo = ativo;
+            IdUsuario = idUsuario;
         }
 
         private void ValidateDomain(Guid idUsuario, decimal preco, bool ativo)

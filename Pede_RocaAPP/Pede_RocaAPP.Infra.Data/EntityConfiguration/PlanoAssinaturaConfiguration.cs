@@ -22,7 +22,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             // Relacionamento
             builder.HasOne(p => p.Usuario)
                 .WithMany()
-                .HasForeignKey(pa => pa.IdUsuario)
+                .HasForeignKey(p => p.IdUsuario)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
         }
