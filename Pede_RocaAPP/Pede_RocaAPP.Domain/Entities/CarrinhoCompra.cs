@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using Pede_RocaAPP.Domain.Entities;
+using Pede_RocaAPP.Domain.Validation;
 namespace Pede_RocaAPP.Domain.Entities
 {
     public class CarrinhoCompra
@@ -41,23 +42,19 @@ namespace Pede_RocaAPP.Domain.Entities
             IdProdutosPedido = idProdutosPedido;
         }
 
+        public CarrinhoCompra(DateTime data, string v)
+        {
+            Data = data;
+        }
+
         private void ValidateDomain(DateTime data, string status, Guid idUsuario, Guid idProdutosPedido)
         {
-            if (data == default(DateTime))
-                throw new ArgumentException("Data inválida.");
 
-            if (string.IsNullOrWhiteSpace(status))
-                throw new ArgumentException("O status é obrigatório.");
-
-            if (status.Length < 3 || status.Length > 50)
-                throw new ArgumentException("O status deve ter entre 3 e 50 caracteres.");
-
-            if (idUsuario == Guid.Empty)
-                throw new ArgumentException("ID de usuário inválido.");
-
-            if (idProdutosPedido == Guid.Empty)
-                throw new ArgumentException("ID de produtos pedidos inválido.");
-
+            DomainExceptionValidation.When(data == default(DateTime), "Data inválida.");
+            DomainExceptionValidation.When(status.Length < 3 || status.Length > 50, "O status deve ter entre 3 e 50 caracteres.");
+            DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
+            DomainExceptionValidation.When(idProdutosPedido == Guid.Empty, "ID de produtos pedidos inválido.");
         }
     }
 }
+
