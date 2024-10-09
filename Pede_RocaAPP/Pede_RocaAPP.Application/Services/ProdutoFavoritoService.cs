@@ -18,13 +18,14 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(ProdutoFavoritoDTO produtoFavoritoDTO)
+        public async Task<Guid> AdicionarAsync(ProdutoFavoritoCreateDTO produtoFavoritoDTO)
         {
             var produtoFavorito = _mapper.Map<ProdutoFavorito>(produtoFavoritoDTO);
             await _produtoFavoritoRepository.AdicionarAsync(produtoFavorito);
+            return produtoFavorito.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, ProdutoFavoritoDTO produtoFavoritoDto)
+        public async Task AtualizarAsync(Guid id, ProdutoFavoritoCreateDTO produtoFavoritoDto)
         {
             var produtoFavorito = _mapper.Map<ProdutoFavorito>(produtoFavoritoDto);
             await _produtoFavoritoRepository.AtualizarAsync(id, produtoFavorito);
@@ -40,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var produtoFavorito = await _produtoFavoritoRepository.GetByIdAsync(id);
             return _mapper.Map<ProdutoFavoritoDTO>(produtoFavorito);
+        }
+
+        public async Task<ProdutoFavoritoCreateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var produtoFavorito = await _produtoFavoritoRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<ProdutoFavoritoCreateDTO>(produtoFavorito);
         }
 
         public async Task<IEnumerable<ProdutoFavoritoDTO>> GetAllAsync()

@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<ProdutoFavorito> AtualizarAsync(Guid id,ProdutoFavorito produtoFavorito)
         {
-            _produtoFavoritoContext.Update(produtoFavorito);
+            var existingEntity = await _produtoFavoritoContext.produtosFavoritos.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _produtoFavoritoContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _produtoFavoritoContext.Entry(produtoFavorito).State = EntityState.Modified;
             await _produtoFavoritoContext.SaveChangesAsync();
+
             return produtoFavorito;
         }
 
@@ -39,6 +47,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var produtoFavorito = await _produtoFavoritoContext.produtosFavoritos.FindAsync(id);
             return produtoFavorito;
+        }
+
+        public async Task<ProdutoFavorito> GetByIdUpdateAsync(Guid id)
+        {
+            return await _produtoFavoritoContext.produtosFavoritos
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<ProdutoFavorito>> GetAllAsync()

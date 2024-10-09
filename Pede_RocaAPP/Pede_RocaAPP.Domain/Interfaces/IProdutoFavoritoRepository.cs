@@ -8,6 +8,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<ProdutoFavorito> AtualizarAsync(Guid id, ProdutoFavorito produtoFavorito);
         Task<ProdutoFavorito> DeleteAsync(ProdutoFavorito produtoFavorito);
         Task<ProdutoFavorito> GetByIdAsync(Guid id);
+        Task<ProdutoFavorito> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<ProdutoFavorito>> GetAllAsync();
     }
 }
