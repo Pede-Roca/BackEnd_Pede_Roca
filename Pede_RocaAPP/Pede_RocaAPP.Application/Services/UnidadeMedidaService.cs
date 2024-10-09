@@ -17,13 +17,14 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(UnidadeMedidaDTO unidadeMedidaDTO)
+        public async Task<Guid> AdicionarAsync(UnidadeMedidaCreateDTO unidadeMedidaDTO)
         {
             var unidadeMedidaEntity = _mapper.Map<UnidadeMedida>(unidadeMedidaDTO);
             await _unidadeMedidaRepository.AdicionarAsync(unidadeMedidaEntity);
+            return unidadeMedidaEntity.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, UnidadeMedidaDTO unidadeMedidaDTO)
+        public async Task AtualizarAsync(Guid id, UnidadeMedidaCreateDTO unidadeMedidaDTO)
         {
             var unidadeMedidaEntity = _mapper.Map<UnidadeMedida>(unidadeMedidaDTO);
             await _unidadeMedidaRepository.AtualizarAsync(id, unidadeMedidaEntity);
@@ -39,6 +40,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var unidadeMedidaEntity = await _unidadeMedidaRepository.GetByIdAsync(id);
             return _mapper.Map<UnidadeMedidaDTO>(unidadeMedidaEntity);
+        }
+
+        public async Task<UnidadeMedidaCreateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var unidadeMedida = await _unidadeMedidaRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<UnidadeMedidaCreateDTO>(unidadeMedida);
         }
 
         public async Task<IEnumerable<UnidadeMedidaDTO>> GetAllAsync()

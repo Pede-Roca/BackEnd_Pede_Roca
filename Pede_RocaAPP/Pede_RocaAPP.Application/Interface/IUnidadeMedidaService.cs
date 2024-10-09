@@ -9,10 +9,11 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface IUnidadeMedidaService
     {
-        Task AdicionarAsync(UnidadeMedidaDTO unidadeMedidaDTO);
-        Task AtualizarAsync(Guid id, UnidadeMedidaDTO unidadeMedidaDTO);
+        Task<Guid> AdicionarAsync(UnidadeMedidaCreateDTO unidadeMedidaDTO);
+        Task AtualizarAsync(Guid id, UnidadeMedidaCreateDTO unidadeMedidaDTO);
         Task DeletarAsync(Guid id);
         Task<UnidadeMedidaDTO> GetByIdAsync(Guid id);
+        Task<UnidadeMedidaCreateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<UnidadeMedidaDTO>> GetAllAsync();
     }
 }

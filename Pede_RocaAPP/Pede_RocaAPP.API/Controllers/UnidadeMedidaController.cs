@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
+using Pede_RocaAPP.Application.Services;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -16,36 +18,57 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarUnidadeMedida")]
-        public async Task<ActionResult> Post([FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
+        public async Task<ActionResult> Post([FromBody] UnidadeMedidaCreateDTO unidadeMedidaDTO)
         {
             if (unidadeMedidaDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _unidadeMedidaService.AdicionarAsync(unidadeMedidaDTO);
+            var unidadeMedidaId = await _unidadeMedidaService.AdicionarAsync(unidadeMedidaDTO);
 
-            return CreatedAtRoute("GetUnidadeMedida", new { id = unidadeMedidaDTO.Id }, unidadeMedidaDTO);
+            return CreatedAtRoute("GetUnidadeMedida", new { id = unidadeMedidaId }, new
+            {
+                id = unidadeMedidaId,
+                message = "Unidade de medida criada com sucesso"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarUnidadeMedida")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] UnidadeMedidaCreateDTO unidadeMedidaDTO)
         {
-            if (id != unidadeMedidaDTO.Id)
-            {
-                return BadRequest("Id não é válido");
-            }
             if (unidadeMedidaDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _unidadeMedidaService.AtualizarAsync(id, unidadeMedidaDTO);
+            var unidadeMedidaEncontrado = await _unidadeMedidaService.GetByIdUpdateAsync(id);
 
-            return Ok(unidadeMedidaDTO);
+            if(unidadeMedidaEncontrado == null)
+            {
+                return NotFound($"Unidade de medida com ID {id} não encontrada. Verifique o ID e tente novamente!");
+            }
+
+            if(unidadeMedidaEncontrado.SiglaUnidade != unidadeMedidaDTO.SiglaUnidade)
+            {
+                unidadeMedidaEncontrado.SiglaUnidade = unidadeMedidaDTO.SiglaUnidade;
+            }
+
+            if (unidadeMedidaEncontrado.NomeUnidade != unidadeMedidaDTO.NomeUnidade)
+            {
+                unidadeMedidaEncontrado.NomeUnidade = unidadeMedidaDTO.NomeUnidade;
+            }
+
+            await _unidadeMedidaService.AtualizarAsync(id, unidadeMedidaEncontrado);
+
+            return Ok(new
+            {
+                mensagem = $"Unidade de medida com o id {id} foi atualizada com sucesso"
+            });
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteUnidadeMedida")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<UnidadeMedidaDTO>> DeleteAsync(Guid id)
         {
             var unidadeMedidaDto = await _unidadeMedidaService.GetByIdAsync(id);
@@ -55,7 +78,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
             await _unidadeMedidaService.DeletarAsync(id);
 
-            return Ok(unidadeMedidaDto);
+            return Ok(new
+            {
+                message = "Unidade de medida removida com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetUnidadeMedida")]
