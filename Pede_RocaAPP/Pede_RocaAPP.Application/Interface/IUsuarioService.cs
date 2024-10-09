@@ -8,7 +8,7 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface IUsuarioService
     {
-        Task AdicionarAsync(UsuarioDTO usuarioDTO);
+        Task<Guid> AdicionarAsync(UsuarioCreateDTO usuarioDTO);
         Task AtualizarAsync(Guid id, UsuarioDTO usuarioDTO);
         Task DeleteAsync(Guid id);
         Task<UsuarioDTO> GetByIdAsync(Guid id);

@@ -5,10 +5,11 @@ namespace Pede_RocaAPP.Application.Interface
 {
     public interface IEnderecoService
     {
-        Task AdicionarAsync(EnderecoDTO categoriaDTO);
-        Task AtualizarAsync(Guid id, EnderecoDTO categoriaDTO);
+        Task<Guid> AdicionarAsync(EnderecoCreateDTO categoriaDTO);
+        Task AtualizarAsync(Guid id, EnderecoUpdateDTO categoriaDTO);
         Task DeleteAsync(Guid id);
         Task<EnderecoDTO> GetByIdAsync(Guid id);
+        Task<EnderecoUpdateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<EnderecoDTO>> GetAllAsync();
     }
 }

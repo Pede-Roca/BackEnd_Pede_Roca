@@ -13,6 +13,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<PlanoAssinatura> AtualizarAsync(Guid id, PlanoAssinatura planoAssinatura);
         Task<PlanoAssinatura> DeleteAsync(PlanoAssinatura planoAssinatura);
         Task<PlanoAssinatura> GetByIdAsync(Guid id);
+        Task<PlanoAssinatura> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<PlanoAssinatura>> GetAllAsync();
     }
 }

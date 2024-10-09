@@ -35,13 +35,20 @@ namespace Pede_RocaAPP.Domain.Entities
         {
         }
 
-        public Mensagem(Guid idUsuario, DateTime data, string email, string conteudo, string uidAnexo, string status)
+        public Mensagem(DateTime data, string email, string conteudo, string uidAnexo, string status, Guid idUsuario)
         {
+
             Id = Guid.NewGuid();
-            ValidateDomain(idUsuario, data, email, conteudo, uidAnexo, status);
+            ValidateDomain(data, email, conteudo, uidAnexo, status, idUsuario);
+            Data = data;
+            Email = email;
+            Conteudo = conteudo;
+            UidAnexo = uidAnexo;
+            Status = status;
+            IdUsuario = idUsuario;
         }
 
-        private void ValidateDomain(Guid idUsuario, DateTime data, string email, string conteudo, string uidAnexo, string status)
+        private void ValidateDomain(DateTime data, string email, string conteudo, string uidAnexo, string status, Guid idUsuario)
         {
             if (idUsuario == Guid.Empty)
                 throw new ArgumentException("ID de usuário inválido.");

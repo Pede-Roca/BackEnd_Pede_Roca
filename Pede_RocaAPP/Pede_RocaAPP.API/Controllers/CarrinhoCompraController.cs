@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
+using Pede_RocaAPP.Application.Services;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -16,34 +18,51 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarCarrinhoCompra")]
-        public async Task<ActionResult> Post([FromBody] CarrinhoCompraDTO carrinhoCompraDTO)
+        public async Task<ActionResult> Post([FromBody] CarrinhoCompraCreateDTO carrinhoCompraDTO)
         {
             if (carrinhoCompraDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
-            await _carrinhoCompraService.AdicionarAsync(carrinhoCompraDTO);
+            var carrinhoCompraId = await _carrinhoCompraService.AdicionarAsync(carrinhoCompraDTO);
 
-            return CreatedAtRoute("GetCarrinhoCompra", new { id = carrinhoCompraDTO.Id }, carrinhoCompraDTO);
+            return CreatedAtRoute("GetCarrinhoCompra", new { id = carrinhoCompraId }, new
+            {
+                id = carrinhoCompraId,
+                message = "Carrinho de compra criado com sucesso!"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarCarrinhoCompra")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] CarrinhoCompraDTO carrinhoCompraDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] CarrinhoComprUpdateDTO carrinhoCompraDTO)
         {
-            if (id != carrinhoCompraDTO.Id)
-            {
-                return BadRequest("Id não válido");
-            }
             if (carrinhoCompraDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _carrinhoCompraService.AtualizarAsync(id, carrinhoCompraDTO);
-            return Ok(carrinhoCompraDTO);
+            var carrinhoCompraEncontrado = await _carrinhoCompraService.GetByIdUpdateAsync(id);
+
+            if (carrinhoCompraEncontrado == null)
+            {
+                return NotFound($"Carrinho de compra com ID {id} não encontrado. Verifique o ID e tente novamente!");
+            }
+
+            if(!string.IsNullOrEmpty(carrinhoCompraDTO.Status))
+            {
+                carrinhoCompraEncontrado.Status = carrinhoCompraDTO.Status;
+            }
+
+            await _carrinhoCompraService.AtualizarAsync(id, carrinhoCompraEncontrado);
+
+            return Ok(new
+            {
+                mensagem = $"Carrinho de compra com o {id} foi atualizado com sucesso"
+            });
         }
 
         [HttpDelete("{id}", Name = "DeleteCarrinhoCompra")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<CarrinhoCompraDTO>> DeleteAsync(Guid id)
         {
             var carrinhoCompraDto = await _carrinhoCompraService.GetByIdAsync(id);
@@ -53,7 +72,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
             await _carrinhoCompraService.DeleteAsync(id);
 
-            return Ok(carrinhoCompraDto);
+            return Ok(new
+            {
+                message = "Carrinho de compra foi removido com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetCarrinhoCompra")]

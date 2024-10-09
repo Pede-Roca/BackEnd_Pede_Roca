@@ -23,10 +23,22 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Usuario> AtualizarAsync(Guid id, Usuario usuario)
         {
-            _usuarioContext.Update(usuario);
+            var usuarioExistente = await _usuarioContext.Usuarios.FindAsync(id);
+
+            if (usuarioExistente == null)
+            {
+                throw new Exception("Usuário não encontrado");
+            }
+
+            // Atualize os campos
+            _usuarioContext.Entry(usuarioExistente).CurrentValues.SetValues(usuario);
+
+            // Salve as mudanças
             await _usuarioContext.SaveChangesAsync();
-            return usuario;
+
+            return usuarioExistente;
         }
+
 
         public async Task<Usuario> DeleteAsync(Usuario usuario)
         {

@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Endereco> AtualizarAsync(Guid id, Endereco endereco)
         {
-            _enderecoContext.Update(endereco);
+            var existingEntity = await _enderecoContext.Avaliacoes.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _enderecoContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _enderecoContext.Entry(endereco).State = EntityState.Modified;
             await _enderecoContext.SaveChangesAsync();
+
             return endereco;
         }
 
@@ -39,6 +47,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var endereco = await _enderecoContext.Enderecos.FindAsync(id);
             return endereco;
+        }
+
+        public async Task<Endereco> GetByIdUpdateAsync(Guid id)
+        {
+            return await _enderecoContext.Enderecos
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<Endereco>> GetAllAsync()

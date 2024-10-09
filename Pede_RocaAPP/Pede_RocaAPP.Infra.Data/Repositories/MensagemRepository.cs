@@ -23,8 +23,17 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Mensagem> AtualizarAsync(Guid id, Mensagem mensagem)
         {
-            _mensagemContext.Update(mensagem);
+
+            var existingEntity = await _mensagemContext.Mensagems.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _mensagemContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _mensagemContext.Entry(mensagem).State = EntityState.Modified;
             await _mensagemContext.SaveChangesAsync();
+
             return mensagem;
         }
 
@@ -39,6 +48,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var mensagem = await _mensagemContext.Mensagems.FindAsync(id);
             return mensagem;
+        }
+
+        public async Task<Mensagem> GetByIdUpdateAsync(Guid id)
+        {
+            return await _mensagemContext.Mensagems
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<Mensagem>> GetAllAsync()

@@ -18,13 +18,14 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(MensagemDTO mensagemDTO)
+        public async Task<Guid> AdicionarAsync(MensagemCreateDTO mensagemDTO)
         {
             var mensagem = _mapper.Map<Mensagem>(mensagemDTO);
             await _mensagemRepository.AdicionarAsync(mensagem);
+            return mensagem.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, MensagemDTO mensagemDTO)
+        public async Task AtualizarAsync(Guid id, MensagemUpdateDTO mensagemDTO)
         {
             var mensagem = _mapper.Map<Mensagem>(mensagemDTO);
             await _mensagemRepository.AtualizarAsync(id, mensagem);
@@ -40,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var mensagem = await _mensagemRepository.GetByIdAsync(id);
             return _mapper.Map<MensagemDTO>(mensagem);
+        }
+
+        public async Task<MensagemUpdateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var mensagem = await _mensagemRepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<MensagemUpdateDTO>(mensagem);
         }
 
         public async Task<IEnumerable<MensagemDTO>> GetAllAsync()

@@ -8,6 +8,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Mensagem> AtualizarAsync(Guid id, Mensagem mensagem);
         Task<Mensagem> DeleteAsync(Mensagem mensagem);
         Task<Mensagem> GetByIdAsync(Guid id);
+        Task<Mensagem> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<Mensagem>> GetAllAsync();
     }
 }

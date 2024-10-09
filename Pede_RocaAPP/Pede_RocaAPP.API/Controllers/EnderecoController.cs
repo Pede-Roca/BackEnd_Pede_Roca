@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -16,46 +17,92 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarEndereco")]
-        public async Task<ActionResult> Post([FromBody] EnderecoDTO enderecoDTO)
+        public async Task<ActionResult> Post([FromBody] EnderecoCreateDTO enderecoDTO)
         {
             if (enderecoDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
             
-            await _enderecoService.AdicionarAsync(enderecoDTO);
+            var enderecoId = await _enderecoService.AdicionarAsync(enderecoDTO);
 
-            return CreatedAtRoute("GetEndereco", new { id = enderecoDTO.Id }, enderecoDTO);
+            return CreatedAtRoute("GetEndereco", new { id = enderecoId }, new
+            {
+                id = enderecoId,
+                message = "Endereço criado com sucesso"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarEndereco")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] EnderecoDTO enderecoDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] EnderecoUpdateDTO enderecoDTO)
         {
-            if (id != enderecoDTO.Id)
-            {
-                return BadRequest("Id não válido");
-            }
             if (enderecoDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _enderecoService.AtualizarAsync(id, enderecoDTO);
+            var enderecoEncontrado = await _enderecoService.GetByIdUpdateAsync(id);
 
-            return Ok(enderecoDTO);
+            if (enderecoEncontrado == null)
+            {
+                return NotFound($"Endereço com ID {id} não encontrado. Verifique o ID e tente novamente!");
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.CEP))
+            {
+                enderecoEncontrado.CEP = enderecoDTO.CEP;
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.Cidade))
+            {
+                enderecoEncontrado.Cidade = enderecoDTO.Cidade;
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.Estado))
+            {
+                enderecoEncontrado.Estado = enderecoDTO.Estado;
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.Logradouro))
+            {
+                enderecoEncontrado.Logradouro = enderecoDTO.Logradouro;
+            }
+
+            if(enderecoDTO.Numero > 0)
+            {
+                enderecoEncontrado.Numero = enderecoDTO.Numero;
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.Complemento))
+            {
+                enderecoEncontrado.Complemento = enderecoDTO.Complemento;
+            }
+
+            await _enderecoService.AtualizarAsync(id, enderecoEncontrado);
+
+            return Ok(new
+            {
+                mensagem = $"Endereço com o id {id} foi atualizada com sucesso"
+            });
         }
 
         [HttpDelete("{id}", Name = "DeleteEndereco")]
-        public async Task<ActionResult<EnderecoDTO>> DeleteAsync(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
+        public async Task<ActionResult<object>> DeleteAsync(Guid id)
         {
             var enderecoDto = await _enderecoService.GetByIdAsync(id);
+
             if (enderecoDto == null)
             {
                 return NotFound("Endereço não encontrado");
             }
+           
             await _enderecoService.DeleteAsync(id);
 
-            return Ok(enderecoDto);
+            return Ok(new
+            {
+                message = "Endereço removido com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetEndereco")]

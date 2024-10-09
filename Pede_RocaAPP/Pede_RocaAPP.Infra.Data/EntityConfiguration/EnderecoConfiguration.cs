@@ -14,7 +14,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             // Propriedades
             builder.Property(e => e.CEP)
                 .IsRequired()
-                .HasMaxLength(9);  // MaxLength de 9 para incluir o formato com hífen (XXXXX-XXX)
+                .HasMaxLength(9);  // Inclui o formato com hífen (XXXXX-XXX)
 
             builder.Property(e => e.Cidade)
                 .IsRequired()
@@ -22,7 +22,7 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             builder.Property(e => e.Estado)
                 .IsRequired()
-                .HasMaxLength(2);  // MaxLength de 2 para siglas de estados brasileiros (ex: SP, RJ)
+                .HasMaxLength(2);  // Siglas dos estados (ex: SP, RJ)
 
             builder.Property(e => e.Logradouro)
                 .IsRequired()
@@ -37,10 +37,10 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
 
             // Configuração da chave estrangeira
             builder.HasOne(e => e.Usuario)
-                .WithMany(u => u.Enderecos) // Um Usuario pode ter muitos Enderecos
-                .HasForeignKey(e => e.IdUsuario) // Chave estrangeira na Endereco
-                .IsRequired() // O relacionamento é obrigatório
-                .OnDelete(DeleteBehavior.NoAction); // Ação de exclusão: não faz nada
+                .WithMany() // Não é necessário que Usuario tenha a coleção de endereços
+                .HasForeignKey(e => e.IdUsuario) // Chave estrangeira de Endereco para Usuario
+                .IsRequired() // Relacionamento obrigatório
+                .OnDelete(DeleteBehavior.NoAction); // Não remover em cascata
         }
     }
 }

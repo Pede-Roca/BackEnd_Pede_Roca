@@ -23,10 +23,19 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Avaliacao> AtualizarAsync(Guid id, Avaliacao avaliacao)
         {
-            _avaliacaoContext.Update(avaliacao);
+            var existingEntity = await _avaliacaoContext.Avaliacoes.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _avaliacaoContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _avaliacaoContext.Entry(avaliacao).State = EntityState.Modified;
             await _avaliacaoContext.SaveChangesAsync();
+
             return avaliacao;
         }
+
 
         public async Task<Avaliacao> DeleteAsync(Avaliacao avaliacao)
         {
@@ -40,6 +49,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             var avaliacao = await _avaliacaoContext.Avaliacoes.FindAsync(id);
             return avaliacao;
         }
+
+        public async Task<Avaliacao> GetByIdUpdateAsync(Guid id)
+        {
+            return await _avaliacaoContext.Avaliacoes
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
 
         public async Task<IEnumerable<Avaliacao>> GetAllAsync()
         {

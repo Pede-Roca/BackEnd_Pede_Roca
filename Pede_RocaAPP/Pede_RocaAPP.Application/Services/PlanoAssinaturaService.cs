@@ -18,13 +18,14 @@ namespace Pede_RocaAPP.Application.Services
             _PlanoAssinaturarepository = planoAssinaturarepository;
         }
 
-        public async Task AdicionarAsync(PlanoAssinaturaDTO planoAssinaturaDTO)
+        public async Task<Guid> AdicionarAsync(PlanoAssinaturaCreateDTO planoAssinaturaDTO)
         {
             var planoAssinatura = _mapper.Map<PlanoAssinatura>(planoAssinaturaDTO);
             await _PlanoAssinaturarepository.AdicionarAsync(planoAssinatura);
+            return planoAssinatura.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, PlanoAssinaturaDTO planoAssinaturaDTO)
+        public async Task AtualizarAsync(Guid id, PlanoAssinaturaUpdateDTO planoAssinaturaDTO)
         {
             var planoAssinatura = _mapper.Map<PlanoAssinatura>(planoAssinaturaDTO);
             await _PlanoAssinaturarepository.AtualizarAsync(id, planoAssinatura);
@@ -40,6 +41,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var planoAssinatura = await _PlanoAssinaturarepository.GetByIdAsync(id);
             return _mapper.Map<PlanoAssinaturaDTO>(planoAssinatura);
+        }
+
+        public async Task<PlanoAssinaturaUpdateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var planoAssinatura = await _PlanoAssinaturarepository.GetByIdUpdateAsync(id);
+            return _mapper.Map<PlanoAssinaturaUpdateDTO>(planoAssinatura);
         }
 
         public async Task<IEnumerable<PlanoAssinaturaDTO>> GetAllAsync()

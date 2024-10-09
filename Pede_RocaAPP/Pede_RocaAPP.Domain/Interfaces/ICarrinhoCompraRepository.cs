@@ -8,6 +8,8 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<CarrinhoCompra> AtualizarAsync(Guid id, CarrinhoCompra carrinhoCompra);
         Task<CarrinhoCompra> DeleteAsync(CarrinhoCompra carrinhoCompra);
         Task<CarrinhoCompra> GetByIdAsync(Guid id);
+        Task<CarrinhoCompra> GetByIdUpdateAsync(Guid id);
+
         Task<IEnumerable<CarrinhoCompra>> GetAllAsync();
     }
 }

@@ -6,6 +6,11 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Interface\IProdutoFavoritoService - Cópia.cs" />
+    <Compile Remove="Services\Class1.cs" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Pede_RocaAPP.Domain\Pede_RocaAPP.Domain.csproj" />
 	</ItemGroup>

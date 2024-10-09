@@ -23,8 +23,16 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<UnidadeMedida> AtualizarAsync(Guid id, UnidadeMedida unidadeMedida)
         {
-            _unidadeMedidaContext.Update(unidadeMedida);
+            var existingEntity = await _unidadeMedidaContext.UnidadeMedidas.FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _unidadeMedidaContext.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            _unidadeMedidaContext.Entry(unidadeMedida).State = EntityState.Modified;
             await _unidadeMedidaContext.SaveChangesAsync();
+
             return unidadeMedida;
         }
 
@@ -39,7 +47,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             var unidadeMedida = await _unidadeMedidaContext.UnidadeMedidas.FindAsync(id);
             return unidadeMedida;
+        }
 
+        public async Task<UnidadeMedida> GetByIdUpdateAsync(Guid id)
+        {
+            return await _unidadeMedidaContext.UnidadeMedidas
+                .AsNoTracking() // Não rastrear a entidade
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<UnidadeMedida>> GetAllAsync()

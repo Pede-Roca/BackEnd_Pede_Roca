@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -16,46 +17,71 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarProdutoFavorito")]
-        public async Task<ActionResult> Post([FromBody] ProdutoFavoritoDTO produtoFavoritoDTO)
+        public async Task<ActionResult> Post([FromBody] ProdutoFavoritoCreateDTO produtoFavoritoDTO)
         {
             if (produtoFavoritoDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
-            
-            await _produtoFavoritoService.AdicionarAsync(produtoFavoritoDTO);
 
-            return CreatedAtRoute("GetProdutoFavorito", new { id =  produtoFavoritoDTO.Id }, produtoFavoritoDTO);
+            var produtoFavoritosId = await _produtoFavoritoService.AdicionarAsync(produtoFavoritoDTO);
+
+            return CreatedAtRoute("GetProdutoFavorito", new { id = produtoFavoritosId }, new
+            {
+                id = produtoFavoritosId,
+                message = "Produtos favoritos criado com sucesso"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarProdutoFavorito")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] ProdutoFavoritoDTO produtoFavoritoDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] ProdutoFavoritoCreateDTO produtoFavoritoDTO)
         {
-            if (id != produtoFavoritoDTO.Id)
-            {
-                return BadRequest("Id não válido");
-            }
             if (produtoFavoritoDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
 
-            await _produtoFavoritoService.AtualizarAsync(id, produtoFavoritoDTO);
+            var produtoFavoritoEncontrado = await _produtoFavoritoService.GetByIdUpdateAsync(id);
 
-            return Ok(produtoFavoritoDTO);
+            if (produtoFavoritoEncontrado == null)
+            {
+                return NotFound($"Produto favorito com ID {id} não encontrada. Verifique o ID e tente novamente!");
+            }
+
+            if(produtoFavoritoDTO.IdProduto != produtoFavoritoEncontrado.IdProduto)
+            {
+                produtoFavoritoEncontrado.IdProduto = produtoFavoritoDTO.IdProduto;
+            }
+
+            if (produtoFavoritoDTO.IdUsuario != produtoFavoritoEncontrado.IdUsuario)
+            {
+                produtoFavoritoEncontrado.IdUsuario = produtoFavoritoDTO.IdUsuario;
+            }
+
+            await _produtoFavoritoService.AtualizarAsync(id, produtoFavoritoEncontrado);
+
+            return Ok(new
+            {
+                mensagem = $"Produto favorito com o id {id} foi atualizada com sucesso"
+            });
         }
 
         [HttpDelete("{id}", Name = "DeleteProdutoFavorito")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<ProdutoFavoritoDTO>> DeleteAsync(Guid id)
         {
             var produtoFavoritoDto = await _produtoFavoritoService.GetByIdAsync(id);
+
             if (produtoFavoritoDto == null)
             {
                 return NotFound("Produto Favorito não encontrado");
             }
             await _produtoFavoritoService.DeleteAsync(id);
 
-            return Ok(produtoFavoritoDto);
+            return Ok(new
+            {
+                message = "Produto favorito removido com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetProdutoFavorito")]

@@ -23,22 +23,25 @@ namespace Pede_RocaAPP.Domain.Entities
 
         // Propriedade de navegação para ProdutosPedido
         [Required(ErrorMessage = "O carrinho de compras deve conter ao menos um produto.")]
-        public List<ProdutosPedido> ProdutosPedido { get; set; } = new List<ProdutosPedido>(); // Inicializando a lista
+        public ProdutosPedido ProdutosPedido { get; set; }
+        public Guid IdProdutosPedido { get; set; }
 
-        // Propriedade de navegação para Avaliacao
-        public ICollection<Avaliacao> Avaliacoes { get; set; } = new List<Avaliacao>(); // Inicializando a coleção
-
+        
         public CarrinhoCompra()
         {
         }
 
-        public CarrinhoCompra(DateTime data, string status, Guid idUsuario, List<ProdutosPedido> produtosPedido)
+        public CarrinhoCompra(DateTime data, string status, Guid idUsuario, Guid idProdutosPedido)
         {
             Id = Guid.NewGuid();
-            ValidateDomain(data, status, idUsuario, produtosPedido);
+            ValidateDomain(data, status, idUsuario, idProdutosPedido);
+            Data = data;
+            Status = status;
+            IdUsuario = idUsuario;
+            IdProdutosPedido = idProdutosPedido;
         }
 
-        private void ValidateDomain(DateTime data, string status, Guid idUsuario, List<ProdutosPedido> produtosPedido)
+        private void ValidateDomain(DateTime data, string status, Guid idUsuario, Guid idProdutosPedido)
         {
             if (data == default(DateTime))
                 throw new ArgumentException("Data inválida.");
@@ -52,8 +55,9 @@ namespace Pede_RocaAPP.Domain.Entities
             if (idUsuario == Guid.Empty)
                 throw new ArgumentException("ID de usuário inválido.");
 
-            if (produtosPedido == null || produtosPedido.Count == 0)
-                throw new ArgumentException("O carrinho de compras deve conter ao menos um produto.");
+            if (idProdutosPedido == Guid.Empty)
+                throw new ArgumentException("ID de produtos pedidos inválido.");
+
         }
     }
 }
