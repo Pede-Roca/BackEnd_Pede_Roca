@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pede_RocaAPP.Domain.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pede_RocaAPP.Domain.Entities
@@ -33,11 +34,8 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(Guid idUsuario, decimal preco, bool ativo)
         {
-            if (idUsuario == Guid.Empty)
-                throw new ArgumentException("ID de usuário inválido.");
-
-            if (preco < 0)
-                throw new ArgumentException("Preço inválido, deve ser maior ou igual a zero.");
+            DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
+            DomainExceptionValidation.When(preco < 0, "Preço inválido, deve ser maior ou igual a zero.");
         }
     }
 }
