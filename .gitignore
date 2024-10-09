@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# API appsettings
+Pede_RocaAPP.API/appsettings.json
