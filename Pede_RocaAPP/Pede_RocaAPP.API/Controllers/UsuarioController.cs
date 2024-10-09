@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
+using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -16,16 +17,20 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPost(Name = "AdicionarUsuario")]
-        public async Task<ActionResult> Post([FromBody] UsuarioDTO usuarioDTO)
+        public async Task<ActionResult> Post([FromBody] UsuarioCreateDTO usuarioDTO)
         {
             if (usuarioDTO == null)
             {
-                return BadRequest("Erro de dado inválido");
+                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
-            
-            await _usuarioService.AdicionarAsync(usuarioDTO);
 
-            return CreatedAtRoute("GetUsuario", new { id = usuarioDTO.Id }, usuarioDTO);
+            var usuarioId = await _usuarioService.AdicionarAsync(usuarioDTO);
+
+            return CreatedAtRoute("GetUsuario", new { id = usuarioId }, new
+            {
+                id = usuarioId,
+                message = "Usuario criado com sucesso"
+            });
         }
 
         [HttpPut("{id}", Name = "AtualizarUsuario")]
@@ -77,6 +82,7 @@ namespace Pede_RocaAPP.API.Controllers
 
 
         [HttpDelete("{id}", Name = "DeleteUsuario")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
         {
             var usuarioDto = await _usuarioService.GetByIdAsync(id);
@@ -86,7 +92,10 @@ namespace Pede_RocaAPP.API.Controllers
             }
             await _usuarioService.DeleteAsync(id);
 
-            return Ok(usuarioDto);
+            return Ok(new
+            {
+                message = "Usuario removido com sucesso"
+            });
         }
 
         [HttpGet("{id}", Name = "GetUsuario")]

@@ -18,10 +18,11 @@ namespace Pede_RocaAPP.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AdicionarAsync(UsuarioDTO usuarioDTO)
+        public async Task<Guid> AdicionarAsync(UsuarioCreateDTO usuarioDTO)
         {
             var usuario = _mapper.Map<Usuario>(usuarioDTO);
             await _usuarioRepository.AdicionarAsync(usuario);
+            return usuario.Id;
         }
 
         public async Task AtualizarAsync(Guid id, UsuarioDTO usuarioDTO)
