@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pede_RocaAPP.Domain.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,11 +29,9 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(string nome)
         {
-            if (string.IsNullOrWhiteSpace(nome))
-                throw new ArgumentException("O nome é obrigatório.");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(nome), "O nome é obrigatório.");
 
-            if (nome.Length < 3 || nome.Length > 100)
-                throw new ArgumentException("O nome deve ter entre 3 e 100 caracteres.");
+            DomainExceptionValidation.When(nome.Length < 3 || nome.Length > 100, "O nome deve ter entre 3 e 100 caracteres.");
         }
     }
 }
