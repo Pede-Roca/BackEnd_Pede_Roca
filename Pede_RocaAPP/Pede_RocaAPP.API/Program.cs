@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Application.Services;
 using Pede_RocaAPP.Domain.Interfaces;
@@ -59,6 +61,22 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://securetoken.google.com/pederoca-22e90";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = "https://securetoken.google.com/pederoca-22e90",
+            ValidateAudience = true,
+            ValidAudience = "pederoca-22e90",
+            ValidateLifetime = true
+        };
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,6 +90,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
