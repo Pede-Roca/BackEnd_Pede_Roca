@@ -27,15 +27,15 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task AtualizarAsync(Guid id, UsuarioDTO usuarioDTO)
         {
-            // Primeiro, buscar o usuário existente no banco de dados
+            // Primeiro, buscar o usuï¿½rio existente no banco de dados
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usuário não encontrado");
+                throw new Exception("Usuï¿½rio nï¿½o encontrado");
             }
 
-            // Atualize os campos do usuário existente com os dados do DTO
+            // Atualize os campos do usuï¿½rio existente com os dados do DTO
             usuarioExistente.Nome = usuarioDTO.Nome;
             usuarioExistente.Email = usuarioDTO.Email;
             usuarioExistente.Senha = usuarioDTO.Senha;
@@ -46,7 +46,7 @@ namespace Pede_RocaAPP.Application.Services
 
             // Outros campos que precisem ser atualizados
 
-            // Agora que o objeto está atualizado, envie para o repositório
+            // Agora que o objeto estï¿½ atualizado, envie para o repositï¿½rio
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
@@ -60,6 +60,12 @@ namespace Pede_RocaAPP.Application.Services
         public async Task<UsuarioDTO> GetByIdAsync(Guid id)
         {
             var usuario = await _usuarioRepository.GetByIdAsync(id);
+            return _mapper.Map<UsuarioDTO>(usuario);
+        }
+
+        public async Task<UsuarioDTO> GetByEmailAsync(string email)
+        {
+            var usuario = await _usuarioRepository.GetByEmailAsync(email);
             return _mapper.Map<UsuarioDTO>(usuario);
         }
 

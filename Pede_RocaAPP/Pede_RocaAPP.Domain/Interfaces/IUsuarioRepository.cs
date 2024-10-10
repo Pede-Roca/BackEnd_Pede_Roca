@@ -8,6 +8,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Usuario> AtualizarAsync(Guid id, Usuario usuario);
         Task<Usuario> DeleteAsync(Usuario usuario);
         Task<Usuario> GetByIdAsync(Guid id);
+        Task<Usuario> GetByEmailAsync(string Email);
         Task<IEnumerable<Usuario>> GetAllAsync();
     }
 }
