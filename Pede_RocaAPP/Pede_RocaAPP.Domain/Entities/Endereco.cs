@@ -28,6 +28,9 @@ namespace Pede_RocaAPP.Domain.Entities
         [Range(1, int.MaxValue, ErrorMessage = "O número deve ser maior que zero.")]
         public int Numero { get; set; }
 
+        [StringLength(150, ErrorMessage = "O complemento deve ter no máximo 150 caracteres.")]
+        public string Complemento { get; set; }
+
         // Chave estrangeira para Usuario
         [Required(ErrorMessage = "O ID do usuário é obrigatório.")]
         public Guid IdUsuario { get; set; }
@@ -37,19 +40,20 @@ namespace Pede_RocaAPP.Domain.Entities
         {
         }
 
-        public Endereco(string cep, string cidade, string estado, string logradouro, int numero, Guid idUsuario)
+        public Endereco(string cep, string cidade, string estado, string logradouro, int numero, string complemento, Guid idUsuario)
         {
             Id = Guid.NewGuid();
-            ValidateDomain(cep, cidade, estado, logradouro, numero, idUsuario);
+            ValidateDomain(cep, cidade, estado, logradouro, numero, complemento, idUsuario);
             CEP = cep;
             Cidade = cidade;
             Estado = estado;
             Logradouro = logradouro;
             Numero = numero;
+            Complemento = complemento;
             IdUsuario = idUsuario;
         }
 
-        private void ValidateDomain(string cep, string cidade, string estado, string logradouro, int numero, Guid idUsuario)
+        private void ValidateDomain(string cep, string cidade, string estado, string logradouro, int numero, string complemento, Guid idUsuario)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(cep) || !System.Text.RegularExpressions.Regex.IsMatch(cep, @"\d{5}-\d{3}"), "CEP inválido, deve estar no formato 00000-000.");
 
@@ -60,6 +64,8 @@ namespace Pede_RocaAPP.Domain.Entities
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(logradouro) || logradouro.Length < 3 || logradouro.Length > 150, "O logradouro deve ter entre 3 e 150 caracteres.");
 
             DomainExceptionValidation.When(numero <= 0, "O número deve ser maior que zero.");
+            
+            DomainExceptionValidation.When(complemento != null && complemento.Length > 150, "O complemento deve ter no máximo 150 caracteres.");
 
             DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
         }
