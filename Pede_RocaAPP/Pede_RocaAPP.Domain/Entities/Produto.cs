@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Pede_RocaAPP.Domain.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace Pede_RocaAPP.Domain.Entities
 {
@@ -14,7 +16,7 @@ namespace Pede_RocaAPP.Domain.Entities
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "A descrição é obrigatória.")]
-        [StringLength(500, ErrorMessage = "A descrição deve ter no máximo 500 caracteres.")]
+        [StringLength(200, ErrorMessage = "A descrição deve ter no máximo 200 caracteres.")]
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O preço é obrigatório.")]
@@ -65,23 +67,26 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(string nome, string descricao, decimal preco, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)
         {
-            if (string.IsNullOrWhiteSpace(nome) || nome.Length > 100)
-                throw new ArgumentException("Nome inválido.");
+            DomainExceptionValidation.When(string.IsNullOrEmpty(nome), "O nome é obrigatório.");
+            DomainExceptionValidation.When(nome.Length < 3 || nome.Length > 100, "O nome deve ter entre 3 e 100 caracteres.");
 
-            if (string.IsNullOrWhiteSpace(descricao) || descricao.Length > 500)
-                throw new ArgumentException("Descrição inválida.");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao), "A descrição é obrigatória.");
+            DomainExceptionValidation.When(descricao.Length < 5 || descricao.Length > 200, "A descrição deve ter entre 5 e 200 caracteres.");
 
-            if (preco < 0)
-                throw new ArgumentException("Preço inválido.");
+            DomainExceptionValidation.When(preco < 0, "Preço inválido.");
+            DomainExceptionValidation.When(!System.Text.RegularExpressions.Regex.IsMatch(preco.ToString(), @"^\d+(\.\d{1,2})?$"), "Preço inválido. Deve ter no máximo duas casas decimais.");
 
-            if (estoque < 0)
-                throw new ArgumentException("Estoque inválido.");
+            DomainExceptionValidation.When(estoque < 0 || estoque > 9999, "Estoque inválido.");
 
-            if (fatorPromocional < 0 || fatorPromocional > 1)
-                throw new ArgumentException("Fator promocional inválido.");
+            DomainExceptionValidation.When(fatorPromocional < 0 || fatorPromocional > 1, "Fator promocional inválido.");
 
-            if (string.IsNullOrWhiteSpace(uidFoto) || uidFoto.Length > 250)
-                throw new ArgumentException("UID da foto inválido.");
+            DomainExceptionValidation.When(uidFoto.Length > 250, "UID da foto inválido.");
+
+            DomainExceptionValidation.When(idCategoria == Guid.Empty, "O idCategoria é obrigatório.");
+
+            DomainExceptionValidation.When(idUnidade == Guid.Empty, "O idUnidade é obrigatório.");
+
         }
     }
 }
+
