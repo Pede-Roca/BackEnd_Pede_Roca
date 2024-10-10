@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
@@ -84,6 +85,7 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetAvaliacao")]
+        [Authorize]
         public async Task<ActionResult<AvaliacaoDTO>> Get(Guid id)
         {
             var avaliacaoDto = await _avaliacaoService.GetByIdAsync(id);
