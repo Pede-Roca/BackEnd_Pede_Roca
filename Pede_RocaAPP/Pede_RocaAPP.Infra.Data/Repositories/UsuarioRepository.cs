@@ -27,18 +27,17 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usuário não encontrado");
+                throw new Exception("Usuï¿½rio nï¿½o encontrado");
             }
 
             // Atualize os campos
             _usuarioContext.Entry(usuarioExistente).CurrentValues.SetValues(usuario);
 
-            // Salve as mudanças
+            // Salve as mudanï¿½as
             await _usuarioContext.SaveChangesAsync();
 
             return usuarioExistente;
         }
-
 
         public async Task<Usuario> DeleteAsync(Usuario usuario)
         {
@@ -50,6 +49,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         public async Task<Usuario> GetByIdAsync(Guid id)
         {
             var usuario = await _usuarioContext.Usuarios.FindAsync(id);
+            return usuario;
+        }
+
+        public async Task<Usuario> GetByEmailAsync(string Email)
+        {
+            var usuario = await _usuarioContext.Usuarios
+                    .Where(u => u.Email.ToLower() == Email.ToLower())
+                    .FirstOrDefaultAsync();
             return usuario;
         }
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
@@ -22,6 +23,13 @@ namespace Pede_RocaAPP.API.Controllers
             if (usuarioDTO == null)
             {
                 return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
+            }
+
+            var usuarioExiste = await _usuarioService.GetByEmailAsync(usuarioDTO.Email);
+
+            if (usuarioExiste != null)
+            {
+                return BadRequest("Email já cadastrado");
             }
 
             var usuarioId = await _usuarioService.AdicionarAsync(usuarioDTO);
@@ -80,16 +88,17 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(usuarioExistente);
         }
 
-
         [HttpDelete("{id}", Name = "DeleteUsuario")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
         {
             var usuarioDto = await _usuarioService.GetByIdAsync(id);
+            
             if (usuarioDto == null)
             {
                 return NotFound("Usuário não encontrado");
             }
+
             await _usuarioService.DeleteAsync(id);
 
             return Ok(new
@@ -98,6 +107,7 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        [Authorize]
         [HttpGet("{id}", Name = "GetUsuario")]
         public async Task<ActionResult<UsuarioDTO>> GetAsync(Guid id)
         {
@@ -110,6 +120,7 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(usuarioDto);
         }
 
+        [Authorize]
         [HttpGet(Name = "GetAllUsuarios")]
         public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetAllAsync()
         {

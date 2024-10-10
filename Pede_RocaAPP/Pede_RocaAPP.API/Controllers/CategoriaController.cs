@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Application.Services;
@@ -6,8 +7,9 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;
@@ -103,9 +105,10 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetAll()
         {
             var categorias = await _categoriaService.GetAllAsync();
-            if (categorias == null || !categorias.Any())
+
+            if (categorias == null)
             {
-                return NotFound("Erro de dado inválido");
+                return NotFound("Carrinho de compra não encontrado");
             }
             return Ok(categorias);
         }

@@ -44,22 +44,6 @@ namespace Pede_RocaAPP.Domain.Entities
         [DataType(DataType.DateTime)]
         public DateTime CreateUserDate { get; set; }
 
-        
-        // Relacionamento com Avaliacao
-        // public ICollection<Avaliacao> Avaliacoes { get; set; } = new List<Avaliacao>();
-
-        // Relacionamento com CarrinhoCompra
-        // public ICollection<CarrinhoCompra> CarrinhoCompra { get; set; } = new List<CarrinhoCompra>();
-
-        // Relacionamento com Mensagem
-        // public ICollection<Mensagem> Mensagens { get; set; } = new List<Mensagem>();
-
-        // Relacionamento com PlanoAssinatura
-        // public ICollection<PlanoAssinatura> PlanosAssinatura { get; set; } = new List<PlanoAssinatura>();
-
-        // Relacionamento com ProdutoFavorito
-        // public ICollection<ProdutoFavorito> ProdutosFavoritos { get; set; } = new List<ProdutoFavorito>();
-
         public Usuario() { }
 
         public Usuario(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string nivelAcesso, string uidFotoPerfil, bool status, DateTime createUserDate)
