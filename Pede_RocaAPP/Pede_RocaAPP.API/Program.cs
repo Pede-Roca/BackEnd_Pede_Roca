@@ -11,6 +11,7 @@ using Google.Apis.Auth.OAuth2;
 using Pede_RocaAPP.Domain.Account;
 using Pede_RocaAPP.Infra.Data.Identity;
 using Serilog;
+using System.Text.Json;
 
 internal class Program
 {
@@ -26,9 +27,12 @@ internal class Program
 
             builder.Host.UseSerilog();
 
+            var firebaseCredentialsSection = builder.Configuration.GetSection("Firebase-Credentials");
+            var firebaseCredentials = JsonSerializer.Serialize(firebaseCredentialsSection.GetChildren().ToDictionary(x => x.Key, x => x.Value));
+
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromJson(builder.Configuration["Firebase:Credential"])
+                Credential = GoogleCredential.FromJson(firebaseCredentials)
             });
 
             builder.Services.AddInfrastructure(builder.Configuration);
