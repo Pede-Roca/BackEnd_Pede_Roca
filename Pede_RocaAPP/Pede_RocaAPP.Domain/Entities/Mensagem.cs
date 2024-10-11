@@ -1,3 +1,4 @@
+using Pede_RocaAPP.Domain.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -50,23 +51,12 @@ namespace Pede_RocaAPP.Domain.Entities
 
         private void ValidateDomain(DateTime data, string email, string conteudo, string uidAnexo, string status, Guid idUsuario)
         {
-            if (idUsuario == Guid.Empty)
-                throw new ArgumentException("ID de usuário inválido.");
-
-            if (data == default(DateTime))
-                throw new ArgumentException("Data inválida.");
-
-            if (string.IsNullOrWhiteSpace(email) || !new EmailAddressAttribute().IsValid(email))
-                throw new ArgumentException("Email inválido.");
-
-            if (string.IsNullOrWhiteSpace(conteudo) || conteudo.Length > 500)
-                throw new ArgumentException("Conteúdo inválido, deve ter no máximo 500 caracteres.");
-
-            if (!string.IsNullOrEmpty(uidAnexo) && uidAnexo.Length > 100)
-                throw new ArgumentException("UID do anexo inválido, deve ter no máximo 100 caracteres.");
-
-            if (string.IsNullOrWhiteSpace(status) || status.Length > 20)
-                throw new ArgumentException("Status inválido, deve ter no máximo 20 caracteres.");
+            DomainExceptionValidation.When(idUsuario == Guid.Empty, "ID de usuário inválido.");
+            DomainExceptionValidation.When(data == DateTime.MinValue, "Formato de hora inválido");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email) || !new EmailAddressAttribute().IsValid(email), "Email inválido.");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(conteudo) || conteudo.Length > 500, "Conteúdo inválido, deve ter no máximo 500 caracteres.");
+            DomainExceptionValidation.When(!string.IsNullOrEmpty(uidAnexo) && uidAnexo.Length > 100, "UID do anexo inválido, deve ter no máximo 100 caracteres.");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(status) || status.Length > 20, "Status inválido, deve ter no máximo 20 caracteres.");
         }
     }
 }
