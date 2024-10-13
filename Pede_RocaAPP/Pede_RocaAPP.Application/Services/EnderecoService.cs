@@ -49,6 +49,12 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<EnderecoUpdateDTO>(endereco);
         }
 
+        public async Task<EnderecoDTO> GetByUsuarioIdUpdateAsync(Guid id)
+        {
+            var endereco = await _enderecoRepository.GetByUsuarioIdUpdateAsync(id);
+            return _mapper.Map<EnderecoDTO>(endereco);
+        }
+
         public async Task<IEnumerable<EnderecoDTO>> GetAllAsync()
         {
             var enderecos = await _enderecoRepository.GetAllAsync();

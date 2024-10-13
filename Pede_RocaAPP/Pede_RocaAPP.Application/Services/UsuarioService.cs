@@ -50,6 +50,24 @@ namespace Pede_RocaAPP.Application.Services
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
+        public async Task AtualizarFotoPerfilAsync(Guid id, string uidFotoPerfil)
+        {
+            // Primeiro, buscar o usu�rio existente no banco de dados
+            var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
+
+            if (usuarioExistente == null)
+            {
+                throw new Exception("Usu�rio n�o encontrado");
+            }
+
+            // Atualize o campo de foto de perfil
+            usuarioExistente.UidFotoPerfil = uidFotoPerfil;
+            
+            // Agora que o objeto est� atualizado, envie para o reposit�rio
+            await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
+        }
+        
+
 
         public async Task DeleteAsync(Guid id)
         {
