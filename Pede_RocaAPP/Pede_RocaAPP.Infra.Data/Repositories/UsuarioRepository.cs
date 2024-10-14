@@ -39,6 +39,24 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return usuarioExistente;
         }
 
+        public async Task<Usuario> AtualizarFotoPerfilAsync(Guid id, string uidFotoPerfil)
+        {
+            var usuarioExistente = await _usuarioContext.Usuarios.FindAsync(id);
+
+            if (usuarioExistente == null)
+            {
+                throw new Exception("Usu�rio n�o encontrado");
+            }
+
+            usuarioExistente.UidFotoPerfil = uidFotoPerfil;
+
+            _usuarioContext.Entry(usuarioExistente).State = EntityState.Modified;
+
+            await _usuarioContext.SaveChangesAsync();
+
+            return usuarioExistente;
+        }
+
         public async Task<Usuario> DeleteAsync(Usuario usuario)
         {
             _usuarioContext.Remove(usuario);

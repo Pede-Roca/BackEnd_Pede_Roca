@@ -9,6 +9,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Endereco> DeleteAsync(Endereco endereco);
         Task<Endereco> GetByIdAsync(Guid id);
         Task<Endereco> GetByIdUpdateAsync(Guid id);
+        Task<Endereco> GetByUsuarioIdUpdateAsync(Guid id);
         Task<IEnumerable<Endereco>> GetAllAsync();
     }
 }

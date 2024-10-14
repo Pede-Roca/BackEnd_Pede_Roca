@@ -6,7 +6,7 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EnderecoController : ControllerBase
@@ -25,7 +25,7 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             }
-            
+
             var enderecoId = await _enderecoService.AdicionarAsync(enderecoDTO);
 
             return CreatedAtRoute("GetEndereco", new { id = enderecoId }, new
@@ -70,7 +70,7 @@ namespace Pede_RocaAPP.API.Controllers
                 enderecoEncontrado.Logradouro = enderecoDTO.Logradouro;
             }
 
-            if(enderecoDTO.Numero > 0)
+            if (enderecoDTO.Numero > 0)
             {
                 enderecoEncontrado.Numero = enderecoDTO.Numero;
             }
@@ -98,7 +98,7 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 return NotFound("Endereço não encontrado");
             }
-           
+
             await _enderecoService.DeleteAsync(id);
 
             return Ok(new
@@ -107,10 +107,24 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        // Rotas de consulta
+
         [HttpGet("{id}", Name = "GetEndereco")]
         public async Task<ActionResult<EnderecoDTO>> Get(Guid id)
         {
             var enderecoDto = await _enderecoService.GetByIdAsync(id);
+            if (enderecoDto == null)
+            {
+                return NotFound("Endereço não encontrado");
+            }
+
+            return Ok(enderecoDto);
+        }
+
+        [HttpGet("usuario/{id_usuario}", Name = "GetEnderecoPorUsuario")]
+        public async Task<ActionResult<EnderecoDTO>> GetEnderecoPorUsuario(Guid id_usuario)
+        {
+            var enderecoDto = await _enderecoService.GetByUsuarioIdUpdateAsync(id_usuario);
             if (enderecoDto == null)
             {
                 return NotFound("Endereço não encontrado");

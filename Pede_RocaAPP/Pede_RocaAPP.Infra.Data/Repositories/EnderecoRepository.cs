@@ -52,8 +52,15 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         public async Task<Endereco> GetByIdUpdateAsync(Guid id)
         {
             return await _enderecoContext.Enderecos
-                .AsNoTracking() // Não rastrear a entidade
+                .AsNoTracking() // Nï¿½o rastrear a entidade
                 .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<Endereco> GetByUsuarioIdUpdateAsync(Guid id)
+        {
+            return await _enderecoContext.Enderecos
+                .AsNoTracking() // Nï¿½o rastrear a entidade
+                .FirstOrDefaultAsync(a => a.IdUsuario == id);
         }
 
         public async Task<IEnumerable<Endereco>> GetAllAsync()
