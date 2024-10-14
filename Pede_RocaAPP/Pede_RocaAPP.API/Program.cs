@@ -56,12 +56,9 @@ internal class Program
 
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
+            app.UseSwagger();
+            app.UseSwaggerUI();
+       
             app.UseSerilogRequestLogging(); // Add Serilog request logging
 
             app.UseHttpsRedirection();
