@@ -88,6 +88,20 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        [HttpPut("StatusUsuario/{id}", Name = "AtualizarStatusUsuario")]
+        public async Task<ActionResult> PutStatusUsuario(Guid id, [FromBody] AtualizarStatusUsuarioRequest atualizarStatusUsuarioRequest)
+        {
+            var usuarioExistente = await _usuarioService.GetByIdAsync(id);
+            if (usuarioExistente == null) return NotFound("Usuário não encontrado");
+
+            await _usuarioService.AtualizarStatusUsuarioAsync(id, atualizarStatusUsuarioRequest.Status);
+
+            return Ok(new {
+                message = "Status do usuário atualizado com sucesso"
+            });
+        }
+
+
         [HttpDelete("{id}", Name = "DeleteUsuario")]
         public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
         {
