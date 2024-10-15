@@ -85,4 +85,14 @@ namespace Pede_RocaAPP.Domain.Entities
             DomainExceptionValidation.When(string.IsNullOrEmpty(nivelAcesso), "O nível de acesso é obrigatório.");
         }
     }
+
+    public class AtualizarFotoPerfilRequest
+    {
+        public string UidFotoPerfil { get; set; }
+    }
+
+    public class AtualizarStatusUsuarioRequest 
+    {
+        public bool Status { get; set; }
+    }
 }

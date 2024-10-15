@@ -57,7 +57,7 @@ namespace Pede_RocaAPP.Application.Services
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usu�rio n�o encontrado");
+                throw new Exception("Usuário não encontrado");
             }
 
             // Atualize o campo de foto de perfil
@@ -67,8 +67,20 @@ namespace Pede_RocaAPP.Application.Services
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
         
+        public async Task AtualizarStatusUsuarioAsync(Guid id, bool status)
+        {
+            // Primeiro, buscar o usuário existente no banco de dados
+            var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
 
+            if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
+            // Atualize o campo de status de perfil
+            usuarioExistente.Status = status;
+            
+            // Agora que o objeto est� atualizado, envie para o reposit�rio
+            await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
+        }
+        
         public async Task DeleteAsync(Guid id)
         {
             var usuario = await _usuarioRepository.GetByIdAsync(id);
