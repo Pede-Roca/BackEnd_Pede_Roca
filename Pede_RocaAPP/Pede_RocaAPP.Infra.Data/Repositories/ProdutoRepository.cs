@@ -52,5 +52,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
             return await _produtoContext.Produtos.OrderBy(p => p.Nome).ToListAsync();
         }
+
+        public async Task<IEnumerable<Produto>> GetProdutosSemEstoqueAsync()
+        {
+            return await _produtoContext.Produtos
+                .AsNoTracking()
+                .Where(p => p.Estoque == 0)
+                .ToListAsync();
+        }
     }
 }

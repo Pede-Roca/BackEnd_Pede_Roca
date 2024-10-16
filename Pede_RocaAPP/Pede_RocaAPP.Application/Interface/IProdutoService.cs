@@ -16,5 +16,6 @@ namespace Pede_RocaAPP.Application.Interface
         Task<ProdutoDTO> GetByIdAsync(Guid id);
         Task<ProdutoCreateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<ProdutoDTO>> GetAllAsync();
+        Task<IEnumerable<ProdutoDTO>> GetProdutosSemEstoqueAsync();
     }
 }

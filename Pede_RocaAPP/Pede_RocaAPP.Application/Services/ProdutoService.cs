@@ -53,5 +53,11 @@ namespace Pede_RocaAPP.Application.Services
             var produtos = await _produtoRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
         }
+
+        public async Task<IEnumerable<ProdutoDTO>> GetProdutosSemEstoqueAsync()
+        {
+            var produtos = await _produtoRepository.GetProdutosSemEstoqueAsync();
+            return _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+        }
     }
 }

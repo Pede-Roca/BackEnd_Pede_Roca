@@ -8,7 +8,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/produto")]
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
@@ -50,7 +50,7 @@ namespace Pede_RocaAPP.API.Controllers
                 return NotFound($"Produto com ID {id} não encontrada. Verifique o ID e tente novamente!");
             }
 
-            if(produtoEncontrado.Nome != produtoDTO.Nome)
+            if (produtoEncontrado.Nome != produtoDTO.Nome)
             {
                 produtoEncontrado.Nome = produtoDTO.Nome;
             }
@@ -60,7 +60,7 @@ namespace Pede_RocaAPP.API.Controllers
                 produtoEncontrado.Descricao = produtoDTO.Descricao;
             }
 
-            if(produtoEncontrado.Preco != produtoDTO.Preco)
+            if (produtoEncontrado.Preco != produtoDTO.Preco)
             {
                 produtoEncontrado.Preco = produtoDTO.Preco;
             }
@@ -109,26 +109,28 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult<ProdutoDTO>> DeleteAsync(Guid id)
         {
             var produtoDto = await _produtoService.GetByIdAsync(id);
-            
+
             if (produtoDto == null)
             {
                 return NotFound("Produto não encontrado");
             }
 
             await _produtoService.DeleteAsync(id);
-            
+
             return Ok(produtoDto);
         }
 
         [HttpGet("{id}", Name = "GetProduto")]
         public async Task<ActionResult<ProdutoDTO>> Get(Guid id)
         {
-            var produtoDto = await _produtoService.GetByIdAsync(id);
-            if(produtoDto == null)
+            var produto = await _produtoService.GetByIdAsync(id);
+
+            if (produto == null)
             {
                 return NotFound("Produto não encontrado");
             }
-            return Ok(produtoDto);
+
+            return Ok(produto);
         }
 
         [HttpGet(Name = "GetAllProdutos")]
@@ -139,6 +141,19 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 return NotFound("Nenhum produto encontrado");
             }
+            return Ok(produtos);
+        }
+
+        [HttpGet("sem-estoque", Name = "GetProdutoSemEstoque")]
+        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetProdutosSemEstoque()
+        {
+            var produtos = await _produtoService.GetProdutosSemEstoqueAsync();
+
+            if (produtos == null || !produtos.Any())
+            {
+                return NotFound("Nenhum produto encontrado");
+            }
+
             return Ok(produtos);
         }
     }
