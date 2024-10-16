@@ -10,6 +10,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<Usuario> DeleteAsync(Usuario usuario);
         Task<Usuario> GetByIdAsync(Guid id);
         Task<Usuario> GetByEmailAsync(string Email);
+        Task<Usuario> GetPorEmailESenhaAsync(string Email, string Senha);
         Task<IEnumerable<Usuario>> GetAllAsync();
     }
 }

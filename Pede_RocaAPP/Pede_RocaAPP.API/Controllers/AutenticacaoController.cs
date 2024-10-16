@@ -6,7 +6,7 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/login")]
     public class AutenticacaoController : Controller
     {
         private readonly IAuthenticate _authenticate;
@@ -18,31 +18,49 @@ namespace Pede_RocaAPP.API.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpPost(Name = "Gerar Token")]
+        [HttpPost(Name = "Login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginRequest loginRequest)
         {
             try
             {
-                // Valida o token JWT usando o Firebase Admin SDK
-                FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(loginRequest.Token);
-                string firebaseUid = decodedToken.Uid; // UID do Firebase
+                // Autentica o usuário com base no email e senha
+                var usuario = await _usuarioService.GetPorEmailESenhaAsync(loginRequest.Email, loginRequest.Senha);
 
-                // // Verifica se o email no token corresponde ao email passado
-                if (decodedToken.Claims.TryGetValue("email", out object tokenEmail) && tokenEmail.ToString() == loginRequest.Email)
+                if (usuario == null)
                 {
-                    var usuario = await _usuarioService.GetByEmailAsync(loginRequest.Email);
-                    var token = _authenticate.GenerateToken(usuario.Id, loginRequest.Email, usuario.NivelAcesso);
+                    return Unauthorized("Usuário ou senha inválidos.");
+                }
 
-                    return token;
-                }
-                else
+                Console.Clear();
+                Console.WriteLine("Usuário autenticado com sucesso!");
+                UserRecord userRecord = await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(usuario.Email);
+                Console.WriteLine($"ID: {usuario}");
+
+
+                // // Cria claims personalizados para o token
+                // var claims = new Dictionary<string, object>()
+                // {
+                //     { "nivelAcesso", usuario.NivelAcesso },  // Claim para o nível de acesso do usuário
+                //     { "email", usuario.Email }
+                // };
+
+                // // Gera o token personalizado com os claims
+                // string customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync(usuario.Id.ToString(), claims);
+
+                // Retorna o token no corpo da resposta
+                return Ok(new
                 {
-                    return Unauthorized("O e-mail fornecido não corresponde ao token.");
-                }
+                    Token = "customToken",
+                    Message = "Token gerado com sucesso"
+                });
             }
             catch (FirebaseAuthException ex)
             {
                 return Unauthorized($"Erro ao validar o token Firebase: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
     }

@@ -135,7 +135,6 @@ namespace Pede_RocaAPP.API.Controllers
             }
         }
 
-        // [Authorize]
         [HttpGet("{id}", Name = "GetUsuario")]
         public async Task<ActionResult<UsuarioDTO>> GetAsync(Guid id)
         {
@@ -148,6 +147,7 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(usuarioDto);
         }
 
+        // [Authorize]
         [HttpGet(Name = "GetAllUsuarios")]
         public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetAllAsync()
         {

@@ -16,8 +16,23 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Usuario> AdicionarAsync(Usuario usuario)
         {
+            // Criptografar a senha do usuário antes de salvar
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+
             _usuarioContext.Add(usuario);
             await _usuarioContext.SaveChangesAsync();
+            return usuario;
+        }
+
+        public async Task<Usuario> GetPorEmailESenhaAsync(string email, string senha)
+        {
+            var usuario = await _usuarioContext.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (usuario == null || !BCrypt.Net.BCrypt.Verify(senha, usuario.Senha))
+            {
+                return null;
+            }
+
             return usuario;
         }
 
