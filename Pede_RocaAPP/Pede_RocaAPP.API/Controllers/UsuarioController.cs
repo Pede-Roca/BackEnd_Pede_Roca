@@ -54,11 +54,6 @@ namespace Pede_RocaAPP.API.Controllers
                 return NotFound("Usuário não encontrado");
             }
 
-            if (id != usuarioExistente.Id)
-            {
-                return BadRequest("Id não válido");
-            }
-
             if (usuarioDTO == null)
             {
                 return BadRequest("Dados inválidos");
@@ -66,9 +61,12 @@ namespace Pede_RocaAPP.API.Controllers
 
             // Atualização de campos omitida para brevidade...
 
-            await _usuarioService.AtualizarAsync(id, usuarioExistente);
+            await _usuarioService.AtualizarAsync(id, usuarioDTO);
 
-            return Ok(usuarioExistente);
+            return Ok(new
+            {
+                mensagem = $"Usuario com o id {id} foi atualizado com sucesso"
+            });
         }
 
         [HttpPut("FotoPerfil/{id}", Name = "AtualizarFotoPerfil")]
@@ -83,7 +81,8 @@ namespace Pede_RocaAPP.API.Controllers
 
             await _usuarioService.AtualizarFotoPerfilAsync(id, atualizarProfilePictureRequest.UidFotoPerfil);
 
-            return Ok(new {
+            return Ok(new
+            {
                 message = "Foto de perfil atualizada com sucesso"
             });
         }
@@ -96,7 +95,8 @@ namespace Pede_RocaAPP.API.Controllers
 
             await _usuarioService.AtualizarStatusUsuarioAsync(id, atualizarStatusUsuarioRequest.Status);
 
-            return Ok(new {
+            return Ok(new
+            {
                 message = "Status do usuário atualizado com sucesso"
             });
         }
