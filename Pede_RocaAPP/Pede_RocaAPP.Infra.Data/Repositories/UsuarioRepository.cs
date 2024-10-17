@@ -19,8 +19,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             // Criptografar a senha do usuário antes de salvar
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.Status = true;
-
-            // Atribuir a data e hora atual em UTC ao campo CreateUserDate
+            usuario.NivelAcesso = "comum";
             usuario.CreateUserDate = DateTime.UtcNow;
 
             _usuarioContext.Add(usuario);

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace Pede_RocaAPP.Domain.Entities
 {
@@ -50,19 +49,19 @@ namespace Pede_RocaAPP.Domain.Entities
         {
         }
 
-        public Produto(string nome, string descricao, decimal preco, bool status, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)
+        public Produto(string nome, string descricao, decimal preco, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)
         {
             Id = Guid.NewGuid();
             ValidateDomain(nome, descricao, preco, estoque, fatorPromocional, uidFoto, idCategoria, idUnidade);
             Nome = nome;
             Descricao = descricao;
             Preco = preco;
-            Status = status;
             Estoque = estoque;
             FatorPromocao = fatorPromocional;
             UidFoto = uidFoto;
             IdCategoria = idCategoria;
             IdUnidade = idUnidade;
+            Status = true;
         }
 
         private void ValidateDomain(string nome, string descricao, decimal preco, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade)
@@ -74,7 +73,7 @@ namespace Pede_RocaAPP.Domain.Entities
             DomainExceptionValidation.When(descricao.Length < 5 || descricao.Length > 200, "A descrição deve ter entre 5 e 200 caracteres.");
 
             DomainExceptionValidation.When(preco < 0, "Preço inválido.");
-            DomainExceptionValidation.When(!System.Text.RegularExpressions.Regex.IsMatch(preco.ToString(), @"^\d+(\.\d{1,2})?$"), "Preço inválido. Deve ter no máximo duas casas decimais.");
+            DomainExceptionValidation.When(Math.Round(preco, 2) != preco, "Preço inválido. Deve ter no máximo duas casas decimais.");
 
             DomainExceptionValidation.When(estoque < 0 || estoque > 9999, "Estoque inválido.");
 
@@ -85,8 +84,12 @@ namespace Pede_RocaAPP.Domain.Entities
             DomainExceptionValidation.When(idCategoria == Guid.Empty, "O idCategoria é obrigatório.");
 
             DomainExceptionValidation.When(idUnidade == Guid.Empty, "O idUnidade é obrigatório.");
-
         }
+
+    }
+
+    public class AtualizarStatusProdutoResponse
+    {
+        public bool Status { get; set; }
     }
 }
-

@@ -46,23 +46,23 @@ namespace Pede_RocaAPP.Domain.Entities
 
         public Usuario() { }
 
-        public Usuario(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string nivelAcesso, string uidFotoPerfil, bool status, DateTime createUserDate)
+        public Usuario(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string uidFotoPerfil)
         {
             Id = Guid.NewGuid();
-            ValidateDomain(nome, email, senha, telefone, cpf, dataNascimento, nivelAcesso);
+            ValidateDomain(nome, email, senha, telefone, cpf, dataNascimento);
             Nome = nome;
             Email = email;
             Senha = senha;
             Telefone = telefone;
             CPF = cpf;
             DataNascimento = dataNascimento;
-            NivelAcesso = nivelAcesso;
             UidFotoPerfil = uidFotoPerfil;
-            Status = status;
-            CreateUserDate = createUserDate;
+            Status = true;
+            NivelAcesso = "comum";
+            CreateUserDate = DateTime.Now;
         }
 
-        private void ValidateDomain(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento, string nivelAcesso)
+        private void ValidateDomain(string nome, string email, string senha, string telefone, string cpf, DateTime dataNascimento)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(nome), "O nome é obrigatório.");
             DomainExceptionValidation.When(nome.Length < 3 || nome.Length > 100, "O nome deve ter entre 3 e 100 caracteres.");
@@ -81,8 +81,6 @@ namespace Pede_RocaAPP.Domain.Entities
 
             DomainExceptionValidation.When(dataNascimento == default, "A data de nascimento é obrigatória.");
             DomainExceptionValidation.When(dataNascimento > DateTime.Now, "A data de nascimento não pode ser no futuro.");
-
-            DomainExceptionValidation.When(string.IsNullOrEmpty(nivelAcesso), "O nível de acesso é obrigatório.");
         }
     }
 
@@ -91,8 +89,13 @@ namespace Pede_RocaAPP.Domain.Entities
         public string UidFotoPerfil { get; set; }
     }
 
-    public class AtualizarStatusUsuarioRequest 
+    public class AtualizarStatusUsuarioRequest
     {
         public bool Status { get; set; }
+    }
+
+    public class AtualizarNivelAcessoUsuarioRequest
+    {
+        public string NivelAcesso { get; set; }
     }
 }

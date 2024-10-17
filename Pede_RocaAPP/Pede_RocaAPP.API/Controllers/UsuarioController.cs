@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
+using Pede_RocaAPP.Domain.Account;
 using FirebaseAdmin.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace Pede_RocaAPP.API.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        private readonly IAuthenticate _authenticate;
         private readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(IUsuarioService usuarioService, IAuthenticate authenticate)
         {
             _usuarioService = usuarioService;
+            _authenticate = authenticate;
         }
 
         [HttpPost(Name = "AdicionarUsuario")]
@@ -29,18 +32,20 @@ namespace Pede_RocaAPP.API.Controllers
             }
 
             var usuarioExiste = await _usuarioService.GetByEmailAsync(usuarioDTO.Email);
-
-            if (usuarioExiste != null)
-            {
-                return BadRequest("Email já cadastrado");
-            }
+            if (usuarioExiste != null) return BadRequest("Email já cadastrado");
 
             var usuarioId = await _usuarioService.AdicionarAsync(usuarioDTO);
+
+            var usuarioCriado = await _usuarioService.GetByIdAsync(usuarioId);
+            if (usuarioCriado == null) return BadRequest("Erro ao criar o usuário.");
+
+            var token = _authenticate.GenerateToken(usuarioCriado.Id, usuarioCriado.Email, usuarioCriado.NivelAcesso);
 
             return CreatedAtRoute("GetUsuario", new { id = usuarioId }, new
             {
                 id = usuarioId,
-                message = "Usuario criado com sucesso"
+                message = "Usuario criado com sucesso",
+                token
             });
         }
 
@@ -99,6 +104,19 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        [HttpPut("alterar-nivel-usuario/{id}", Name = "AtualizarNivelAcessoUsuario")]
+        public async Task<ActionResult> PutNivelAcessoUsuario(Guid id, [FromBody] AtualizarNivelAcessoUsuarioRequest atualizarNivelAcessoUsuarioRequest)
+        {
+            var usuarioExistente = await _usuarioService.GetByIdAsync(id);
+            if (usuarioExistente == null) return NotFound("Usuário não encontrado");
+
+            await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, atualizarNivelAcessoUsuarioRequest.NivelAcesso);
+
+            return Ok(new
+            {
+                message = $"Nivel do usuário atualizado com sucesso, agora o usuário é {atualizarNivelAcessoUsuarioRequest.NivelAcesso}"
+            });
+        }
 
         [HttpDelete("{id}", Name = "DeleteUsuario")]
         public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
