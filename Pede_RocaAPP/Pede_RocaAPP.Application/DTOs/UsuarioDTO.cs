@@ -39,11 +39,9 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data de Nascimento")]
         public DateTime DataNasc { get; set; }
 
-        [Required(ErrorMessage = "O status é obrigatório.")]
         [DisplayName("Status")]
         public bool Status { get; set; }
 
-        [Required(ErrorMessage = "O nível de acesso é obrigatório.")]
         [DisplayName("Nível de Acesso")]
         public string NivelAcesso { get; set; }
 
@@ -53,8 +51,6 @@ namespace Pede_RocaAPP.Application.DTOs
         [DataType(DataType.Date)]
         [DisplayName("Data de Criação da Conta")]
         public DateTime CreateUserDate { get; set; }
-
-        // public List<Endereco> Enderecos { get; set; }
     }
 
     public class UsuarioCreateDTO
@@ -91,17 +87,16 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data de Nascimento")]
         public DateTime DataNasc { get; set; }
 
+        [DisplayName("Foto de Perfil")]
+        public string UidFotoPerfil { get; set; }
+
         [JsonIgnore]
-        [Required(ErrorMessage = "O status é obrigatório.")]
         [DisplayName("Status")]
         public bool Status { get; set; }
 
-        [Required(ErrorMessage = "O nível de acesso é obrigatório.")]
+        [JsonIgnore]
         [DisplayName("Nível de Acesso")]
         public string NivelAcesso { get; set; }
-
-        [DisplayName("Foto de Perfil")]
-        public string UidFotoPerfil { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.Date)]
@@ -152,12 +147,10 @@ namespace Pede_RocaAPP.Application.DTOs
         public DateTime DataNasc { get; set; }
 
         [JsonIgnore]
-        [Required(ErrorMessage = "O status é obrigatório.")]
         [DisplayName("Status")]
         public bool Status { get; set; }
 
         [JsonIgnore]
-        [Required(ErrorMessage = "O nível de acesso é obrigatório.")]
         [DisplayName("Nível de Acesso")]
         public string NivelAcesso { get; set; }
 
