@@ -33,6 +33,12 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Logradouro")]
         public string Logradouro { get; set; }
 
+        [Required(ErrorMessage = "O Bairro é obrigatório.")]
+        [MinLength(3, ErrorMessage = "O Bairro deve ter no mínimo 3 caracteres.")]
+        [MaxLength(150, ErrorMessage = "O Bairro deve ter no máximo 150 caracteres.")]
+        [DisplayName("Bairro")]
+        public string Bairro { get; set; }
+
         [Required(ErrorMessage = "O Número é obrigatório.")]
         [Range(1, 99999, ErrorMessage = "O Número deve ser entre 1 e 99999.")]
         [DisplayName("Número")]
@@ -76,6 +82,12 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Logradouro")]
         public string Logradouro { get; set; }
 
+        [Required(ErrorMessage = "O Bairro é obrigatório.")]
+        [MinLength(3, ErrorMessage = "O Bairro deve ter no mínimo 3 caracteres.")]
+        [MaxLength(150, ErrorMessage = "O Bairro deve ter no máximo 150 caracteres.")]
+        [DisplayName("Bairro")]
+        public string Bairro { get; set; }
+
         [Required(ErrorMessage = "O Número é obrigatório.")]
         [Range(1, 99999, ErrorMessage = "O Número deve ser entre 1 e 99999.")]
         [DisplayName("Número")]
@@ -118,6 +130,12 @@ namespace Pede_RocaAPP.Application.DTOs
         [MaxLength(150, ErrorMessage = "O Logradouro deve ter no máximo 150 caracteres.")]
         [DisplayName("Logradouro")]
         public string Logradouro { get; set; }
+
+        [Required(ErrorMessage = "O Bairro é obrigatório.")]
+        [MinLength(3, ErrorMessage = "O Bairro deve ter no mínimo 3 caracteres.")]
+        [MaxLength(150, ErrorMessage = "O Bairro deve ter no máximo 150 caracteres.")]
+        [DisplayName("Bairro")]
+        public string Bairro { get; set; }
 
         [Required(ErrorMessage = "O Número é obrigatório.")]
         [Range(1, 99999, ErrorMessage = "O Número deve ser entre 1 e 99999.")]

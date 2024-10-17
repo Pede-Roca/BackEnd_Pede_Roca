@@ -6,60 +6,70 @@ namespace Pede_RocaAPP.Application.DTOs
 {
     public class CarrinhoCompraDTO
     {
+        [DisplayName("Id")]
         public Guid Id { get; set; }
 
-        [DataType(DataType.Date)]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
 
-        [Required(ErrorMessage = "O Status do pedido é obrigatório.")]
         [DisplayName("Status")]
-        [MaxLength(20, ErrorMessage = "O Status do pedido deve ter no máximo 20 caracteres.")]
-        public string Status { get; set; }
+        public bool Status { get; set; }
 
+        [DisplayName("Id do Usuario")]
         public Guid IdUsuario { get; set; }
-
-        public Guid IdProdutosPedido { get; set; }
     }
 
     public class CarrinhoCompraCreateDTO
     {
         [JsonIgnore]
+
+        [DisplayName("Id")]
         public Guid Id { get; set; }
 
-        [DataType(DataType.Date)]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
 
-        [Required(ErrorMessage = "O Status do pedido é obrigatório.")]
         [DisplayName("Status")]
-        [MaxLength(20, ErrorMessage = "O Status do pedido deve ter no máximo 20 caracteres.")]
-        public string Status { get; set; }
+        public bool Status { get; set; }
 
+        [DisplayName("Id do Usuario")]
         public Guid IdUsuario { get; set; }
-
-        public Guid IdProdutosPedido { get; set; }
     }
 
-    public class CarrinhoComprUpdateDTO
+    public class CarrinhoCompraUpdateDTO
     {
         [JsonIgnore]
         public Guid Id { get; set; }
 
-        [DataType(DataType.Date)]
         [DisplayName("Data")]
         [JsonIgnore]
         public DateTime Data { get; set; }
 
-        [Required(ErrorMessage = "O Status do pedido é obrigatório.")]
         [DisplayName("Status")]
-        [MaxLength(20, ErrorMessage = "O Status do pedido deve ter no máximo 20 caracteres.")]
-        public string Status { get; set; }
+        public bool Status { get; set; }
 
         [JsonIgnore]
         public Guid IdUsuario { get; set; }
+    }
 
-        [JsonIgnore]
-        public Guid IdProdutosPedido { get; set; }
+    public class ItensCarrinhoCompraDTO
+    {
+        [DisplayName("Id de Produtos Pedidos")]
+        public string IdProdutoPedido { get; set; }
+
+        [DisplayName("Quantidade")]
+        public int Quantidade { get; set; }
+
+        [DisplayName("Id do Produto")]
+        public Guid IdProduto { get; set; }
+
+        [DisplayName("Nome do Produto")]
+        public string NomeProduto { get; set; }
+
+        [DisplayName("Preço do Produto")]
+        public decimal Preco { get; set; }
+
+        [DisplayName("Quantidade em Estoque")]
+        public int Estoque { get; set; }
     }
 }

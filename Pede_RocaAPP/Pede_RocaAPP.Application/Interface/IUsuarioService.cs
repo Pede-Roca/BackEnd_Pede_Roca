@@ -14,7 +14,8 @@ namespace Pede_RocaAPP.Application.Interface
         Task AtualizarStatusUsuarioAsync(Guid id, bool status);
         Task DeleteAsync(Guid id);
         Task<UsuarioDTO> GetByIdAsync(Guid id);
-        Task<UsuarioDTO> GetByEmailAsync(string Email);
+        Task<UsuarioDTO> GetByEmailAsync(string email);
+        Task<UsuarioDTO> GetByEmailESenhaAsync(string email, string senha);
         Task<IEnumerable<UsuarioDTO>> GetAllAsync();
     }
 }

@@ -9,7 +9,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/unidade-medida")]
     public class UnidadeMedidaController : ControllerBase
     {
         private readonly IUnidadeMedidaService _unidadeMedidaService;

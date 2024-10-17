@@ -8,7 +8,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/plano-assinatura")]
     public class PlanoAssinaturaController : ControllerBase
     {
         private readonly IPlanoAssinaturaService _planoAssinaturaService;

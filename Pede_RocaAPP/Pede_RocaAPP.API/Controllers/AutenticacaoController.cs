@@ -6,7 +6,7 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/login")]
     public class AutenticacaoController : Controller
     {
         private readonly IAuthenticate _authenticate;
@@ -18,31 +18,26 @@ namespace Pede_RocaAPP.API.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpPost(Name = "Gerar Token")]
+        [HttpPost(Name = "Login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginRequest loginRequest)
         {
             try
             {
-                // Valida o token JWT usando o Firebase Admin SDK
-                FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(loginRequest.Token);
-                string firebaseUid = decodedToken.Uid; // UID do Firebase
+                var usuarioEncontrado = await _usuarioService.GetByEmailESenhaAsync(loginRequest.Email, loginRequest.Senha);
 
-                // // Verifica se o email no token corresponde ao email passado
-                if (decodedToken.Claims.TryGetValue("email", out object tokenEmail) && tokenEmail.ToString() == loginRequest.Email)
+                if (usuarioEncontrado == null)
                 {
-                    var usuario = await _usuarioService.GetByEmailAsync(loginRequest.Email);
-                    var token = _authenticate.GenerateToken(usuario.Id, loginRequest.Email, usuario.NivelAcesso);
+                    return Unauthorized("Usuário ou senha inválidos");
+                }
 
-                    return token;
-                }
-                else
-                {
-                    return Unauthorized("O e-mail fornecido não corresponde ao token.");
-                }
+                var token = _authenticate.GenerateToken(usuarioEncontrado.Id, usuarioEncontrado.Email, usuarioEncontrado.NivelAcesso);
+
+                return Ok(token);
             }
-            catch (FirebaseAuthException ex)
+            catch (Exception ex)
             {
-                return Unauthorized($"Erro ao validar o token Firebase: {ex.Message}");
+                Console.WriteLine(ex.Message);
+                return Unauthorized($"Erro ao efetuar o login");
             }
         }
     }

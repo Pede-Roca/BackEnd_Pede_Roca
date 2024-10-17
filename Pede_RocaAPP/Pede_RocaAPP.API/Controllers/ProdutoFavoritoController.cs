@@ -8,7 +8,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/produto-favorito")]
     public class ProdutoFavoritoController : ControllerBase
     {
         private readonly IProdutoFavoritoService _produtoFavoritoService;

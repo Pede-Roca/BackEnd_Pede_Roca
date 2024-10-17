@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/usuario")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -59,8 +59,6 @@ namespace Pede_RocaAPP.API.Controllers
                 return BadRequest("Dados inválidos");
             }
 
-            // Atualização de campos omitida para brevidade...
-
             await _usuarioService.AtualizarAsync(id, usuarioDTO);
 
             return Ok(new
@@ -69,7 +67,7 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
-        [HttpPut("FotoPerfil/{id}", Name = "AtualizarFotoPerfil")]
+        [HttpPut("alterar-foto-perfil/{id}", Name = "AtualizarFotoPerfil")]
         public async Task<ActionResult> PutFotoPerfil(Guid id, [FromBody] AtualizarFotoPerfilRequest atualizarProfilePictureRequest)
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
@@ -87,7 +85,7 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
-        [HttpPut("StatusUsuario/{id}", Name = "AtualizarStatusUsuario")]
+        [HttpPut("alterar-status-usuario/{id}", Name = "AtualizarStatusUsuario")]
         public async Task<ActionResult> PutStatusUsuario(Guid id, [FromBody] AtualizarStatusUsuarioRequest atualizarStatusUsuarioRequest)
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
@@ -118,21 +116,6 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 message = "Usuario removido com sucesso"
             });
-        }
-
-        // Definir claims personalizados
-        [HttpPost("setCustomClaims", Name = "DefinirCustomClaims")]
-        public async Task<IActionResult> SetCustomClaims(string uid, string backendId)
-        {
-            {
-                var claims = new Dictionary<string, object>
-                {
-                    { "backendId", backendId }
-                };
-
-                await FirebaseAuth.DefaultInstance.SetCustomUserClaimsAsync(uid, claims);
-                return Ok("Claims set successfully.");
-            }
         }
 
         // [Authorize]

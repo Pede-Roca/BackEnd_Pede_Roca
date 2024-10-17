@@ -9,7 +9,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/categoria")]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;

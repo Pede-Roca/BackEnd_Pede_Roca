@@ -10,11 +10,13 @@ namespace Pede_RocaAPP.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly ICarrinhoCompraRepository _carrinhoCompraRepository;
+        private readonly IProdutosPedidoRepository _produtosPedidoRepository;
 
-        public CarrinhoCompraService(ICarrinhoCompraRepository carrinhoCompraRepository, IMapper mapper)
+        public CarrinhoCompraService(ICarrinhoCompraRepository carrinhoCompraRepository, IMapper mapper, IProdutosPedidoRepository produtosPedidoRepository)
         {
             _carrinhoCompraRepository = carrinhoCompraRepository;
             _mapper = mapper;
+            _produtosPedidoRepository = produtosPedidoRepository;
         }
 
         public async Task<Guid> AdicionarAsync(CarrinhoCompraCreateDTO carrinhoCompraDTO)
@@ -24,16 +26,28 @@ namespace Pede_RocaAPP.Application.Services
             return carrinhoCompraEntity.Id;
         }
 
+        public async Task AdicionarProdutoNoCarrinho(CarrinhoComprasProdutosPedidoDTO carrinhoComprasProdutosPedido)
+        {
+            var carrinhoComprasProdutosPedidoEntity = _mapper.Map<CarrinhoComprasProdutosPedido>(carrinhoComprasProdutosPedido);
+            await _carrinhoCompraRepository.AdicionarProdutoNoCarrinho(carrinhoComprasProdutosPedidoEntity);
+        }
+
         public async Task AtualizarAsync(Guid id, CarrinhoCompraDTO carrinhoCompraDTO)
         {
             var carrinhoCompraEntity = _mapper.Map<CarrinhoCompra>(carrinhoCompraDTO);
             await _carrinhoCompraRepository.AtualizarAsync(id, carrinhoCompraEntity);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync()
         {
-            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdAsync(id);
-            await _carrinhoCompraRepository.DeleteAsync(carrinhoCompraEntity);
+            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CarrinhoCompraDTO>>(carrinhoCompraEntity);
+        }
+
+        public async Task<IEnumerable<ItensCarrinhoCompraDTO>> GetProdutosNoCarrinhoCompra(Guid idUsuario)
+        {
+            var itensCarrinhoCompraEntity = await _carrinhoCompraRepository.GetProdutosNoCarrinhoCompra(idUsuario);
+            return _mapper.Map<IEnumerable<ItensCarrinhoCompraDTO>>(itensCarrinhoCompraEntity);
         }
 
         public async Task<CarrinhoCompraDTO> GetByIdAsync(Guid id)
@@ -48,10 +62,16 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
         }
 
-        public async Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync()
+        public async Task<CarrinhoCompraDTO> GetByIdUsuarioAsync(Guid id)
         {
-            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<CarrinhoCompraDTO>>(carrinhoCompraEntity);
+            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdUsuarioAsync(id);
+            return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdAsync(id);
+            await _carrinhoCompraRepository.DeleteAsync(carrinhoCompraEntity);
         }
     }
 }

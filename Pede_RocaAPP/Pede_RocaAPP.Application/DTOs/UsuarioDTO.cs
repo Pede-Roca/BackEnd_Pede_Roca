@@ -91,6 +91,7 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data de Nascimento")]
         public DateTime DataNasc { get; set; }
 
+        [JsonIgnore]
         [Required(ErrorMessage = "O status é obrigatório.")]
         [DisplayName("Status")]
         public bool Status { get; set; }
@@ -102,6 +103,7 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Foto de Perfil")]
         public string UidFotoPerfil { get; set; }
 
+        [JsonIgnore]
         [DataType(DataType.Date)]
         [DisplayName("Data de Criação da Conta")]
         public DateTime CreateUserDate { get; set; }

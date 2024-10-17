@@ -7,15 +7,12 @@ namespace Pede_RocaAPP.Domain.Entities
 {
     public class ProdutosPedido
     {
-        [Key]
         public Guid Id { get; set; }
-        
-        [Range(1, int.MaxValue, ErrorMessage = "A quantidade de produto deve ser maior que 0.")]
         public int QuantidadeProduto { get; set; }
-
-        [Required(ErrorMessage = "O Id do produto é obrigatório.")]
         public Guid IdProduto { get; set; }
-        public Produto Produto { get; set; } // Propriedade de navegação para Produto
+
+        public Produto Produto { get; set; }
+        public ICollection<CarrinhoComprasProdutosPedido> CarrinhoComprasProdutosPedido { get; set; } // Relacionamento com CarrinhoCompra
 
         public ProdutosPedido() { }
 

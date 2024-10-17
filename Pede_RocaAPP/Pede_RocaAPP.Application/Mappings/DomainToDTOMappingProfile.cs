@@ -15,7 +15,11 @@ namespace Pede_RocaAPP.Application.Mappings
 
             CreateMap<CarrinhoCompra, CarrinhoCompraDTO>().ReverseMap();
             CreateMap<CarrinhoCompra, CarrinhoCompraCreateDTO>().ReverseMap();
-            CreateMap<CarrinhoCompra, CarrinhoComprUpdateDTO>().ReverseMap();
+            CreateMap<CarrinhoCompra, CarrinhoCompraUpdateDTO>().ReverseMap();
+
+            CreateMap<ItensCarrinhoCompra, ItensCarrinhoCompraDTO>().ReverseMap();
+
+            CreateMap<CarrinhoComprasProdutosPedido, CarrinhoComprasProdutosPedidoDTO>().ReverseMap();
 
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();
             CreateMap<Categoria, CategoriaCreateDTO>().ReverseMap();

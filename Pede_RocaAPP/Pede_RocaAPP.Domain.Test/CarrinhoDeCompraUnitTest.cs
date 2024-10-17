@@ -18,7 +18,7 @@ namespace Pede_RocaAPP.Domain.Test
             var idUsuario = Guid.NewGuid();
             var idProdutosPedido = Guid.NewGuid();
 
-            Action action = () => new CarrinhoCompra(data, "Em processamento", idUsuario, idProdutosPedido);
+            Action action = () => new CarrinhoCompra(data, idUsuario);
             action.Should().NotThrow<DomainExceptionValidation>();
         }
 
@@ -30,7 +30,7 @@ namespace Pede_RocaAPP.Domain.Test
             var idUsuario = Guid.NewGuid();
             var idProdutosPedido = Guid.NewGuid();
 
-            Action action = () => new CarrinhoCompra(data, "Em processamento", idUsuario, idProdutosPedido);
+            Action action = () => new CarrinhoCompra(data, idUsuario);
             action.Should().Throw<DomainExceptionValidation>().WithMessage("Data inválida.");
         }
 
@@ -41,21 +41,8 @@ namespace Pede_RocaAPP.Domain.Test
             var data = DateTime.Now;
             var idProdutosPedido = Guid.NewGuid();
 
-            Action action = () => new CarrinhoCompra(data, "Em processamento", Guid.Empty, idProdutosPedido);
+            Action action = () => new CarrinhoCompra(data, Guid.Empty);
             action.Should().Throw<DomainExceptionValidation>().WithMessage("ID de usuário inválido.");
         }
-
-        [Fact(DisplayName = "ID de produtos pedidos inválido.")]
-
-        public void CreateCarrinhoCompra_ParametrosInvalidos_idProdutosPedido()
-        {
-            var data = DateTime.Now;
-            var idUsuario = Guid.NewGuid();
-
-            Action action = () => new CarrinhoCompra(data, "Em processamento", idUsuario, Guid.Empty);
-            action.Should().Throw<DomainExceptionValidation>().WithMessage("ID de produtos pedidos inválido.");
-        }
-
-
-        }
+    }
 }

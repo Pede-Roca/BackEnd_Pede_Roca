@@ -6,9 +6,9 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/avaliacao")]
     public class AvaliacaoController : ControllerBase
     {
         private readonly IAvaliacaoService _avaliacaoService;

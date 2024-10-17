@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/endereco")]
     public class EnderecoController : ControllerBase
     {
         private readonly IEnderecoService _enderecoService;
@@ -68,6 +69,11 @@ namespace Pede_RocaAPP.API.Controllers
             if (!string.IsNullOrEmpty(enderecoDTO.Logradouro))
             {
                 enderecoEncontrado.Logradouro = enderecoDTO.Logradouro;
+            }
+
+            if (!string.IsNullOrEmpty(enderecoDTO.Bairro))
+            {
+                enderecoEncontrado.Bairro = enderecoDTO.Bairro;
             }
 
             if (enderecoDTO.Numero > 0)

@@ -99,6 +99,12 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<UsuarioDTO>(usuario);
         }
 
+        public async Task<UsuarioDTO> GetByEmailESenhaAsync(string email, string senha)
+        {
+            var usuario = await _usuarioRepository.GetByEmailESenhaAsync(email, senha);
+            return _mapper.Map<UsuarioDTO>(usuario);
+        }
+
         public async Task<IEnumerable<UsuarioDTO>> GetAllAsync()
         {
             var usuarios = await _usuarioRepository.GetAllAsync();

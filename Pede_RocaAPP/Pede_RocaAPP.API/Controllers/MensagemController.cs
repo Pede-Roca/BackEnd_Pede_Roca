@@ -9,7 +9,7 @@ namespace Pede_RocaAPP.API.Controllers
 {
     // [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/mensagem")]
     public class MensagemController : ControllerBase
     {
         private readonly IMensagemService _mensagemService;

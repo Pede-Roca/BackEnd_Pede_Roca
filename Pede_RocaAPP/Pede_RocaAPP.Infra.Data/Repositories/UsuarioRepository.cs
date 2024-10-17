@@ -16,6 +16,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<Usuario> AdicionarAsync(Usuario usuario)
         {
+            // Criptografar a senha do usuário antes de salvar
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+            usuario.Status = true;
+
+            // Atribuir a data e hora atual em UTC ao campo CreateUserDate
+            usuario.CreateUserDate = DateTime.UtcNow;
+
             _usuarioContext.Add(usuario);
             await _usuarioContext.SaveChangesAsync();
             return usuario;
@@ -75,6 +82,18 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             var usuario = await _usuarioContext.Usuarios
                     .Where(u => u.Email.ToLower() == Email.ToLower())
                     .FirstOrDefaultAsync();
+            return usuario;
+        }
+
+        public async Task<Usuario> GetByEmailESenhaAsync(string email, string senha)
+        {
+            var usuario = await _usuarioContext.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (usuario == null || !BCrypt.Net.BCrypt.Verify(senha, usuario.Senha))
+            {
+                return null;
+            }
+
             return usuario;
         }
 
