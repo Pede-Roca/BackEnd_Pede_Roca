@@ -2,6 +2,7 @@ using AutoMapper;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
+using Pede_RocaAPP.Domain.Enums;
 using Pede_RocaAPP.Domain.Interfaces;
 
 namespace Pede_RocaAPP.Application.Services
@@ -68,7 +69,7 @@ namespace Pede_RocaAPP.Application.Services
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
-        public async Task AtualizarNivelAcessoUsuarioAsync(Guid id, string nivelAcesso)
+        public async Task AtualizarNivelAcessoUsuarioAsync(Guid id, NivelAcesso nivelAcesso)
         {
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
