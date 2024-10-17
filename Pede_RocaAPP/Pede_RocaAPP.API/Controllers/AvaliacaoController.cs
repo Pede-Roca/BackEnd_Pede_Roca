@@ -6,7 +6,7 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    [Authorize]
+    // [Authorize(Roles = "adm")]
     [ApiController]
     [Route("api/avaliacao")]
     public class AvaliacaoController : ControllerBase
