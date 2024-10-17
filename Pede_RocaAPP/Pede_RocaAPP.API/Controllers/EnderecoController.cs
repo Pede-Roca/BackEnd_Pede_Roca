@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    // [Authorize]
+    // [Authorize(Roles = "comum,adm")]
     [ApiController]
     [Route("api/endereco")]
     public class EnderecoController : ControllerBase

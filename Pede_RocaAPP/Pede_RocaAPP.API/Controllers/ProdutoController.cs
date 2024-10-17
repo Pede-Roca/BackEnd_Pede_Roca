@@ -6,7 +6,7 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    // [Authorize]
+    // [Authorize(Roles = "adm")]
     [ApiController]
     [Route("api/produto")]
     public class ProdutoController : ControllerBase
@@ -117,7 +117,6 @@ namespace Pede_RocaAPP.API.Controllers
                 message = "Status do produto atualizado com sucesso"
             });
         }
-
 
         [HttpDelete("{id}", Name = "DeleteProduto")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]

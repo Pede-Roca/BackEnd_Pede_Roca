@@ -25,10 +25,8 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 var usuarioEncontrado = await _usuarioService.GetByEmailESenhaAsync(loginRequest.Email, loginRequest.Senha);
 
-                if (usuarioEncontrado == null)
-                {
-                    return Unauthorized("Usuário ou senha inválidos");
-                }
+                if (usuarioEncontrado == null) return Unauthorized("Usuário ou senha inválidos");
+                if (usuarioEncontrado.Status == false) return Unauthorized("Usuário inativo, favor entrar em contato com o administrador");
 
                 var token = _authenticate.GenerateToken(usuarioEncontrado.Id, usuarioEncontrado.Email, usuarioEncontrado.NivelAcesso);
 

@@ -38,7 +38,7 @@ namespace Pede_RocaAPP.Infra.Data.Identity
                 new Claim("id", id.ToString()),
                 new Claim("email", email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("access_type", nivelAcesso)
+                new Claim(ClaimTypes.Role, nivelAcesso)
             };
 
             var privateKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
@@ -63,7 +63,6 @@ namespace Pede_RocaAPP.Infra.Data.Identity
 
             return userToken;
         }
-
         public async Task<bool> UserExist(string email)
         {
             var usuario = await _context.Usuarios.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefaultAsync();
