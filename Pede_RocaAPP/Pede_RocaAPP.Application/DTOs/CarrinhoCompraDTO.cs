@@ -26,9 +26,11 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Id")]
         public Guid Id { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Status")]
         public bool Status { get; set; }
 

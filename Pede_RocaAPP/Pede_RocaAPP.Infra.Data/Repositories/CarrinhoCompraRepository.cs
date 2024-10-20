@@ -20,6 +20,10 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<CarrinhoCompra> AdicionarAsync(CarrinhoCompra carrinhoCompra)
         {
+            // carrinhoCompra.Status = true;
+            //formatar data no formato: 2024-10-20T00:00:40.171Z
+            // carrinhoCompra.Data = DateTime.UtcNow;
+
             _context.Add(carrinhoCompra);
             await _context.SaveChangesAsync();
             return carrinhoCompra;
@@ -61,6 +65,22 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return carrinhoCompra;
         }
 
+        public async Task<CarrinhoCompra> RemoverProdutoDoCarrinhoAsync(Guid idCarrinhoCompra, Guid idProdutoPedido)
+        {
+            var produtoExistenteNoCarrinho = await _context.CarrinhoComprasProdutosPedidos
+                .FirstOrDefaultAsync(c => c.IdCarrinhoCompra == idCarrinhoCompra
+                                          && c.IdProdutosPedido == idProdutoPedido);
+
+            if (produtoExistenteNoCarrinho != null)
+            {
+                _context.CarrinhoComprasProdutosPedidos.Remove(produtoExistenteNoCarrinho);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return null;
+        }
+
         public async Task<CarrinhoCompra> DeleteAsync(CarrinhoCompra carrinhoCompra)
         {
             _context.Remove(carrinhoCompra);
@@ -85,14 +105,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
 
             return await _context.CarrinhoCompras
-                .AsNoTracking() // Não rastrear a entidade
+                .AsNoTracking() // Nï¿½o rastrear a entidade
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<CarrinhoCompra>> GetAllAsync()
         {
             return await _context.CarrinhoCompras
-                .Where(c => c.Status)  // Filtra apenas os carrinhos que estão ativos
+                .Where(c => c.Status)  // Filtra apenas os carrinhos que estï¿½o ativos
                 .OrderBy(c => c.Data)   // Ordena pela data
                 .ToListAsync();
         }

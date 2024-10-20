@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Pede_RocaAPP.Domain.Validation;
-using Pede_RocaAPP.Domain.Enums;
 
 namespace Pede_RocaAPP.Domain.Entities
 {
@@ -37,7 +36,7 @@ namespace Pede_RocaAPP.Domain.Entities
         public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "O nível de acesso é obrigatório.")]
-        public NivelAcesso NivelAcesso { get; set; }
+        public string NivelAcesso { get; set; }
 
         public string UidFotoPerfil { get; set; }
         public bool Status { get; set; }
@@ -59,7 +58,7 @@ namespace Pede_RocaAPP.Domain.Entities
             DataNascimento = dataNascimento;
             UidFotoPerfil = uidFotoPerfil;
             Status = true;
-            NivelAcesso = NivelAcesso.Comum;
+            NivelAcesso = "comum";
             CreateUserDate = DateTime.Now;
         }
 

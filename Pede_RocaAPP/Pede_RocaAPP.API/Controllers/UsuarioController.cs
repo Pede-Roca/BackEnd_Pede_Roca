@@ -4,7 +4,6 @@ using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
 using Pede_RocaAPP.Domain.Account;
-using Pede_RocaAPP.Domain.Enums;
 using FirebaseAdmin.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -106,22 +105,12 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPut("alterar-nivel-usuario/{id}", Name = "AtualizarNivelAcessoUsuario")]
-        public async Task<ActionResult<NivelAcessoDTO>> PutNivelAcessoUsuario(Guid id, [FromBody] NivelAcesso nivelAcesso)
+        public async Task<ActionResult> PutNivelAcessoUsuario(Guid id, [FromBody] AtualizarNivelAcessoUsuarioRequest nivelAcesso)
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
             if (usuarioExistente == null) return NotFound("Usuário não encontrado");
 
-            await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, nivelAcesso);
-
-            // Lista de opções disponíveis
-            var opcoesDisponiveis = Enum.GetValues(typeof(NivelAcesso)).Cast<NivelAcesso>().ToList();
-
-            // Cria o DTO de resposta
-            var nivelAcessoDTO = new NivelAcessoDTO
-            {
-                NivelAtual = nivelAcesso,
-                OpcoesDisponiveis = opcoesDisponiveis
-            };
+            await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, nivelAcesso.NivelAcesso);
 
             return Ok(new
             {

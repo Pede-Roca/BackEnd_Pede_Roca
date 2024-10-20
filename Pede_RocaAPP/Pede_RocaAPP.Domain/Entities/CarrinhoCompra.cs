@@ -59,4 +59,10 @@ namespace Pede_RocaAPP.Domain.Entities
             Estoque = estoque;
         }
     }
+
+    public class CarrinhoComprasRemoverProdutosPedidoRequest
+    {
+        public Guid IdCarrinhoCompra { get; set; }
+        public Guid IdProdutoPedido { get; set; }
+    }
 }

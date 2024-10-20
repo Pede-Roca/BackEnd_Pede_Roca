@@ -92,4 +92,10 @@ namespace Pede_RocaAPP.Domain.Entities
     {
         public bool Status { get; set; }
     }
+
+    public class AtualizarEstoqueProdutoResponse
+    {
+        public int Quantidade { get; set; }
+        public bool Adicionar { get; set; }
+    }
 }

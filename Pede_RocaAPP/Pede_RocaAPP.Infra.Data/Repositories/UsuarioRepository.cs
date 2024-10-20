@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Pede_RocaAPP.Domain.Entities;
 using Pede_RocaAPP.Domain.Interfaces;
 using Pede_RocaAPP.Infra.Data.Context;
-using Pede_RocaAPP.Domain.Enums;
 
 namespace Pede_RocaAPP.Infra.Data.Repositories
 {
@@ -20,7 +19,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             // Criptografar a senha do usuário antes de salvar
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.Status = true;
-            usuario.NivelAcesso = NivelAcesso.Comum;
+            usuario.NivelAcesso = "comum";
             usuario.CreateUserDate = DateTime.UtcNow;
 
             _usuarioContext.Add(usuario);
@@ -52,7 +51,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usu�rio n�o encontrado");
+                throw new Exception("Usuario nao encontrado");
             }
 
             usuarioExistente.UidFotoPerfil = uidFotoPerfil;

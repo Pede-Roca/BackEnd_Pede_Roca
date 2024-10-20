@@ -118,6 +118,20 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        [HttpPut("alterar-estoque-produto/{id}", Name = "AtualizarEstoqueProduto")]
+        public async Task<ActionResult> PutEstoqueProduto(Guid id, [FromBody] AtualizarEstoqueProdutoResponse atualizarEstoqueProdutoResponse)
+        {
+            var produtoExistente = await _produtoService.GetByIdAsync(id);
+            if (produtoExistente == null) return NotFound("Produto não encontrado");
+
+            await _produtoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueProdutoResponse.Quantidade, atualizarEstoqueProdutoResponse.Adicionar);
+
+            return Ok(new
+            {
+                message = "Estoque do produto atualizado com sucesso"
+            });
+        }
+
         [HttpDelete("{id}", Name = "DeleteProduto")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
         public async Task<ActionResult<ProdutoDTO>> DeleteAsync(Guid id)

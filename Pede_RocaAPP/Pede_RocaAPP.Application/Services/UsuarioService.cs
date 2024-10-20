@@ -2,7 +2,6 @@ using AutoMapper;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
-using Pede_RocaAPP.Domain.Enums;
 using Pede_RocaAPP.Domain.Interfaces;
 
 namespace Pede_RocaAPP.Application.Services
@@ -62,14 +61,12 @@ namespace Pede_RocaAPP.Application.Services
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
-            // Atualize o campo de status de perfil
             usuarioExistente.Status = status;
             
-            // Agora que o objeto est� atualizado, envie para o reposit�rio
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
-        public async Task AtualizarNivelAcessoUsuarioAsync(Guid id, NivelAcesso nivelAcesso)
+        public async Task AtualizarNivelAcessoUsuarioAsync(Guid id, string nivelAcesso)
         {
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
