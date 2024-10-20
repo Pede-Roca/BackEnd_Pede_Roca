@@ -93,9 +93,9 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<IEnumerable<CarrinhoCompraDTO>>(carrinhoCompraEntity);
         }
 
-        public async Task<IEnumerable<ItensCarrinhoCompraDTO>> GetProdutosNoCarrinhoCompra(Guid idUsuario)
+        public async Task<IEnumerable<ItensCarrinhoCompraDTO>> GetProdutosNoCarrinhoCompra(Guid idUsuario, Guid idCarrinho)
         {
-            var itensCarrinhoCompraEntity = await _carrinhoCompraRepository.GetProdutosNoCarrinhoCompra(idUsuario);
+            var itensCarrinhoCompraEntity = await _carrinhoCompraRepository.GetProdutosNoCarrinhoCompra(idUsuario, idCarrinho);
             return _mapper.Map<IEnumerable<ItensCarrinhoCompraDTO>>(itensCarrinhoCompraEntity);
         }
 

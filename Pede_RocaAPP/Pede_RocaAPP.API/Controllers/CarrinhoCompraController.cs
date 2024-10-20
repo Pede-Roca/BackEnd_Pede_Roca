@@ -65,9 +65,9 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpGet("itens-carrinho-por-usuario/{id_usuario}", Name = "GetItensNoCarrinho")]
-        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho(Guid id_usuario)
+        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho(Guid id_usuario, Guid idCarrinhoCompra)
         {
-            var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(id_usuario);
+            var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(id_usuario, idCarrinhoCompra);
             return itensCarrinhoCompra == null ? NotFound("Nenhum carrinho de compra encontrado.") : Ok(itensCarrinhoCompra);
         }
 
