@@ -158,5 +158,21 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<Top10ProdutosMaisVendidos>> GetTop10ProdutosMaisVendidos()
+        {
+            var query = from ccpp in _context.CarrinhoComprasProdutosPedidos
+                        join pp in _context.ProdutosPedidos on ccpp.IdProdutosPedido equals pp.Id
+                        join p in _context.Produtos on pp.IdProduto equals p.Id
+                        group new { p, pp } by new { p.Id, p.Nome } into g
+                        orderby g.Sum(x => x.pp.QuantidadeProduto) descending
+                        select new Top10ProdutosMaisVendidos
+                        {
+                            IdProduto = g.Key.Id,
+                            NomeProduto = g.Key.Nome,
+                            QuantidadeVendida = g.Sum(x => x.pp.QuantidadeProduto)
+                        };
+
+            return await query.Take(10).ToListAsync();
+        }
     }
 }

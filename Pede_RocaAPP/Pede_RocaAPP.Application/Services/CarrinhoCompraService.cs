@@ -128,5 +128,12 @@ namespace Pede_RocaAPP.Application.Services
             var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdAsync(id);
             await _carrinhoCompraRepository.DeleteAsync(carrinhoCompraEntity);
         }
+
+        public async Task<IEnumerable<Top10ProdutosMaisVendidos>> GetTop10ProdutosMaisVendidos()
+        {
+            var top10ProdutosMaisVendidosEntity = await _carrinhoCompraRepository.GetTop10ProdutosMaisVendidos();
+            return _mapper.Map<IEnumerable<Top10ProdutosMaisVendidos>>(top10ProdutosMaisVendidosEntity);
+        }
+
     }
 }

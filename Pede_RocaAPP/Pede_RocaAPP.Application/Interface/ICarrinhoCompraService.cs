@@ -21,5 +21,6 @@ namespace Pede_RocaAPP.Application.Interface
         Task<CarrinhoCompraDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync();
         Task<IEnumerable<ItensCarrinhoCompraDTO>> GetProdutosNoCarrinhoCompra(Guid idUsuario, Guid idCarrinho);
+        Task<IEnumerable<Top10ProdutosMaisVendidos>> GetTop10ProdutosMaisVendidos();
     }
 }

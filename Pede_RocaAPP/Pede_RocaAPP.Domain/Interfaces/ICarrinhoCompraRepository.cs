@@ -16,5 +16,6 @@ namespace Pede_RocaAPP.Domain.Interfaces
         Task<IEnumerable<CarrinhoCompra>> GetAllAsync();
         Task<IEnumerable<ItensCarrinhoCompra>> GetProdutosNoCarrinhoCompra(Guid idUsuario, Guid idCarrinho);
         Task<IEnumerable<ItemCarrinho>> GetItensCarrinhoPorIdCarrinhoAsync(Guid idCarrinhoCompra);
+        Task<IEnumerable<Top10ProdutosMaisVendidos>> GetTop10ProdutosMaisVendidos();
     }
 }

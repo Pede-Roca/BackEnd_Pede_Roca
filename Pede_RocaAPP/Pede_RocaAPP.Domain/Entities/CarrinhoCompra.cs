@@ -60,6 +60,13 @@ namespace Pede_RocaAPP.Domain.Entities
         }
     }
 
+    public class Top10ProdutosMaisVendidos
+    {
+        public Guid IdProduto { get; set; }
+        public string NomeProduto { get; set; }
+        public int QuantidadeVendida { get; set; }
+    }
+
     public class ItemCarrinho
     {
         public Guid IdCarrinhoCompra { get; set; }
