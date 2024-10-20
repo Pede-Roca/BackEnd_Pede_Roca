@@ -33,7 +33,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usu�rio n�o encontrado");
+                throw new Exception("Usuario nao encontrado");
             }
 
             // Atualize os campos
@@ -51,7 +51,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
             if (usuarioExistente == null)
             {
-                throw new Exception("Usu�rio n�o encontrado");
+                throw new Exception("Usuario nao encontrado");
             }
 
             usuarioExistente.UidFotoPerfil = uidFotoPerfil;

@@ -61,10 +61,8 @@ namespace Pede_RocaAPP.Application.Services
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
-            // Atualize o campo de status de perfil
             usuarioExistente.Status = status;
             
-            // Agora que o objeto est� atualizado, envie para o reposit�rio
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 

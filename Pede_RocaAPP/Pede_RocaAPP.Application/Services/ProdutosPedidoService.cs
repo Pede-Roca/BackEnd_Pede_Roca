@@ -31,6 +31,23 @@ namespace Pede_RocaAPP.Application.Services
             await _produtosPedidoRepository.AtualizarAsync(id, produtosPedido);
         }
 
+        public async Task AtualizarEstoqueProdutosAsync(Guid id, int quantidade, bool adicionar)
+        {
+            var produtoPedidoExistente = await _produtosPedidoRepository.GetByIdAsync(id);
+            if (produtoPedidoExistente == null) throw new Exception("Produto Pedido não encontrado");
+
+            if (adicionar)
+            {
+                produtoPedidoExistente.QuantidadeProduto += quantidade;
+            }
+            else
+            {
+                produtoPedidoExistente.QuantidadeProduto -= quantidade;
+            }
+
+            await _produtosPedidoRepository.AtualizarAsync(id, produtoPedidoExistente);
+        }
+
         public async Task DeleteAsync(Guid id)
         {
             var produtosPedido = await _produtosPedidoRepository.GetByIdAsync(id);

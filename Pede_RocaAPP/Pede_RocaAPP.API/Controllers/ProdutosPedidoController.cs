@@ -12,21 +12,28 @@ namespace Pede_RocaAPP.API.Controllers
     public class ProdutosPedidoController : ControllerBase
     {
         private readonly IProdutosPedidoService _produtosPedidoService;
+        private readonly IProdutoService _produtoService;
 
-        public ProdutosPedidoController(IProdutosPedidoService produtosPedidoService)
+        public ProdutosPedidoController(IProdutosPedidoService produtosPedidoService, IProdutoService produtoService)
         {
             _produtosPedidoService = produtosPedidoService;
+            _produtoService = produtoService;
         }
 
         [HttpPost(Name = "AdicionarProdutosPedido")]
         public async Task<ActionResult> Post([FromBody] ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
-            if (produtosPedidoDTO == null)
-            {
-                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
-            }
+            if (produtosPedidoDTO == null) return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
 
+            var produto = await _produtoService.GetByIdAsync(produtosPedidoDTO.IdProduto);
+
+            if (produto == null) return NotFound("Produto não encontrado");
+
+            if (produtosPedidoDTO.QuantidadeProduto <= 0) return BadRequest("Quantidade de produto inválida, deve ser maior que 0.");
+            if (produtosPedidoDTO.QuantidadeProduto > produto.Estoque) return BadRequest("Quantidade de produto maior que o estoque disponível");
+            
             var produtosPedidoId = await _produtosPedidoService.AdicionarAsync(produtosPedidoDTO);
+            await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoDTO.IdProduto, produtosPedidoDTO.QuantidadeProduto, false);
 
             return CreatedAtRoute("GetProdutosPedido", new { id = produtosPedidoId }, new
             {
@@ -40,18 +47,10 @@ namespace Pede_RocaAPP.API.Controllers
         {
             var produtosPedidoExistente = await _produtosPedidoService.GetByIdUpdateAsync(id);
 
-            if (produtosPedidoDTO == null)
-            {
-                return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
-            }
+            if (produtosPedidoDTO == null) return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
+            if (produtosPedidoExistente == null) return NotFound($"Produto pedido com ID {id} não encontrada. Verifique o ID e tente novamente!");
 
-            // Busca o produto pedido atual do banco de dados sem rastreamento
-            if (produtosPedidoExistente == null)
-            {
-                return NotFound($"Produto pedido com ID {id} não encontrada. Verifique o ID e tente novamente!");
-            }
-
-            if(produtosPedidoExistente.IdProduto != produtosPedidoDTO.IdProduto)
+            if (produtosPedidoExistente.IdProduto != produtosPedidoDTO.IdProduto)
             {
                 produtosPedidoExistente.IdProduto = produtosPedidoDTO.IdProduto;
             }
@@ -68,6 +67,34 @@ namespace Pede_RocaAPP.API.Controllers
                 mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso"
             });
 
+        }
+
+        [HttpPut("atualizar-quantidade-produto/{id}", Name = "AtualizarQuantidadeProduto")]
+        public async Task<ActionResult> PutQuantidadeProduto(Guid id, [FromBody] ProdutoPedidoAtualizarEstoqueRequest atualizarEstoqueRequest)
+        {
+            var produtosPedidoExistente = await _produtosPedidoService.GetByIdUpdateAsync(id);
+            if (produtosPedidoExistente == null) return NotFound($"Produto pedido com ID {id} não encontrada. Verifique o ID e tente novamente!");
+
+            var produto = await _produtoService.GetByIdAsync(produtosPedidoExistente.IdProduto);
+            if (produto == null) return NotFound("Produto não encontrado");
+
+            if (atualizarEstoqueRequest.Adicionar)
+            {
+                if (atualizarEstoqueRequest.Quantidade > produto.Estoque) return BadRequest("Quantidade de produto maior que o estoque disponível");
+                await _produtosPedidoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueRequest.Quantidade, true);
+                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, true);
+            }
+            else
+            {
+                await _produtosPedidoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueRequest.Quantidade, false);
+                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, false);
+            }
+
+            return Ok(new
+            {
+                mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso"
+            });
+            
         }
 
         [HttpDelete("{id}", Name = "DeleteProdutosPedido")]

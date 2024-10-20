@@ -105,16 +105,16 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPut("alterar-nivel-usuario/{id}", Name = "AtualizarNivelAcessoUsuario")]
-        public async Task<ActionResult> PutNivelAcessoUsuario(Guid id, [FromBody] AtualizarNivelAcessoUsuarioRequest atualizarNivelAcessoUsuarioRequest)
+        public async Task<ActionResult> PutNivelAcessoUsuario(Guid id, [FromBody] AtualizarNivelAcessoUsuarioRequest nivelAcesso)
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
             if (usuarioExistente == null) return NotFound("Usuário não encontrado");
 
-            await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, atualizarNivelAcessoUsuarioRequest.NivelAcesso);
+            await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, nivelAcesso.NivelAcesso);
 
             return Ok(new
             {
-                message = $"Nivel do usuário atualizado com sucesso, agora o usuário é {atualizarNivelAcessoUsuarioRequest.NivelAcesso}"
+                message = $"Nivel do usuário atualizado com sucesso, agora o usuário é {nivelAcesso}"
             });
         }
 

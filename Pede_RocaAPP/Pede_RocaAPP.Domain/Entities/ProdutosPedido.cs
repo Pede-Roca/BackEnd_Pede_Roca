@@ -30,4 +30,10 @@ namespace Pede_RocaAPP.Domain.Entities
             DomainExceptionValidation.When(idProduto == Guid.Empty, "Id do produto inválido, ele é obrigatório.");
         }
     }
+
+    public class ProdutoPedidoAtualizarEstoqueRequest
+    {
+        public int Quantidade { get; set; }
+        public bool Adicionar { get; set; }
+    }
 }
