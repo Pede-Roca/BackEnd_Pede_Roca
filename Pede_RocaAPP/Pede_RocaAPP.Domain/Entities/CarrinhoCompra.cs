@@ -60,6 +60,12 @@ namespace Pede_RocaAPP.Domain.Entities
         }
     }
 
+    public class ItemCarrinhoCompraRequest
+    {
+        public Guid IdUsuario { get; set; }
+        public Guid IdCarrinhoCompra { get; set; }
+    }
+
     public class ItemCarrinho
     {
         public Guid IdCarrinhoCompra { get; set; }
