@@ -122,13 +122,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ItensCarrinhoCompra>> GetProdutosNoCarrinhoCompra(Guid idUsuario)
+        public async Task<IEnumerable<ItensCarrinhoCompra>> GetProdutosNoCarrinhoCompra(Guid idUsuario, Guid idCarrinho)
         {
             var query = from ccpp in _context.CarrinhoComprasProdutosPedidos
                         join cc in _context.CarrinhoCompras on ccpp.IdCarrinhoCompra equals cc.Id
                         join pp in _context.ProdutosPedidos on ccpp.IdProdutosPedido equals pp.Id
                         join p in _context.Produtos on pp.IdProduto equals p.Id
-                        where cc.IdUsuario == idUsuario
+                        where cc.IdUsuario == idUsuario && cc.Id == idCarrinho
                         select new ItensCarrinhoCompra(
                             pp.Id,
                             pp.QuantidadeProduto,
