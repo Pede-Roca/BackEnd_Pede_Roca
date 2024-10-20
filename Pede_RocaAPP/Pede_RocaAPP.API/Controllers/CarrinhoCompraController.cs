@@ -71,10 +71,12 @@ namespace Pede_RocaAPP.API.Controllers
             return carrinhoCompraDto == null ? NotFound("Não foi possivel mapear os 10 produtos mais vendidos.") : Ok(carrinhoCompraDto);
         }
 
-        [HttpGet("itens-carrinho-por-usuario/{id_usuario}", Name = "GetItensNoCarrinho")]
-        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho(Guid id_usuario, Guid idCarrinhoCompra)
+        [HttpGet("itens-carrinho-por-usuario", Name = "GetItensNoCarrinho")]
+        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho(
+    [FromQuery] Guid idUsuario,
+    [FromQuery] Guid idCarrinhoCompra)
         {
-            var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(id_usuario, idCarrinhoCompra);
+            var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(idUsuario, idCarrinhoCompra);
             return itensCarrinhoCompra == null ? NotFound("Nenhum carrinho de compra encontrado.") : Ok(itensCarrinhoCompra);
         }
 
