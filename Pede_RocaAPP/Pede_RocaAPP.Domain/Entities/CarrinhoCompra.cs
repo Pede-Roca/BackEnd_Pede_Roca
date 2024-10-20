@@ -40,7 +40,7 @@ namespace Pede_RocaAPP.Domain.Entities
         public Guid IdProdutoPedido { get; set; }
 
         public int Quantidade { get; set; }
-        
+
         public Guid IdProduto { get; set; }
 
         public string NomeProduto { get; set; }
@@ -57,6 +57,27 @@ namespace Pede_RocaAPP.Domain.Entities
             NomeProduto = nomeProduto;
             Preco = preco;
             Estoque = estoque;
+        }
+    }
+
+    public class ItemCarrinho
+    {
+        public Guid IdCarrinhoCompra { get; set; }
+        public Guid IdProduto { get; set; }
+        public int QuantidadeComprada { get; set; }
+        public int EstoqueProduto { get; set; }
+    }
+
+    public class FinalizarCompraResponse
+    {
+        public Guid IdCarrinhoCompra { get; set; }
+        public bool Sucesso { get; set; }
+        public List<ItemCarrinho> ProdutosSemEstoque { get; set; }
+        public string Message { get; set; }
+
+        public FinalizarCompraResponse()
+        {
+            ProdutosSemEstoque = new List<ItemCarrinho>();
         }
     }
 
