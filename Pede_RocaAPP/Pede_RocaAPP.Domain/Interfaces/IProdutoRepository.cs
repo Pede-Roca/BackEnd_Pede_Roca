@@ -11,6 +11,7 @@ namespace Pede_RocaAPP.Domain.Interfaces
     {
         Task<Produto> AdicionarAsync(Produto produto);
         Task<Produto> AtualizarAsync(Guid id, Produto produto);
+        Task<Produto> AtualizarFotoProdutoAsync(Guid id, string uidFotoProduto);
         Task<Produto> DeleteAsync(Produto produto);
         Task<Produto> GetByIdAsync(Guid id);
         Task<Produto> GetByIdUpdateAsync(Guid id);

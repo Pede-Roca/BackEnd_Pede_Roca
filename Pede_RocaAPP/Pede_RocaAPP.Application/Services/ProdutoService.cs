@@ -30,6 +30,16 @@ namespace Pede_RocaAPP.Application.Services
             await _produtoRepository.AtualizarAsync(id, produto);
         }
 
+        public async Task AtualizarFotoProdutoAsync(Guid id, string uidFotoProduto)
+        {
+            var produtoExistente = await _produtoRepository.GetByIdAsync(id);
+            if (produtoExistente == null) throw new Exception("Produto não encontrado");
+
+            produtoExistente.UidFoto = uidFotoProduto;
+            
+            await _produtoRepository.AtualizarAsync(id, produtoExistente);
+        }
+
         public async Task AtualizarStatusProdutoAsync(Guid id, bool status)
         {
             var produtoExistente = await _produtoRepository.GetByIdAsync(id);

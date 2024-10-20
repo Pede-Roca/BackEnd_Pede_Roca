@@ -104,6 +104,20 @@ namespace Pede_RocaAPP.API.Controllers
             });
         }
 
+        [HttpPut("alterar-foto-produto/{id}", Name = "AtualizarFotoProduto")]
+        public async Task<ActionResult> PutFotoProduto(Guid id, [FromBody] AtualizarFotoProdutoRequest atualizarFotoPerfil)
+        {
+            var produtoExistente = await _produtoService.GetByIdAsync(id);
+            if (produtoExistente == null) return NotFound("Usuário não encontrado");
+
+            await _produtoService.AtualizarFotoProdutoAsync(id, atualizarFotoPerfil.UidFotoProduto);
+
+            return Ok(new
+            {
+                message = "Foto de produto atualizada com sucesso"
+            });
+        }
+
         [HttpPut("alterar-status-produto/{id}", Name = "AtualizarStatusProduto")]
         public async Task<ActionResult> PutStatusProduto(Guid id, [FromBody] AtualizarStatusProdutoResponse atualizarStatusProdutoResponse)
         {

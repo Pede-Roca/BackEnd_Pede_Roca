@@ -12,6 +12,7 @@ namespace Pede_RocaAPP.Application.Interface
     {
         Task<Guid> AdicionarAsync(ProdutoCreateDTO produtoDTO);
         Task AtualizarAsync(Guid id, ProdutoCreateDTO produtoDTO);
+        Task AtualizarFotoProdutoAsync(Guid id, string uidFotoProduto);
         Task AtualizarStatusProdutoAsync(Guid id, bool status);
         Task AtualizarEstoqueProdutosAsync(Guid id, int quantidade, bool adicionar);
         Task DeleteAsync(Guid id);

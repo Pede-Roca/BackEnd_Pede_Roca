@@ -28,6 +28,26 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return produto;
         }
 
+
+        public async Task<Produto> AtualizarFotoProdutoAsync(Guid id, string uidFotoProduto)
+        {
+            var produtoExistente = await _produtoContext.Produtos.FindAsync(id);
+
+            if (produtoExistente == null)
+            {
+                throw new Exception("Produto nao encontrado");
+            }
+
+            produtoExistente.UidFoto = uidFotoProduto;
+
+            _produtoContext.Entry(produtoExistente).State = EntityState.Modified;
+
+            await _produtoContext.SaveChangesAsync();
+
+            return produtoExistente;
+        }
+
+
         public async Task<Produto> DeleteAsync(Produto produto)
         {
             _produtoContext.Remove(produto);

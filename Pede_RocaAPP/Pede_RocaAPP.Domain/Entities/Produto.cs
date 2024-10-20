@@ -88,6 +88,11 @@ namespace Pede_RocaAPP.Domain.Entities
 
     }
 
+    public class AtualizarFotoProdutoRequest
+    {
+        public string UidFotoProduto { get; set; }
+    }
+
     public class AtualizarStatusProdutoResponse
     {
         public bool Status { get; set; }
