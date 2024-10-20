@@ -46,6 +46,47 @@ namespace Pede_RocaAPP.Application.Services
             await _carrinhoCompraRepository.RemoverProdutoDoCarrinhoAsync(idCarrinhoCompra, idProdutoPedido);
         }
 
+        public async Task<FinalizarCompraResponse> FinalizarCompraDoCarrinhoAsync(Guid idCarrinhoCompra, CarrinhoCompra carrinhoCompra)
+        {
+            var lista = await _carrinhoCompraRepository.GetItensCarrinhoPorIdCarrinhoAsync(idCarrinhoCompra);
+
+            var produtosSemEstoque = new List<ItemCarrinho>();
+
+            foreach (var item in lista)
+            {
+                // Valida se a quantidade comprada excede o estoque do produto
+                if (item.QuantidadeComprada > item.EstoqueProduto)
+                {
+                    produtosSemEstoque.Add(item);
+                }
+            }
+
+            // Se houver produtos sem estoque, retorne uma resposta de falha
+            if (produtosSemEstoque.Any())
+            {
+                return new FinalizarCompraResponse
+                {
+                    IdCarrinhoCompra = idCarrinhoCompra,
+                    Sucesso = false,
+                    ProdutosSemEstoque = produtosSemEstoque,
+                    Message = "Alguns produtos não possuem estoque suficiente."
+                };
+            }
+
+            // Marca o carrinho como finalizado
+            carrinhoCompra.Status = false;
+
+            await _carrinhoCompraRepository.AtualizarAsync(idCarrinhoCompra, carrinhoCompra);
+
+            // Retorna a resposta de sucesso
+            return new FinalizarCompraResponse
+            {
+                IdCarrinhoCompra = idCarrinhoCompra,
+                Sucesso = true,
+                Message = "Compra finalizada com sucesso."
+            };
+        }
+
         public async Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync()
         {
             var carrinhoCompraEntity = await _carrinhoCompraRepository.GetAllAsync();
@@ -73,6 +114,12 @@ namespace Pede_RocaAPP.Application.Services
         public async Task<CarrinhoCompraDTO> GetByIdUsuarioAsync(Guid id)
         {
             var carrinhoCompraEntity = await _carrinhoCompraRepository.GetByIdUsuarioAsync(id);
+            return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
+        }
+
+        public async Task<CarrinhoCompraDTO> GetHistoricoByIdUsuarioAsync(Guid id)
+        {
+            var carrinhoCompraEntity = await _carrinhoCompraRepository.GetHistoricoByIdUsuarioAsync(id);
             return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
         }
 

@@ -20,10 +20,6 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<CarrinhoCompra> AdicionarAsync(CarrinhoCompra carrinhoCompra)
         {
-            // carrinhoCompra.Status = true;
-            //formatar data no formato: 2024-10-20T00:00:40.171Z
-            // carrinhoCompra.Data = DateTime.UtcNow;
-
             _context.Add(carrinhoCompra);
             await _context.SaveChangesAsync();
             return carrinhoCompra;
@@ -93,11 +89,20 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             var carrinhoCompra = await _context.CarrinhoCompras.FindAsync(id);
             return carrinhoCompra;
         }
+        
         public async Task<CarrinhoCompra> GetByIdUsuarioAsync(Guid id)
         {
             var carrinhoCompra = await _context.CarrinhoCompras
                 .AsNoTracking()
-                .FirstOrDefaultAsync(a => a.IdUsuario == id);
+                .FirstOrDefaultAsync(a => a.IdUsuario == id && a.Status);
+            return carrinhoCompra;
+        }
+
+        public async Task<CarrinhoCompra> GetHistoricoByIdUsuarioAsync(Guid id)
+        {
+            var carrinhoCompra = await _context.CarrinhoCompras
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.IdUsuario == id && a.Status == false);
             return carrinhoCompra;
         }
 
@@ -105,7 +110,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         {
 
             return await _context.CarrinhoCompras
-                .AsNoTracking() // N�o rastrear a entidade
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
@@ -135,5 +140,23 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<ItemCarrinho>> GetItensCarrinhoPorIdCarrinhoAsync(Guid idCarrinhoCompra)
+        {
+            var query = from ccpp in _context.CarrinhoComprasProdutosPedidos
+                        join pp in _context.ProdutosPedidos on ccpp.IdProdutosPedido equals pp.Id
+                        join p in _context.Produtos on pp.IdProduto equals p.Id
+                        where ccpp.IdCarrinhoCompra == idCarrinhoCompra
+                        select new ItemCarrinho
+                        {
+                            IdCarrinhoCompra = ccpp.IdCarrinhoCompra,
+                            IdProduto = p.Id,
+                            QuantidadeComprada = pp.QuantidadeProduto,
+                            EstoqueProduto = p.Estoque
+                        };
+
+            return await query.ToListAsync();
+        }
+
     }
 }

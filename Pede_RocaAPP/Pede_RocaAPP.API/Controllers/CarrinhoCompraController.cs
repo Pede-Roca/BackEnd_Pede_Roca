@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
@@ -13,6 +14,7 @@ namespace Pede_RocaAPP.API.Controllers
         private readonly ICarrinhoCompraService _carrinhoCompraService;
         private readonly IProdutoService _produtoService;
         private readonly IProdutosPedidoService _produtosPedidoService;
+
 
         public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService)
         {
@@ -83,6 +85,13 @@ namespace Pede_RocaAPP.API.Controllers
             return carrinhoCompraDto == null ? NotFound("Carrinho de compra não encontrado.") : Ok(carrinhoCompraDto);
         }
 
+        [HttpGet("buscar-historico-por-id-usuario/{id}", Name = "GetHistoricoCarrinhoCompraPorIdUsuario")]
+        public async Task<ActionResult<CarrinhoCompraDTO>> GetHistoricoPorIdUsuario(Guid id)
+        {
+            var carrinhoCompraDto = await _carrinhoCompraService.GetHistoricoByIdUsuarioAsync(id);
+            return carrinhoCompraDto == null ? NotFound("Usuario não tem um historico de carrinho de compra.") : Ok(carrinhoCompraDto);
+        }
+
         [HttpPut("atualizar-status/{id}", Name = "AtualizarCarrinhoCompra")]
         public async Task<ActionResult> Put(Guid id, [FromBody] CarrinhoCompraUpdateDTO carrinhoCompraDTO)
         {
@@ -118,6 +127,40 @@ namespace Pede_RocaAPP.API.Controllers
 
             // Retorna o sucesso da operação
             return Ok(new { message = "Produto removido do carrinho com sucesso." });
+        }
+
+        [HttpPost("finalizar-compra/{id_carrinho}", Name = "FinalizarCompra")]
+        public async Task<ActionResult> FinalizarCompra(Guid id_carrinho)
+        {
+            var carrinhoCompraExistenteDTO = await _carrinhoCompraService.GetByIdAsync(id_carrinho);
+
+            if (carrinhoCompraExistenteDTO == null)
+                return NotFound("Carrinho de compra não encontrado.");
+
+            var carrinhoCompraExistente = new CarrinhoCompra
+            {
+                Id = carrinhoCompraExistenteDTO.Id,
+                Status = carrinhoCompraExistenteDTO.Status,
+                Data = carrinhoCompraExistenteDTO.Data,
+                IdUsuario = carrinhoCompraExistenteDTO.IdUsuario,
+            };
+
+            FinalizarCompraResponse finalizarCompraResponse = await _carrinhoCompraService.FinalizarCompraDoCarrinhoAsync(id_carrinho, carrinhoCompraExistente);
+
+            if (!finalizarCompraResponse.Sucesso)
+            {
+                return BadRequest(new
+                {
+                    message = finalizarCompraResponse.Message,
+                    produtosSemEstoque = finalizarCompraResponse.ProdutosSemEstoque
+                });
+            }
+
+            return Ok(new
+            {
+                message = finalizarCompraResponse.Message
+            });
+
         }
 
         [HttpDelete("{id}", Name = "DeleteCarrinhoCompra")]
