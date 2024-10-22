@@ -89,7 +89,7 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             var carrinhoCompra = await _context.CarrinhoCompras.FindAsync(id);
             return carrinhoCompra;
         }
-        
+
         public async Task<CarrinhoCompra> GetByIdUsuarioAsync(Guid id)
         {
             var carrinhoCompra = await _context.CarrinhoCompras
@@ -169,7 +169,8 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
                         {
                             IdProduto = g.Key.Id,
                             NomeProduto = g.Key.Nome,
-                            QuantidadeVendida = g.Sum(x => x.pp.QuantidadeProduto)
+                            QuantidadeVendida = g.Sum(x => x.pp.QuantidadeProduto),
+                            ValorTotal = g.Sum(x => x.pp.QuantidadeProduto * x.p.Preco)
                         };
 
             return await query.Take(10).ToListAsync();
