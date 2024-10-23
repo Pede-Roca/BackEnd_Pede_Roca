@@ -42,6 +42,9 @@ namespace Pede_RocaAPP.Domain.Entities
         public Guid IdUnidade { get; set; }
         public UnidadeMedida UnidadeMedida { get; set; }
 
+        public Guid IdImagensProdutos { get; set; }
+        public ImagensProdutos ImagensProduto { get; set; }
+
         public ICollection<ProdutosPedido> ProdutosPedidos { get; set; } = new List<ProdutosPedido>();
         public ICollection<ProdutoFavorito> ProdutosFavoritos { get; set; } = new List<ProdutoFavorito>();
 
@@ -61,6 +64,22 @@ namespace Pede_RocaAPP.Domain.Entities
             UidFoto = uidFoto;
             IdCategoria = idCategoria;
             IdUnidade = idUnidade;
+            Status = true;
+        }
+
+        public Produto(string nome, string descricao, decimal preco, int estoque, decimal fatorPromocional, string uidFoto, Guid idCategoria, Guid idUnidade, Guid idImagensProdutos)
+        {
+            Id = Guid.NewGuid();
+            ValidateDomain(nome, descricao, preco, estoque, fatorPromocional, uidFoto, idCategoria, idUnidade);
+            Nome = nome;
+            Descricao = descricao;
+            Preco = preco;
+            Estoque = estoque;
+            FatorPromocao = fatorPromocional;
+            UidFoto = uidFoto;
+            IdCategoria = idCategoria;
+            IdUnidade = idUnidade;
+            IdImagensProdutos = idImagensProdutos;
             Status = true;
         }
 

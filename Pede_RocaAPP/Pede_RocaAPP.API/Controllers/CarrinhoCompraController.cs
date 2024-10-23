@@ -15,7 +15,6 @@ namespace Pede_RocaAPP.API.Controllers
         private readonly IProdutoService _produtoService;
         private readonly IProdutosPedidoService _produtosPedidoService;
 
-
         public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService)
         {
             _carrinhoCompraService = carrinhoCompraService;
@@ -61,7 +60,7 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult<IEnumerable<CarrinhoCompraDTO>>> Get()
         {
             var carrinhoCompraDto = await _carrinhoCompraService.GetAllAsync();
-            return carrinhoCompraDto == null ? NotFound("Nenhum carrinho de compra encontrado.") : Ok(carrinhoCompraDto);
+            return carrinhoCompraDto == null ? Ok(new List<CarrinhoCompraDTO>()) : Ok(carrinhoCompraDto);
         }
 
         [HttpGet("produtos-mais-vendidos", Name = "Get10ProdutosMaisVendidos")]
@@ -72,9 +71,7 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpGet("itens-carrinho-por-usuario", Name = "GetItensNoCarrinho")]
-        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho(
-    [FromQuery] Guid idUsuario,
-    [FromQuery] Guid idCarrinhoCompra)
+        public async Task<ActionResult<IEnumerable<ItensCarrinhoCompraDTO>>> GetItensNoCarrinho([FromQuery] Guid idUsuario, [FromQuery] Guid idCarrinhoCompra)
         {
             var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(idUsuario, idCarrinhoCompra);
             return itensCarrinhoCompra == null ? NotFound("Nenhum carrinho de compra encontrado.") : Ok(itensCarrinhoCompra);
@@ -176,11 +173,8 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
             var carrinhoCompraDto = await _carrinhoCompraService.GetByIdAsync(id);
-            if (carrinhoCompraDto == null)
-            {
-                return NotFound("Carrinho de compra não encontrado.");
-            }
-
+            if (carrinhoCompraDto == null) return NotFound("Carrinho de compra não encontrado.");
+        
             await _carrinhoCompraService.DeleteAsync(id);
             return Ok(new { message = "Carrinho de compra removido com sucesso." });
         }
