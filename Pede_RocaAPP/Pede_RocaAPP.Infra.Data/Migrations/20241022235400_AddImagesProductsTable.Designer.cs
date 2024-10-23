@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pede_RocaAPP.Infra.Data.Context;
 
@@ -11,9 +12,10 @@ using Pede_RocaAPP.Infra.Data.Context;
 namespace Pede_RocaAPP.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241022235400_AddImagesProductsTable")]
+    partial class AddImagesProductsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,6 +267,9 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                     b.Property<Guid>("IdUnidade")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ImagensProdutoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -285,9 +290,9 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdCategoria");
 
-                    b.HasIndex("IdImagensProdutos");
-
                     b.HasIndex("IdUnidade");
+
+                    b.HasIndex("ImagensProdutoId");
 
                     b.ToTable("Produtos");
                 });
@@ -498,17 +503,15 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Pede_RocaAPP.Domain.Entities.ImagensProdutos", "ImagensProduto")
-                        .WithMany("Produtos")
-                        .HasForeignKey("IdImagensProdutos")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Pede_RocaAPP.Domain.Entities.UnidadeMedida", "UnidadeMedida")
                         .WithMany("Produtos")
                         .HasForeignKey("IdUnidade")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Pede_RocaAPP.Domain.Entities.ImagensProdutos", "ImagensProduto")
+                        .WithMany()
+                        .HasForeignKey("ImagensProdutoId");
 
                     b.Navigation("Categoria");
 
@@ -553,11 +556,6 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Categoria", b =>
-                {
-                    b.Navigation("Produtos");
-                });
-
-            modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ImagensProdutos", b =>
                 {
                     b.Navigation("Produtos");
                 });

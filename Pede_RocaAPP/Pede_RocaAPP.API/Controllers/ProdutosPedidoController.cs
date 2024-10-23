@@ -6,7 +6,6 @@ using Pede_RocaAPP.Domain.Entities;
 
 namespace Pede_RocaAPP.API.Controllers
 {
-    // [Authorize]
     [ApiController]
     [Route("api/produto-pedido")]
     public class ProdutosPedidoController : ControllerBase
@@ -28,7 +27,6 @@ namespace Pede_RocaAPP.API.Controllers
             var produto = await _produtoService.GetByIdAsync(produtosPedidoDTO.IdProduto);
 
             if (produto == null) return NotFound("Produto não encontrado");
-
             if (produtosPedidoDTO.QuantidadeProduto <= 0) return BadRequest("Quantidade de produto inválida, deve ser maior que 0.");
             if (produtosPedidoDTO.QuantidadeProduto > produto.Estoque) return BadRequest("Quantidade de produto maior que o estoque disponível");
             
@@ -50,23 +48,12 @@ namespace Pede_RocaAPP.API.Controllers
             if (produtosPedidoDTO == null) return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
             if (produtosPedidoExistente == null) return NotFound($"Produto pedido com ID {id} não encontrada. Verifique o ID e tente novamente!");
 
-            if (produtosPedidoExistente.IdProduto != produtosPedidoDTO.IdProduto)
-            {
-                produtosPedidoExistente.IdProduto = produtosPedidoDTO.IdProduto;
-            }
-
-            if (produtosPedidoExistente.QuantidadeProduto != produtosPedidoDTO.QuantidadeProduto)
-            {
-                produtosPedidoExistente.QuantidadeProduto = produtosPedidoDTO.QuantidadeProduto;
-            }
-
+            if (produtosPedidoExistente.IdProduto != produtosPedidoDTO.IdProduto) produtosPedidoExistente.IdProduto = produtosPedidoDTO.IdProduto;
+            if (produtosPedidoExistente.QuantidadeProduto != produtosPedidoDTO.QuantidadeProduto) produtosPedidoExistente.QuantidadeProduto = produtosPedidoDTO.QuantidadeProduto;
+        
             await _produtosPedidoService.AtualizarAsync(id, produtosPedidoExistente);
 
-            return Ok(new
-            {
-                mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso"
-            });
-
+            return Ok(new { mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso" });
         }
 
         [HttpPut("atualizar-quantidade-produto/{id}", Name = "AtualizarQuantidadeProduto")]
@@ -90,38 +77,15 @@ namespace Pede_RocaAPP.API.Controllers
                 await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, false);
             }
 
-            return Ok(new
-            {
-                mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso"
-            });
-            
-        }
-
-        [HttpDelete("{id}", Name = "DeleteProdutosPedido")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MensagemResponse))]
-        public async Task<ActionResult<ProdutosPedidoDTO>> DeleteAsync(Guid id)
-        {
-            var produtosPedidoDTO = await _produtosPedidoService.GetByIdAsync(id);
-            if (produtosPedidoDTO == null)
-            {
-                return NotFound("Produtos Pedido não encontrado");
-            }
-            await _produtosPedidoService.DeleteAsync(id);
-
-            return Ok(new
-            {
-                message = "Produto Pedidos removido com sucesso"
-            });
+            return Ok(new { mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso" });
         }
 
         [HttpGet("{id}", Name = "GetProdutosPedido")]
         public async Task<ActionResult<ProdutosPedidoDTO>> Get(Guid id)
         {
             var produtosPedidoDTO = await _produtosPedidoService.GetByIdAsync(id);
-            if (produtosPedidoDTO == null)
-            {
-                return NotFound("Produtos Pedido não encontrado");
-            }
+            if (produtosPedidoDTO == null) return NotFound("Produtos Pedido não encontrado");
+
             return Ok(produtosPedidoDTO);
         }
 
@@ -129,11 +93,20 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult<IEnumerable<ProdutosPedidoDTO>>> GetAll()
         {
             var produtosPedidos = await _produtosPedidoService.GetAllAsync();
-            if (produtosPedidos == null)
-            {
-                return NotFound("Nenhum Produto Pedido encontrado");
-            }
+            if (produtosPedidos == null) return Ok(new List<ProdutosPedidoDTO>());
+
             return Ok(produtosPedidos);
+        }
+
+        [HttpDelete("{id}", Name = "DeleteProdutosPedido")]
+        public async Task<ActionResult<ProdutosPedidoDTO>> DeleteAsync(Guid id)
+        {
+            var produtosPedidoDTO = await _produtosPedidoService.GetByIdAsync(id);
+            if (produtosPedidoDTO == null) return NotFound("Produtos Pedido não encontrado");
+
+            await _produtosPedidoService.DeleteAsync(id);
+
+            return Ok(new { message = "Produto Pedidos removido com sucesso" });
         }
     }
 }

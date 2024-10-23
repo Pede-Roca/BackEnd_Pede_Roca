@@ -4,9 +4,6 @@ using Pede_RocaAPP.Application.DTOs;
 using Pede_RocaAPP.Application.Interface;
 using Pede_RocaAPP.Domain.Entities;
 using Pede_RocaAPP.Domain.Account;
-using FirebaseAdmin.Auth;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Pede_RocaAPP.API.Controllers
 {
@@ -54,40 +51,22 @@ namespace Pede_RocaAPP.API.Controllers
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
 
-            if (usuarioExistente == null)
-            {
-                return NotFound("Usuário não encontrado");
-            }
-
-            if (usuarioDTO == null)
-            {
-                return BadRequest("Dados inválidos");
-            }
+            if (usuarioExistente == null) return NotFound("Usuário não encontrado");
+            if (usuarioDTO == null) return BadRequest("Dados inválidos");
 
             await _usuarioService.AtualizarAsync(id, usuarioDTO);
 
-            return Ok(new
-            {
-                mensagem = $"Usuario com o id {id} foi atualizado com sucesso"
-            });
+            return Ok(new { mensagem = $"Usuario com o id {id} foi atualizado com sucesso" });
         }
 
         [HttpPut("alterar-foto-perfil/{id}", Name = "AtualizarFotoPerfil")]
         public async Task<ActionResult> PutFotoPerfil(Guid id, [FromBody] AtualizarFotoPerfilRequest atualizarProfilePictureRequest)
         {
             var usuarioExistente = await _usuarioService.GetByIdAsync(id);
-
-            if (usuarioExistente == null)
-            {
-                return NotFound("Usuário não encontrado");
-            }
+            if (usuarioExistente == null) return NotFound("Usuário não encontrado");
 
             await _usuarioService.AtualizarFotoPerfilAsync(id, atualizarProfilePictureRequest.UidFotoPerfil);
-
-            return Ok(new
-            {
-                message = "Foto de perfil atualizada com sucesso"
-            });
+            return Ok(new { message = "Foto de perfil atualizada com sucesso" });
         }
 
         [HttpPut("alterar-status-usuario/{id}", Name = "AtualizarStatusUsuario")]
@@ -97,11 +76,7 @@ namespace Pede_RocaAPP.API.Controllers
             if (usuarioExistente == null) return NotFound("Usuário não encontrado");
 
             await _usuarioService.AtualizarStatusUsuarioAsync(id, atualizarStatusUsuarioRequest.Status);
-
-            return Ok(new
-            {
-                message = "Status do usuário atualizado com sucesso"
-            });
+            return Ok(new { message = "Status do usuário atualizado com sucesso" });
         }
 
         [HttpPut("alterar-nivel-usuario/{id}", Name = "AtualizarNivelAcessoUsuario")]
@@ -111,41 +86,15 @@ namespace Pede_RocaAPP.API.Controllers
             if (usuarioExistente == null) return NotFound("Usuário não encontrado");
 
             await _usuarioService.AtualizarNivelAcessoUsuarioAsync(id, nivelAcesso.NivelAcesso);
-
-            return Ok(new
-            {
-                message = $"Nivel do usuário atualizado com sucesso, agora o usuário é {nivelAcesso}"
-            });
+            return Ok(new { message = $"Nivel do usuário atualizado com sucesso, agora o usuário é {nivelAcesso}" });
         }
 
-        [HttpDelete("{id}", Name = "DeleteUsuario")]
-        public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
-        {
-            var usuarioDto = await _usuarioService.GetByIdAsync(id);
-
-            if (usuarioDto == null)
-            {
-                return NotFound("Usuário não encontrado");
-            }
-
-            await _usuarioService.DeleteAsync(id);
-
-            return Ok(new
-            {
-                message = "Usuario removido com sucesso"
-            });
-        }
-
-        // [Authorize]
         [HttpGet("{id}", Name = "GetUsuario")]
         public async Task<ActionResult<UsuarioDTO>> GetAsync(Guid id)
         {
             var usuarioDto = await _usuarioService.GetByIdAsync(id);
-            if (usuarioDto == null)
-            {
-                return NotFound("Usuário não encontrado");
-            }
-
+            if (usuarioDto == null) return NotFound("Usuário não encontrado");
+        
             return Ok(usuarioDto);
         }
 
@@ -153,12 +102,19 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetAllAsync()
         {
             var usuariosDto = await _usuarioService.GetAllAsync();
-            if (usuariosDto == null)
-            {
-                return NotFound("Nenhum usuário encontrado");
-            }
-
+            if (usuariosDto == null && !usuariosDto.Any()) return Ok(new List<UsuarioDTO>());
+        
             return Ok(usuariosDto);
+        }
+
+        [HttpDelete("{id}", Name = "DeleteUsuario")]
+        public async Task<ActionResult<UsuarioDTO>> DeleteAsync(Guid id)
+        {
+            var usuarioDto = await _usuarioService.GetByIdAsync(id);
+            if (usuarioDto == null) return NotFound("Usuário não encontrado");
+
+            await _usuarioService.DeleteAsync(id);
+            return Ok(new { message = "Usuario removido com sucesso" });
         }
     }
 }
