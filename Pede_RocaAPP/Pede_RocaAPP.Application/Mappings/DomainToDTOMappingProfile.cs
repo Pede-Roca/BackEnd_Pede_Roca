@@ -28,9 +28,6 @@ namespace Pede_RocaAPP.Application.Mappings
             CreateMap<Endereco, EnderecoCreateDTO>().ReverseMap();
             CreateMap<Endereco, EnderecoUpdateDTO>().ReverseMap();
 
-            CreateMap<ImagensProdutos, ImagensProdutosDTO>().ReverseMap();
-            CreateMap<ImagensProdutos, ImagensProdutosCreateDTO>().ReverseMap();
-
             CreateMap<Mensagem, MensagemDTO>().ReverseMap();
             CreateMap<Mensagem, MensagemCreateDTO>().ReverseMap();
             CreateMap<Mensagem, MensagemUpdateDTO>().ReverseMap();

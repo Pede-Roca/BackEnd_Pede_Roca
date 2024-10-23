@@ -50,7 +50,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Avaliacoes");
+                    b.ToTable("Avaliacoes", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.CarrinhoCompra", b =>
@@ -73,7 +73,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("CarrinhoCompras");
+                    b.ToTable("CarrinhoCompras", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.CarrinhoComprasProdutosPedido", b =>
@@ -94,7 +94,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdProdutosPedido");
 
-                    b.ToTable("CarrinhoComprasProdutosPedidos");
+                    b.ToTable("CarrinhoComprasProdutosPedidos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Categoria", b =>
@@ -110,7 +110,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Endereco", b =>
@@ -158,7 +158,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Enderecos");
+                    b.ToTable("Enderecos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ImagensProdutos", b =>
@@ -174,7 +174,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImagensProdutos");
+                    b.ToTable("ImagensProdutos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Mensagem", b =>
@@ -212,7 +212,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Mensagems");
+                    b.ToTable("Mensagems", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.PlanoAssinatura", b =>
@@ -234,7 +234,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("planoAssinaturas");
+                    b.ToTable("planoAssinaturas", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Produto", b =>
@@ -259,10 +259,13 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                     b.Property<Guid>("IdCategoria")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdImagensProdutos")
+                    b.Property<Guid>("ImagensProdutoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdUnidade")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ImagensProdutoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -285,11 +288,11 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdCategoria");
 
-                    b.HasIndex("IdImagensProdutos");
-
                     b.HasIndex("IdUnidade");
 
-                    b.ToTable("Produtos");
+                    b.HasIndex("ImagensProdutoId");
+
+                    b.ToTable("Produtos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ProdutoFavorito", b =>
@@ -310,7 +313,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("produtosFavoritos");
+                    b.ToTable("produtosFavoritos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ProdutosPedido", b =>
@@ -329,7 +332,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasIndex("IdProduto");
 
-                    b.ToTable("ProdutosPedidos");
+                    b.ToTable("ProdutosPedidos", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.UnidadeMedida", b =>
@@ -350,7 +353,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UnidadeMedidas");
+                    b.ToTable("UnidadeMedidas", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Usuario", b =>
@@ -405,7 +408,7 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Avaliacao", b =>
@@ -498,17 +501,15 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Pede_RocaAPP.Domain.Entities.ImagensProdutos", "ImagensProduto")
-                        .WithMany("Produtos")
-                        .HasForeignKey("IdImagensProdutos")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Pede_RocaAPP.Domain.Entities.UnidadeMedida", "UnidadeMedida")
                         .WithMany("Produtos")
                         .HasForeignKey("IdUnidade")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Pede_RocaAPP.Domain.Entities.ImagensProdutos", "ImagensProduto")
+                        .WithMany()
+                        .HasForeignKey("ImagensProdutoId");
 
                     b.Navigation("Categoria");
 
@@ -553,11 +554,6 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Categoria", b =>
-                {
-                    b.Navigation("Produtos");
-                });
-
-            modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ImagensProdutos", b =>
                 {
                     b.Navigation("Produtos");
                 });
