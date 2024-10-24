@@ -7,7 +7,7 @@ using Pede_RocaAPP.Domain.Entities;
 namespace Pede_RocaAPP.API.Controllers
 {
     [ApiController]
-    [Route("api/produto-favorito")]
+    [Route("api/favoritos")]
     public class ProdutoFavoritoController : ControllerBase
     {
         private readonly IProdutoFavoritoService _produtoFavoritoService;
@@ -21,7 +21,9 @@ namespace Pede_RocaAPP.API.Controllers
         public async Task<ActionResult> Post([FromBody] ProdutoFavoritoCreateDTO produtoFavoritoDTO)
         {
             if (produtoFavoritoDTO == null) return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
-            
+            var produtoFavoritoEncontrado = await _produtoFavoritoService.GetByIdAndUserIdAsync(produtoFavoritoDTO.IdProduto, produtoFavoritoDTO.IdUsuario);
+
+            if (produtoFavoritoEncontrado != null) return BadRequest("Produto favorito já cadastrado para este usuário");
             var produtoFavoritosId = await _produtoFavoritoService.AdicionarAsync(produtoFavoritoDTO);
 
             return CreatedAtRoute("GetProdutoFavorito", new { id = produtoFavoritosId }, new
@@ -74,6 +76,15 @@ namespace Pede_RocaAPP.API.Controllers
             await _produtoFavoritoService.DeleteAsync(id);
 
             return Ok(new { message = "Produto favorito removido com sucesso" });
+        }
+
+        [HttpGet("buscar-todos-por-usuario/{id}", Name = "GetProdutosFavoritosByUsuario")]
+        public async Task<ActionResult<IEnumerable<ProdutoFavoritoDTO>>> GetProdutosFavoritosByUsuario(Guid id)
+        {
+            var produtosFavoritos = await _produtoFavoritoService.GetAllByUserId(id);
+            if (produtosFavoritos == null) return Ok(new List<ProdutoFavoritoDTO>());
+
+            return Ok(produtosFavoritos);
         }
     }
 }

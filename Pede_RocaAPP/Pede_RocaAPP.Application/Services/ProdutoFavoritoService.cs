@@ -49,9 +49,21 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<ProdutoFavoritoCreateDTO>(produtoFavorito);
         }
 
+        public async Task<ProdutoFavoritoDTO> GetByIdAndUserIdAsync(Guid id, Guid userId)
+        {
+            var produtoFavorito = await _produtoFavoritoRepository.GetByIdAndUserIdAsync(id, userId);
+            return _mapper.Map<ProdutoFavoritoDTO>(produtoFavorito);
+        }
+
         public async Task<IEnumerable<ProdutoFavoritoDTO>> GetAllAsync()
         {
             var produtosFavoritos = await _produtoFavoritoRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<ProdutoFavoritoDTO>>(produtosFavoritos);
+        }
+
+        public async Task<IEnumerable<ProdutoFavoritoDTO>> GetAllByUserId(Guid clienteId)
+        {
+            var produtosFavoritos = await _produtoFavoritoRepository.GetAllByUserIdAsync(clienteId);
             return _mapper.Map<IEnumerable<ProdutoFavoritoDTO>>(produtosFavoritos);
         }
     }

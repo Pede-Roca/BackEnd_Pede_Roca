@@ -9,6 +9,8 @@ namespace Pede_RocaAPP.Application.Interface
         Task DeleteAsync(Guid id);
         Task<ProdutoFavoritoDTO> GetByIdAsync(Guid id);
         Task<ProdutoFavoritoCreateDTO> GetByIdUpdateAsync(Guid id);
+        Task<ProdutoFavoritoDTO> GetByIdAndUserIdAsync(Guid id, Guid userId);
         Task<IEnumerable<ProdutoFavoritoDTO>> GetAllAsync();
+        Task<IEnumerable<ProdutoFavoritoDTO>> GetAllByUserId(Guid clienteId);
     }
 }

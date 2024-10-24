@@ -49,6 +49,13 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return produtoFavorito;
         }
 
+        public async Task<ProdutoFavorito> GetByIdAndUserIdAsync(Guid id, Guid userId)
+        {
+            var produtoFavorito = await _produtoFavoritoContext.produtosFavoritos
+                .FirstOrDefaultAsync(p => p.IdProduto == id && p.IdUsuario == userId);
+            return produtoFavorito;
+        }
+
         public async Task<ProdutoFavorito> GetByIdUpdateAsync(Guid id)
         {
             return await _produtoFavoritoContext.produtosFavoritos
@@ -59,6 +66,14 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
         public async Task<IEnumerable<ProdutoFavorito>> GetAllAsync()
         {
             return await _produtoFavoritoContext.produtosFavoritos.OrderBy(p => p.Id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProdutoFavorito>> GetAllByUserIdAsync(Guid userId)
+        {
+            return await _produtoFavoritoContext.produtosFavoritos
+                .Where(p => p.IdUsuario == userId)
+                .OrderBy(p => p.Id)
+                .ToListAsync();
         }
     }
 }
