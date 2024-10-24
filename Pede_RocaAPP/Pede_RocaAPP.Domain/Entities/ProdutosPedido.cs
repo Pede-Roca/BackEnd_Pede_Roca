@@ -33,6 +33,7 @@ namespace Pede_RocaAPP.Domain.Entities
 
     public class ProdutoPedidoAtualizarEstoqueRequest
     {
+        public Guid IdCarrinhoCompra { get; set; }
         public int Quantidade { get; set; }
         public bool Adicionar { get; set; }
     }
