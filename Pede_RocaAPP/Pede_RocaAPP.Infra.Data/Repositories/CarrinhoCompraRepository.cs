@@ -27,26 +27,43 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<CarrinhoComprasProdutosPedido> AdicionarProdutoNoCarrinho(CarrinhoComprasProdutosPedido carrinhoComprasProdutosPedido)
         {
-            var idProdutoQueDeseja = await _context.ProdutosPedidos.FirstOrDefaultAsync(p => p.Id == carrinhoComprasProdutosPedido.IdProdutosPedido);
+            var idProdutoQueDeseja = await _context.ProdutosPedidos
+                .FirstOrDefaultAsync(p => p.Id == carrinhoComprasProdutosPedido.IdProdutosPedido);
+
             if (idProdutoQueDeseja == null) throw new Exception("Produto não encontrado");
 
-            Console.WriteLine("CarrinhoCompraRepository - AdicionarProdutoNoCarrinho", idProdutoQueDeseja);
+            var produtoExistenteNoCarrinho = await (from ccpp in _context.CarrinhoComprasProdutosPedidos
+                                                    join cc in _context.CarrinhoCompras on ccpp.IdCarrinhoCompra equals cc.Id
+                                                    join pp in _context.ProdutosPedidos on ccpp.IdProdutosPedido equals pp.Id
+                                                    where cc.Id == carrinhoComprasProdutosPedido.IdCarrinhoCompra
+                                                          && pp.IdProduto == idProdutoQueDeseja.IdProduto
+                                                    select new CarrinhoComprasProdutosPedido
+                                                    {
+                                                        Id = ccpp.IdProdutosPedido,
+                                                        IdCarrinhoCompra = cc.Id,
+                                                        IdProdutosPedido = ccpp.IdProdutosPedido,
+                                                    }).FirstOrDefaultAsync();
 
+            if (produtoExistenteNoCarrinho != null)
+            {
+                // Verificar se o produto encontrado no carrinho é o mesmo
+                var produtosPedidosExistente = await _context.ProdutosPedidos
+                    .FirstOrDefaultAsync(p => p.Id == produtoExistenteNoCarrinho.IdProdutosPedido);
 
-            // var produtoExistenteNoCarrinho = await _context.CarrinhoComprasProdutosPedidos
-            //     .FirstOrDefaultAsync(c => c.IdCarrinhoCompra == carrinhoComprasProdutosPedido.IdCarrinhoCompra
-            //                               && c.IdProdutosPedido == carrinhoComprasProdutosPedido.IdProdutosPedido);
+                if (produtosPedidosExistente == null) throw new Exception("Produto Pedido não encontrado");
 
-            // if (produtoExistenteNoCarrinho != null)
-            // {
-            //     produtoExistenteNoCarrinho.ProdutosPedido.QuantidadeProduto += carrinhoComprasProdutosPedido.ProdutosPedido.QuantidadeProduto;
-            //     _context.CarrinhoComprasProdutosPedidos.Update(produtoExistenteNoCarrinho);
-            // }
-            // else _context.CarrinhoComprasProdutosPedidos.Add(carrinhoComprasProdutosPedido);
+                // Atualiza a quantidade do produto
+                produtosPedidosExistente.QuantidadeProduto += idProdutoQueDeseja.QuantidadeProduto;
+                _context.ProdutosPedidos.Update(produtosPedidosExistente);
+            }
+            else
+            {
+                // Adiciona o produto ao carrinho se não existir
+                _context.CarrinhoComprasProdutosPedidos.Add(carrinhoComprasProdutosPedido);
+            }
 
-            // await _context.SaveChangesAsync();
-            // return carrinhoComprasProdutosPedido;
-            return null;
+            await _context.SaveChangesAsync();
+            return carrinhoComprasProdutosPedido;
         }
 
         public async Task<CarrinhoCompra> AtualizarAsync(Guid id, CarrinhoCompra carrinhoCompra)

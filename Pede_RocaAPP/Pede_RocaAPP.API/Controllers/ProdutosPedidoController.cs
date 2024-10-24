@@ -11,12 +11,14 @@ namespace Pede_RocaAPP.API.Controllers
     public class ProdutosPedidoController : ControllerBase
     {
         private readonly IProdutosPedidoService _produtosPedidoService;
+        private readonly ICarrinhoCompraService _carrinhoCompraService;
         private readonly IProdutoService _produtoService;
 
-        public ProdutosPedidoController(IProdutosPedidoService produtosPedidoService, IProdutoService produtoService)
+        public ProdutosPedidoController(IProdutosPedidoService produtosPedidoService, IProdutoService produtoService, ICarrinhoCompraService carrinhoCompraService)
         {
             _produtosPedidoService = produtosPedidoService;
             _produtoService = produtoService;
+            _carrinhoCompraService = carrinhoCompraService;
         }
 
         [HttpPost(Name = "AdicionarProdutosPedido")]
@@ -75,6 +77,14 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 await _produtosPedidoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueRequest.Quantidade, false);
                 await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, false);
+                
+                var produtoAposAtualizar = await _produtosPedidoService.GetByIdUpdateAsync(id);
+
+                if (produtoAposAtualizar.QuantidadeProduto == 0)
+                {
+                    await _carrinhoCompraService.RemoverProdutoDoCarrinhoAsync(atualizarEstoqueRequest.IdCarrinhoCompra, id);
+                }
+
             }
 
             return Ok(new { mensagem = $"Produto pedido com o id {id} foi atualizada com sucesso" });
