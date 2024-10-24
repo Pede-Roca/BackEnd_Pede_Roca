@@ -27,23 +27,26 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<CarrinhoComprasProdutosPedido> AdicionarProdutoNoCarrinho(CarrinhoComprasProdutosPedido carrinhoComprasProdutosPedido)
         {
-            var produtoExistenteNoCarrinho = await _context.CarrinhoComprasProdutosPedidos
-                .FirstOrDefaultAsync(c => c.IdCarrinhoCompra == carrinhoComprasProdutosPedido.IdCarrinhoCompra
-                                          && c.IdProdutosPedido == carrinhoComprasProdutosPedido.IdProdutosPedido);
+            var idProdutoQueDeseja = await _context.ProdutosPedidos.FirstOrDefaultAsync(p => p.Id == carrinhoComprasProdutosPedido.IdProdutosPedido);
+            if (idProdutoQueDeseja == null) throw new Exception("Produto não encontrado");
 
-            if (produtoExistenteNoCarrinho != null)
-            {
-                produtoExistenteNoCarrinho.ProdutosPedido.QuantidadeProduto += carrinhoComprasProdutosPedido.ProdutosPedido.QuantidadeProduto;
-                _context.CarrinhoComprasProdutosPedidos.Update(produtoExistenteNoCarrinho);
-            }
-            else
-            {
-                _context.CarrinhoComprasProdutosPedidos.Add(carrinhoComprasProdutosPedido);
-            }
+            Console.WriteLine("CarrinhoCompraRepository - AdicionarProdutoNoCarrinho", idProdutoQueDeseja);
 
-            await _context.SaveChangesAsync();
 
-            return carrinhoComprasProdutosPedido;
+            // var produtoExistenteNoCarrinho = await _context.CarrinhoComprasProdutosPedidos
+            //     .FirstOrDefaultAsync(c => c.IdCarrinhoCompra == carrinhoComprasProdutosPedido.IdCarrinhoCompra
+            //                               && c.IdProdutosPedido == carrinhoComprasProdutosPedido.IdProdutosPedido);
+
+            // if (produtoExistenteNoCarrinho != null)
+            // {
+            //     produtoExistenteNoCarrinho.ProdutosPedido.QuantidadeProduto += carrinhoComprasProdutosPedido.ProdutosPedido.QuantidadeProduto;
+            //     _context.CarrinhoComprasProdutosPedidos.Update(produtoExistenteNoCarrinho);
+            // }
+            // else _context.CarrinhoComprasProdutosPedidos.Add(carrinhoComprasProdutosPedido);
+
+            // await _context.SaveChangesAsync();
+            // return carrinhoComprasProdutosPedido;
+            return null;
         }
 
         public async Task<CarrinhoCompra> AtualizarAsync(Guid id, CarrinhoCompra carrinhoCompra)
