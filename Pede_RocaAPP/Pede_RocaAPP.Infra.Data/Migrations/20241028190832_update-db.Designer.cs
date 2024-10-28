@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pede_RocaAPP.Infra.Data.Context;
 
@@ -11,9 +12,10 @@ using Pede_RocaAPP.Infra.Data.Context;
 namespace Pede_RocaAPP.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028190832_update-db")]
+    partial class updatedb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,32 +113,6 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
-                });
-
-            modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataEntrega")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IdCarrinhoCompra")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCarrinhoCompra")
-                        .IsUnique();
-
-                    b.ToTable("ComprasFinalizadas");
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Endereco", b =>
@@ -460,17 +436,6 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
                     b.Navigation("CarrinhoCompra");
 
                     b.Navigation("ProdutosPedido");
-                });
-
-            modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", b =>
-                {
-                    b.HasOne("Pede_RocaAPP.Domain.Entities.CarrinhoCompra", "CarrinhoCompra")
-                        .WithOne()
-                        .HasForeignKey("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", "IdCarrinhoCompra")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CarrinhoCompra");
                 });
 
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.Endereco", b =>
