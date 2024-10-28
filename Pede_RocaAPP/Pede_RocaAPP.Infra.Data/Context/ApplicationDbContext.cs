@@ -19,7 +19,8 @@ namespace Pede_RocaAPP.Infra.Data.Context
         public DbSet<CarrinhoCompra> CarrinhoCompras { get; set; }
         public DbSet<Avaliacao> Avaliacoes { get; set; }
         public DbSet<CarrinhoComprasProdutosPedido> CarrinhoComprasProdutosPedidos { get; set; }
-        
+        public DbSet<ComprasFinalizadas> ComprasFinalizadas { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

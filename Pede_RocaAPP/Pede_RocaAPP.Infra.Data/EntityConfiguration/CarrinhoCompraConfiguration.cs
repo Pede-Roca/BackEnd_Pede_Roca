@@ -10,25 +10,25 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<CarrinhoCompra> builder)
         {
-            builder.HasKey(t => t.Id); // Define a chave primária
+            builder.HasKey(t => t.Id);
 
             builder.Property(cc => cc.Data)
-                .IsRequired(); // Define que a Data é obrigatória
+                .IsRequired();
 
             builder.Property(cc => cc.Status)
                 .IsRequired()
-                .HasMaxLength(50); // Define que o Status é obrigatório e tem um comprimento máximo
+                .HasMaxLength(50);
 
             // Configurando o relacionamento com Usuario
-            builder.HasOne(cc => cc.Usuario) // Define a propriedade de navegação para Usuario
-                .WithMany() // Supondo que você tenha uma coleção de CarrinhosCompra no Usuario
-                .HasForeignKey(cc => cc.IdUsuario) // Define a chave estrangeira
-                .IsRequired() // Define que a chave estrangeira é obrigatória
+            builder.HasOne(cc => cc.Usuario)
+                .WithMany()
+                .HasForeignKey(cc => cc.IdUsuario)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
             // Configurando o relacionamento muitos-para-muitos com ProdutosPedido
-            builder.HasMany(cc => cc.CarrinhoComprasProdutosPedido) // Use o nome correto da propriedade de navegação
-                .WithOne(cp => cp.CarrinhoCompra) // Configuração do lado oposto do relacionamento
+            builder.HasMany(cc => cc.CarrinhoComprasProdutosPedido)
+                .WithOne(cp => cp.CarrinhoCompra)
                 .HasForeignKey(cp => cp.IdCarrinhoCompra);
         }
     }

@@ -52,13 +52,6 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Relacionamento com ImagensProdutos
-            //builder.HasOne(p => p.ImagensProduto)
-            //    .WithMany(i => i.Produtos)
-            //    .HasForeignKey(p => p.ImagensProdutoId)
-            //    .IsRequired()
-            //    .OnDelete(DeleteBehavior.NoAction);
-
             builder.HasMany(p => p.ProdutosPedidos)
                 .WithOne(pp => pp.Produto)
                 .HasForeignKey(pp => pp.IdProduto)
