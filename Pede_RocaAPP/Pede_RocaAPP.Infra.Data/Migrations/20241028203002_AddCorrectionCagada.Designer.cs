@@ -12,8 +12,8 @@ using Pede_RocaAPP.Infra.Data.Context;
 namespace Pede_RocaAPP.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241028192722_AddComprasFinalizadasTable")]
-    partial class AddComprasFinalizadasTable
+    [Migration("20241028203002_AddCorrectionCagada")]
+    partial class AddCorrectionCagada
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
