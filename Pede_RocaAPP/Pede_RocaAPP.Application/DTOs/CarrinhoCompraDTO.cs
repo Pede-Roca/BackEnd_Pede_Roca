@@ -74,4 +74,19 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Quantidade em Estoque")]
         public int Estoque { get; set; }
     }
+
+    public class HistoricoCarrinhoCompraResponseDTO
+    {
+        [DisplayName("Id do Carrinho de Compra")]
+        public Guid IdCarrinhoCompra { get; set; }
+
+        [DisplayName("Data")]
+        public DateTime Data { get; set; }
+
+        [DisplayName("Status")]
+        public bool Status { get; set; }
+
+        [DisplayName("Itens do Carrinho de Compra")]
+        public IEnumerable<ItensCarrinhoCompraDTO> ItensCarrinhoCompra { get; set; }
+    }
 }

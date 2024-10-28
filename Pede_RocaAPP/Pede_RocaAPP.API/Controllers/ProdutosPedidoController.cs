@@ -71,12 +71,12 @@ namespace Pede_RocaAPP.API.Controllers
             {
                 if (atualizarEstoqueRequest.Quantidade > produto.Estoque) return BadRequest("Quantidade de produto maior que o estoque disponível");
                 await _produtosPedidoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueRequest.Quantidade, true);
-                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, true);
+                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, false);
             }
             else
             {
                 await _produtosPedidoService.AtualizarEstoqueProdutosAsync(id, atualizarEstoqueRequest.Quantidade, false);
-                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, false);
+                await _produtoService.AtualizarEstoqueProdutosAsync(produtosPedidoExistente.IdProduto, atualizarEstoqueRequest.Quantidade, true);
                 
                 var produtoAposAtualizar = await _produtosPedidoService.GetByIdUpdateAsync(id);
 

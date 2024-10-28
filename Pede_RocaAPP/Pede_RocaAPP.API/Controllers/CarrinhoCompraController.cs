@@ -92,11 +92,37 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpGet("buscar-historico-por-id-usuario/{id}", Name = "GetHistoricoCarrinhoCompraPorIdUsuario")]
-        public async Task<ActionResult<IEnumerable<CarrinhoCompraDTO>>> GetHistoricoPorIdUsuario(Guid id)
+        public async Task<ActionResult<IEnumerable<HistoricoCarrinhoCompraResponseDTO>>> GetHistoricoPorIdUsuario(Guid id)
         {
-            var carrinhoCompraDto = await _carrinhoCompraService.GetHistoricoByIdUsuarioAsync(id);
-            return carrinhoCompraDto == null ? NotFound("Usuario não tem um historico de carrinho de compra.") : Ok(carrinhoCompraDto);
+            // Recupera o histórico do carrinho do usuário
+            var carrinhoCompraDtos = await _carrinhoCompraService.GetHistoricoByIdUsuarioAsync(id);
+
+            if (carrinhoCompraDtos == null || !carrinhoCompraDtos.Any())
+            {
+                return NotFound("Usuário não tem um histórico de carrinho de compra.");
+            }
+
+            // Mapeia cada `CarrinhoCompra` para `HistoricoCarrinhoCompraResponse` e busca itens do carrinho
+            var historicoCarrinhoResponse = new List<HistoricoCarrinhoCompraResponseDTO>();
+
+            foreach (var carrinho in carrinhoCompraDtos)
+            {
+                // Recupera os itens do carrinho para o carrinho atual
+                var itensCarrinhoCompra = await _carrinhoCompraService.GetProdutosNoCarrinhoCompra(carrinho.IdUsuario, carrinho.Id);
+
+                // Adiciona o carrinho com seus itens à lista de resposta
+                historicoCarrinhoResponse.Add(new HistoricoCarrinhoCompraResponseDTO
+                {
+                    IdCarrinhoCompra = carrinho.Id,
+                    Data = carrinho.Data,
+                    Status = carrinho.Status,
+                    ItensCarrinhoCompra = itensCarrinhoCompra
+                });
+            }
+
+            return Ok(historicoCarrinhoResponse);
         }
+
 
         [HttpPut("atualizar-status/{id}", Name = "AtualizarCarrinhoCompra")]
         public async Task<ActionResult> Put(Guid id, [FromBody] CarrinhoCompraUpdateDTO carrinhoCompraDTO)
@@ -174,7 +200,7 @@ namespace Pede_RocaAPP.API.Controllers
         {
             var carrinhoCompraDto = await _carrinhoCompraService.GetByIdAsync(id);
             if (carrinhoCompraDto == null) return NotFound("Carrinho de compra não encontrado.");
-        
+
             await _carrinhoCompraService.DeleteAsync(id);
             return Ok(new { message = "Carrinho de compra removido com sucesso." });
         }
