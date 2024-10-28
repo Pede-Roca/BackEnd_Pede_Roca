@@ -82,6 +82,14 @@ namespace Pede_RocaAPP.Domain.Entities
         public int EstoqueProduto { get; set; }
     }
 
+    public class FinalizarCompraRequest
+    {
+        public Guid IdCarrinhoCompra { get; set; }
+        public Guid IdEndereco { get; set; }
+        public int TipoPagamento { get; set; }
+        public int TipoEntrega { get; set; }
+    }
+
     public class FinalizarCompraResponse
     {
         public Guid IdCarrinhoCompra { get; set; }

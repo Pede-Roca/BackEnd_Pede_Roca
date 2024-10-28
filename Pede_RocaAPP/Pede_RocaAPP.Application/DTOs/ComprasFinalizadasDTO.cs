@@ -22,7 +22,7 @@ namespace Pede_RocaAPP.Application.DTOs
         public int TipoEntrega { get; set; }
 
         [DisplayName("Tipo de Pagamento")]
-        public string TipoPagamento { get; set; }
+        public int TipoPagamento { get; set; }
 
         [DisplayName("Id do Endereço")]
         public Guid IdEndereco { get; set; }
@@ -53,7 +53,7 @@ namespace Pede_RocaAPP.Application.DTOs
         public int TipoEntrega { get; set; }
 
         [DisplayName("Tipo de Pagamento")]
-        public string TipoPagamento { get; set; }
+        public int TipoPagamento { get; set; }
 
         [DisplayName("Id do Endereço")]
         public Guid IdEndereco { get; set; }
@@ -84,7 +84,7 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [JsonIgnore]
         [DisplayName("Tipo de Pagamento")]
-        public string TipoPagamento { get; set; }
+        public int TipoPagamento { get; set; }
 
         [JsonIgnore]
         [DisplayName("Id do Endereço")]
