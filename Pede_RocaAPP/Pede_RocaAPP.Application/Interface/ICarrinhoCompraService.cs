@@ -17,7 +17,7 @@ namespace Pede_RocaAPP.Application.Interface
         Task DeleteAsync(Guid id);
         Task<CarrinhoCompraDTO> GetByIdAsync(Guid id);
         Task<CarrinhoCompraDTO> GetByIdUsuarioAsync(Guid id);
-        Task<CarrinhoCompraDTO> GetHistoricoByIdUsuarioAsync(Guid id);
+        Task<IEnumerable<CarrinhoCompraDTO>> GetHistoricoByIdUsuarioAsync(Guid id);
         Task<CarrinhoCompraDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<CarrinhoCompraDTO>> GetAllAsync();
         Task<IEnumerable<ItensCarrinhoCompraDTO>> GetProdutosNoCarrinhoCompra(Guid idUsuario, Guid idCarrinho);

@@ -92,7 +92,7 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpGet("buscar-historico-por-id-usuario/{id}", Name = "GetHistoricoCarrinhoCompraPorIdUsuario")]
-        public async Task<ActionResult<CarrinhoCompraDTO>> GetHistoricoPorIdUsuario(Guid id)
+        public async Task<ActionResult<IEnumerable<CarrinhoCompraDTO>>> GetHistoricoPorIdUsuario(Guid id)
         {
             var carrinhoCompraDto = await _carrinhoCompraService.GetHistoricoByIdUsuarioAsync(id);
             return carrinhoCompraDto == null ? NotFound("Usuario não tem um historico de carrinho de compra.") : Ok(carrinhoCompraDto);

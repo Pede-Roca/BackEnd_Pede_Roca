@@ -118,11 +118,12 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
             return carrinhoCompra;
         }
 
-        public async Task<CarrinhoCompra> GetHistoricoByIdUsuarioAsync(Guid id)
+        public async Task<IEnumerable<CarrinhoCompra>> GetHistoricoByIdUsuarioAsync(Guid id)
         {
             var carrinhoCompra = await _context.CarrinhoCompras
                 .AsNoTracking()
-                .FirstOrDefaultAsync(a => a.IdUsuario == id && a.Status == false);
+                .Where(a => a.IdUsuario == id && !a.Status)
+                .ToListAsync();
             return carrinhoCompra;
         }
 

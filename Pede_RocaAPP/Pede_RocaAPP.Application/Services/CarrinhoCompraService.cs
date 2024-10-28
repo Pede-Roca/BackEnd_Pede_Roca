@@ -69,7 +69,7 @@ namespace Pede_RocaAPP.Application.Services
                     IdCarrinhoCompra = idCarrinhoCompra,
                     Sucesso = false,
                     ProdutosSemEstoque = produtosSemEstoque,
-                    Message = "Alguns produtos não possuem estoque suficiente."
+                    Message = "Alguns produtos nï¿½o possuem estoque suficiente."
                 };
             }
 
@@ -117,10 +117,10 @@ namespace Pede_RocaAPP.Application.Services
             return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
         }
 
-        public async Task<CarrinhoCompraDTO> GetHistoricoByIdUsuarioAsync(Guid id)
+        public async Task<IEnumerable<CarrinhoCompraDTO>> GetHistoricoByIdUsuarioAsync(Guid id)
         {
             var carrinhoCompraEntity = await _carrinhoCompraRepository.GetHistoricoByIdUsuarioAsync(id);
-            return _mapper.Map<CarrinhoCompraDTO>(carrinhoCompraEntity);
+            return _mapper.Map<IEnumerable<CarrinhoCompraDTO>>(carrinhoCompraEntity);
         }
 
         public async Task DeleteAsync(Guid id)
