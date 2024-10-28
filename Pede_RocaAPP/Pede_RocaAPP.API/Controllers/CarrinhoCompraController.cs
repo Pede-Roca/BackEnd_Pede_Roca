@@ -195,7 +195,7 @@ namespace Pede_RocaAPP.API.Controllers
                 IdCarrinhoCompra = carrinhoCompraExistenteDTO.Id
             };
 
-            _comprasFinalizadasService.AdicionarAsync(comprasFinalizadas);
+            await _comprasFinalizadasService.AdicionarAsync(comprasFinalizadas);
 
             return Ok(new
             {

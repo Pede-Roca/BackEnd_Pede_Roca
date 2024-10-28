@@ -42,11 +42,11 @@ namespace Pede_RocaAPP.Infra.IoC
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
+            services.AddScoped<IComprasFinalizadasService, ComprasFinalizadasService>();
+            services.AddScoped<IComprasFinalizadasRepository, ComprasFinalizadasRepository>();
+
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-
-            //services.AddScoped<IImagensProdutosService, ImagensProdutosService>();
-            //services.AddScoped<IImagensProdutosRepository, ImagensProdutosRepository>();
 
             services.AddScoped<IMensagemService, MensagemService>();
             services.AddScoped<IMensagemRepository, MensagemRepository>();
