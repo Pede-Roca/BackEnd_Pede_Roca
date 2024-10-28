@@ -15,14 +15,28 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.Data)
                 .IsRequired();
 
-            builder.Property(t => t.Status)
-                .IsRequired();
-
             builder.Property(t => t.DataEntrega)
                 .IsRequired(false);
 
+            builder.Property(t => t.Status)
+                .IsRequired();
+
+            builder.Property(t => t.TipoEntrega)
+                .IsRequired();
+
+            builder.Property(t => t.TipoPagamento)
+                .IsRequired();
+
+            builder.Property(t => t.IdEndereco)
+                .IsRequired();
+
             builder.Property(t => t.IdCarrinhoCompra)
                 .IsRequired();
+
+            // Configuração de relacionamento um-para-um com Endereco
+            builder.HasOne(t => t.Endereco)
+                .WithOne()
+                .HasForeignKey<ComprasFinalizadas>(t => t.IdEndereco);
 
             // Configuração de relacionamento um-para-um com CarrinhoCompra
             builder.HasOne(t => t.CarrinhoCompra)

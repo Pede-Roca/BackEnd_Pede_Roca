@@ -19,7 +19,7 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task<Guid> AdicionarAsync(ComprasFinalizadasCreateDTO finalizadasDTO)
         {
-            finalizadasDTO.Data = new DateTime();
+            finalizadasDTO.Data = DateTime.Now; // Usa a data e hora atual
             finalizadasDTO.Status = true;
             finalizadasDTO.DataEntrega = null;
 

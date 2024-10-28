@@ -4,19 +4,26 @@
     {
         public Guid Id { get; set; }
         public DateTime Data {  get; set; }
-        public bool Status { get; set; }
         public DateTime? DataEntrega { get; set; }
+        public bool Status { get; set; }
+        public int TipoEntrega { get; set; }
+        public int TipoPagamento { get; set; }
+        public Guid IdEndereco { get; set; }
+        public Endereco Endereco { get; set; }
         public Guid IdCarrinhoCompra {  get; set; }
         public CarrinhoCompra CarrinhoCompra { get; set; }
 
         public ComprasFinalizadas() { }
 
-        public ComprasFinalizadas(DateTime data, Guid idCarrinhoCompra)
+        public ComprasFinalizadas(int tipoEntrega, int tipoPagamento, Guid idEndereco, Guid idCarrinhoCompra)
         {
             Id = Guid.NewGuid();
-            Data = data;
-            Status = true;
+            Data = DateTime.Now;
             DataEntrega = null;
+            Status = true;
+            TipoEntrega = tipoEntrega;
+            TipoPagamento = tipoPagamento;
+            IdEndereco = idEndereco;
             IdCarrinhoCompra = idCarrinhoCompra;
         }
     }
