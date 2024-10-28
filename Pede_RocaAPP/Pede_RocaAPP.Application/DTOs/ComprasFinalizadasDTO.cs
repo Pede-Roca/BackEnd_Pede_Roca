@@ -20,9 +20,6 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [DisplayName("Id do Carrinho de Compra")]
         public Guid IdCarrinhoCompra { get; set; }
-
-        [DisplayName("Id do Produto do Pedido")]
-        public Guid IdProdutosPedido { get; set; }
     }
 
     public class ComprasFinalizadasCreateDTO
@@ -31,9 +28,11 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Id")]
         public Guid Id { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Status")]
         public bool Status { get; set; }
 
@@ -43,8 +42,26 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [DisplayName("Id do Carrinho de Compra")]
         public Guid IdCarrinhoCompra { get; set; }
+    }
 
-        [DisplayName("Id do Produto do Pedido")]
-        public Guid IdProdutosPedido { get; set; }
+    public class ComprasFinalizadasUpdateDTO
+    {
+        [JsonIgnore]
+        [DisplayName("Id")]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Data")]
+        public DateTime Data { get; set; }
+
+        [DisplayName("Status")]
+        public bool Status { get; set; }
+
+        [DisplayName("Data da Entrega")]
+        public DateTime? DataEntrega { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Id do Carrinho de Compra")]
+        public Guid IdCarrinhoCompra { get; set; }
     }
 }

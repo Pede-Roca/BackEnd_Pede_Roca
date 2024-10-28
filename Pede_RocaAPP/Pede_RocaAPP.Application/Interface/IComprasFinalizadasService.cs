@@ -10,8 +10,9 @@ namespace Pede_RocaAPP.Application.Interface
     public interface IComprasFinalizadasService
     {
         Task<Guid> AdicionarAsync(ComprasFinalizadasCreateDTO finalizadasDTO);
-        Task AtualizarAsync(Guid id, ComprasFinalizadasCreateDTO finalizadasDTO);
+        Task AtualizarAsync(Guid id, ComprasFinalizadasUpdateDTO finalizadasDTO);
         Task<ComprasFinalizadasDTO> GetByIdAsync(Guid id);
+        Task<ComprasFinalizadasUpdateDTO> GetByIdUpdateAsync(Guid id);
         Task<IEnumerable<ComprasFinalizadasDTO>> GetAllAsync();
         Task DeleteAsync(Guid id);
     }

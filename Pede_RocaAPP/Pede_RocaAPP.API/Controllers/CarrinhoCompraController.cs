@@ -14,12 +14,14 @@ namespace Pede_RocaAPP.API.Controllers
         private readonly ICarrinhoCompraService _carrinhoCompraService;
         private readonly IProdutoService _produtoService;
         private readonly IProdutosPedidoService _produtosPedidoService;
+        private readonly IComprasFinalizadasService _comprasFinalizadasService;
 
-        public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService)
+        public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService, IComprasFinalizadasService comprasFinalizadasService)
         {
             _carrinhoCompraService = carrinhoCompraService;
             _produtoService = produtoService;
             _produtosPedidoService = produtosPedidoService;
+            _comprasFinalizadasService = comprasFinalizadasService;
         }
 
         [HttpPost(Name = "AdicionarCarrinhoCompra")]
@@ -187,6 +189,13 @@ namespace Pede_RocaAPP.API.Controllers
                     produtosSemEstoque = finalizarCompraResponse.ProdutosSemEstoque
                 });
             }
+
+            ComprasFinalizadasCreateDTO comprasFinalizadas = new ComprasFinalizadasCreateDTO
+            {
+                IdCarrinhoCompra = carrinhoCompraExistenteDTO.Id
+            };
+
+            _comprasFinalizadasService.AdicionarAsync(comprasFinalizadas);
 
             return Ok(new
             {
