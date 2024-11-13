@@ -14,12 +14,14 @@ namespace Pede_RocaAPP.API.Controllers
         private readonly ICarrinhoCompraService _carrinhoCompraService;
         private readonly IProdutoService _produtoService;
         private readonly IProdutosPedidoService _produtosPedidoService;
+        private readonly IComprasFinalizadasService _comprasFinalizadasService;
 
-        public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService)
+        public CarrinhoCompraController(ICarrinhoCompraService carrinhoCompraService, IProdutoService produtoService, IProdutosPedidoService produtosPedidoService, IComprasFinalizadasService comprasFinalizadasService)
         {
             _carrinhoCompraService = carrinhoCompraService;
             _produtoService = produtoService;
             _produtosPedidoService = produtosPedidoService;
+            _comprasFinalizadasService = comprasFinalizadasService;
         }
 
         [HttpPost(Name = "AdicionarCarrinhoCompra")]
@@ -161,10 +163,10 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(new { message = "Produto removido do carrinho com sucesso." });
         }
 
-        [HttpPost("finalizar-compra/{id_carrinho}", Name = "FinalizarCompra")]
-        public async Task<ActionResult> FinalizarCompra(Guid id_carrinho)
+        [HttpPost("finalizar-compra", Name = "FinalizarCompra")]
+        public async Task<ActionResult> FinalizarCompra(FinalizarCompraRequest finalizar)
         {
-            var carrinhoCompraExistenteDTO = await _carrinhoCompraService.GetByIdAsync(id_carrinho);
+            var carrinhoCompraExistenteDTO = await _carrinhoCompraService.GetByIdAsync(finalizar.IdCarrinhoCompra);
 
             if (carrinhoCompraExistenteDTO == null)
                 return NotFound("Carrinho de compra não encontrado.");
@@ -177,7 +179,7 @@ namespace Pede_RocaAPP.API.Controllers
                 IdUsuario = carrinhoCompraExistenteDTO.IdUsuario,
             };
 
-            FinalizarCompraResponse finalizarCompraResponse = await _carrinhoCompraService.FinalizarCompraDoCarrinhoAsync(id_carrinho, carrinhoCompraExistente);
+            FinalizarCompraResponse finalizarCompraResponse = await _carrinhoCompraService.FinalizarCompraDoCarrinhoAsync(finalizar.IdCarrinhoCompra, carrinhoCompraExistente);
 
             if (!finalizarCompraResponse.Sucesso)
             {
@@ -187,6 +189,16 @@ namespace Pede_RocaAPP.API.Controllers
                     produtosSemEstoque = finalizarCompraResponse.ProdutosSemEstoque
                 });
             }
+
+            ComprasFinalizadasCreateDTO comprasFinalizadas = new ComprasFinalizadasCreateDTO
+            {
+                IdCarrinhoCompra = carrinhoCompraExistenteDTO.Id,
+                IdEndereco = finalizar.IdEndereco,
+                TipoPagamento = finalizar.TipoPagamento,
+                TipoEntrega = finalizar.TipoEntrega
+            };
+
+            await _comprasFinalizadasService.AdicionarAsync(comprasFinalizadas);
 
             return Ok(new
             {

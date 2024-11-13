@@ -32,14 +32,17 @@ namespace Pede_RocaAPP.API.Controllers
         }
 
         [HttpPut("{id}", Name = "AtualizarCompraFinalizada")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] ComprasFinalizadasCreateDTO finalizadasDTO)
+        public async Task<ActionResult> Put(Guid id, [FromBody] ComprasFinalizadasUpdateDTO finalizadasDTO)
         {
             if (finalizadasDTO == null) return BadRequest("Erro de dados inválidos. Verifique o payload de envio e tente novamente!");
 
-            var compraFinalizadaEncontrada = await _service.GetByIdAsync(id);
+            var compraFinalizadaEncontrada = await _service.GetByIdUpdateAsync(id);
             if (compraFinalizadaEncontrada == null) return NotFound($"Compra finalizada com o ID {id} não encontrada. Verifique o ID e tente novamente!");
 
-            await _service.AtualizarAsync(id, finalizadasDTO);
+            if (compraFinalizadaEncontrada.Status != finalizadasDTO.Status) compraFinalizadaEncontrada.Status = finalizadasDTO.Status;
+            if (compraFinalizadaEncontrada.DataEntrega != finalizadasDTO.DataEntrega) compraFinalizadaEncontrada.DataEntrega = finalizadasDTO.DataEntrega;
+
+            await _service.AtualizarAsync(id, compraFinalizadaEncontrada);
             return Ok(new { mensagem = $"Compra finalizada com o id {id} foi atualizada com sucesso" });
         }
 

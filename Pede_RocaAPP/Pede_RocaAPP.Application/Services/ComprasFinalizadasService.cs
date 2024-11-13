@@ -19,6 +19,7 @@ namespace Pede_RocaAPP.Application.Services
 
         public async Task<Guid> AdicionarAsync(ComprasFinalizadasCreateDTO finalizadasDTO)
         {
+            finalizadasDTO.Data = DateTime.Now; // Usa a data e hora atual
             finalizadasDTO.Status = true;
             finalizadasDTO.DataEntrega = null;
 
@@ -27,7 +28,7 @@ namespace Pede_RocaAPP.Application.Services
             return entity.Id;
         }
 
-        public async Task AtualizarAsync(Guid id, ComprasFinalizadasCreateDTO finalizadasDTO)
+        public async Task AtualizarAsync(Guid id, ComprasFinalizadasUpdateDTO finalizadasDTO)
         {
             var entity = _mapper.Map<ComprasFinalizadas>(finalizadasDTO);
             await _repository.AtualizarAsync(id, entity);
@@ -43,6 +44,12 @@ namespace Pede_RocaAPP.Application.Services
         {
             var entity = await _repository.GetByIdAsync(id);
             return _mapper.Map<ComprasFinalizadasDTO>(entity);
+        }
+
+        public async Task<ComprasFinalizadasUpdateDTO> GetByIdUpdateAsync(Guid id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+            return _mapper.Map<ComprasFinalizadasUpdateDTO>(entity);
         }
 
         public async Task DeleteAsync(Guid id)

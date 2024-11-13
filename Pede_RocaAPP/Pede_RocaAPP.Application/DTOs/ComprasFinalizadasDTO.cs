@@ -18,11 +18,20 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data da Entrega")]
         public DateTime? DataEntrega { get; set; }
 
+        [DisplayName("Tipo de Entrega")]
+        public int TipoEntrega { get; set; }
+
+        [DisplayName("Tipo de Pagamento")]
+        public int TipoPagamento { get; set; }
+
+        [DisplayName("Id do Endereço")]
+        public Guid IdEndereco { get; set; }
+
         [DisplayName("Id do Carrinho de Compra")]
         public Guid IdCarrinhoCompra { get; set; }
 
-        [DisplayName("Id do Produto do Pedido")]
-        public Guid IdProdutosPedido { get; set; }
+        [DisplayName("Id do usuario")]
+        public Guid IdUsuario { get; set; }
     }
 
     public class ComprasFinalizadasCreateDTO
@@ -31,9 +40,11 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Id")]
         public Guid Id { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
 
+        [JsonIgnore]
         [DisplayName("Status")]
         public bool Status { get; set; }
 
@@ -41,10 +52,49 @@ namespace Pede_RocaAPP.Application.DTOs
         [DisplayName("Data da Entrega")]
         public DateTime? DataEntrega { get; set; }
 
+        [DisplayName("Tipo de Entrega")]
+        public int TipoEntrega { get; set; }
+
+        [DisplayName("Tipo de Pagamento")]
+        public int TipoPagamento { get; set; }
+
+        [DisplayName("Id do Endereço")]
+        public Guid IdEndereco { get; set; }
+
         [DisplayName("Id do Carrinho de Compra")]
         public Guid IdCarrinhoCompra { get; set; }
+    }
 
-        [DisplayName("Id do Produto do Pedido")]
-        public Guid IdProdutosPedido { get; set; }
+    public class ComprasFinalizadasUpdateDTO
+    {
+        [JsonIgnore]
+        [DisplayName("Id")]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Data")]
+        public DateTime Data { get; set; }
+
+        [DisplayName("Status")]
+        public bool Status { get; set; }
+
+        [DisplayName("Data da Entrega")]
+        public DateTime? DataEntrega { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Tipo de Entrega")]
+        public int TipoEntrega { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Tipo de Pagamento")]
+        public int TipoPagamento { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Id do Endereço")]
+        public Guid IdEndereco { get; set; }
+
+        [JsonIgnore]
+        [DisplayName("Id do Carrinho de Compra")]
+        public Guid IdCarrinhoCompra { get; set; }
     }
 }

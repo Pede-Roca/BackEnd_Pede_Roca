@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pede_RocaAPP.Infra.Data.Context;
 
@@ -11,9 +12,10 @@ using Pede_RocaAPP.Infra.Data.Context;
 namespace Pede_RocaAPP.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028213656_AddTipoPagamentoEntregaEIdEndereco")]
+    partial class AddTipoPagamentoEntregaEIdEndereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,9 +144,11 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCarrinhoCompra");
+                    b.HasIndex("IdCarrinhoCompra")
+                        .IsUnique();
 
-                    b.HasIndex("IdEndereco");
+                    b.HasIndex("IdEndereco")
+                        .IsUnique();
 
                     b.ToTable("ComprasFinalizadas");
                 });
@@ -475,14 +479,14 @@ namespace Pede_RocaAPP.Infra.Data.Migrations
             modelBuilder.Entity("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", b =>
                 {
                     b.HasOne("Pede_RocaAPP.Domain.Entities.CarrinhoCompra", "CarrinhoCompra")
-                        .WithMany()
-                        .HasForeignKey("IdCarrinhoCompra")
+                        .WithOne()
+                        .HasForeignKey("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", "IdCarrinhoCompra")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pede_RocaAPP.Domain.Entities.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("IdEndereco")
+                        .WithOne()
+                        .HasForeignKey("Pede_RocaAPP.Domain.Entities.ComprasFinalizadas", "IdEndereco")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
