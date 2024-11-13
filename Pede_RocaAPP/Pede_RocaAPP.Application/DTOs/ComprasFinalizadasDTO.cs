@@ -29,6 +29,9 @@ namespace Pede_RocaAPP.Application.DTOs
 
         [DisplayName("Id do Carrinho de Compra")]
         public Guid IdCarrinhoCompra { get; set; }
+
+        [DisplayName("Id do usuario")]
+        public Guid IdUsuario { get; set; }
     }
 
     public class ComprasFinalizadasCreateDTO

@@ -8,6 +8,7 @@
         public bool Status { get; set; }
         public int TipoEntrega { get; set; }
         public int TipoPagamento { get; set; }
+        public Guid IdUsuario { get; set; }
         public Guid IdEndereco { get; set; }
         public Endereco Endereco { get; set; }
         public Guid IdCarrinhoCompra {  get; set; }
@@ -15,7 +16,7 @@
 
         public ComprasFinalizadas() { }
 
-        public ComprasFinalizadas(int tipoEntrega, int tipoPagamento, Guid idEndereco, Guid idCarrinhoCompra)
+        public ComprasFinalizadas(int tipoEntrega, int tipoPagamento, Guid idEndereco, Guid idCarrinhoCompra, Guid idUsuario)
         {
             Id = Guid.NewGuid();
             Data = DateTime.Now;
@@ -25,6 +26,7 @@
             TipoPagamento = tipoPagamento;
             IdEndereco = idEndereco;
             IdCarrinhoCompra = idCarrinhoCompra;
+            IdUsuario = idUsuario;
         }
     }
 }

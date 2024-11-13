@@ -41,8 +41,26 @@ namespace Pede_RocaAPP.Infra.Data.Repositories
 
         public async Task<IEnumerable<ComprasFinalizadas>> GetAllAsync()
         {
-            return await _context.ComprasFinalizadas.OrderBy(c => c.Data).ToListAsync();
+            var query = from cf in _context.ComprasFinalizadas
+                        join cc in _context.CarrinhoCompras on cf.IdCarrinhoCompra equals cc.Id
+                        orderby cf.Data
+                        select new ComprasFinalizadas
+                        {
+                            Id = cf.Id,
+                            Data = cf.Data,
+                            Status = cf.Status,
+                            DataEntrega = cf.DataEntrega,
+                            IdCarrinhoCompra = cf.IdCarrinhoCompra,
+                            IdEndereco = cf.IdEndereco,
+                            TipoEntrega = cf.TipoEntrega,
+                            TipoPagamento = cf.TipoPagamento,
+                            // Aqui você pode mapear o IdUsuario, por exemplo, se ele não for parte de ComprasFinalizadas:
+                            IdUsuario = cc.IdUsuario
+                        };
+
+            return await query.ToListAsync();
         }
+
 
         public async Task<ComprasFinalizadas> DeleteAsync(ComprasFinalizadas finalizadas)
         {

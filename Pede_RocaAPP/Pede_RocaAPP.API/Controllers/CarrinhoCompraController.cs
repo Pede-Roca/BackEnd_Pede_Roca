@@ -163,7 +163,7 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(new { message = "Produto removido do carrinho com sucesso." });
         }
 
-        [HttpPost("finalizar-compra/{id_carrinho}", Name = "FinalizarCompra")]
+        [HttpPost("finalizar-compra", Name = "FinalizarCompra")]
         public async Task<ActionResult> FinalizarCompra(FinalizarCompraRequest finalizar)
         {
             var carrinhoCompraExistenteDTO = await _carrinhoCompraService.GetByIdAsync(finalizar.IdCarrinhoCompra);

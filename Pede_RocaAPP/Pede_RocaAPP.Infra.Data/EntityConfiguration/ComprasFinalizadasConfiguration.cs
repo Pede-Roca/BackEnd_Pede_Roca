@@ -33,15 +33,15 @@ namespace Pede_RocaAPP.Infra.Data.EntityConfiguration
             builder.Property(t => t.IdCarrinhoCompra)
                 .IsRequired();
 
-            // Configuração de relacionamento um-para-um com Endereco
+            // Configuração de relacionamento muitos-para-um com Endereco
             builder.HasOne(t => t.Endereco)
-                .WithOne()
-                .HasForeignKey<ComprasFinalizadas>(t => t.IdEndereco);
+                .WithMany() // Altere para WithMany para indicar a relação de muitos para um
+                .HasForeignKey(t => t.IdEndereco);
 
             // Configuração de relacionamento um-para-um com CarrinhoCompra
             builder.HasOne(t => t.CarrinhoCompra)
-                .WithOne()
-                .HasForeignKey<ComprasFinalizadas>(t => t.IdCarrinhoCompra);
+                .WithMany()
+                .HasForeignKey(t => t.IdCarrinhoCompra);
         }
     }
 }
