@@ -84,6 +84,14 @@ namespace Pede_RocaAPP.Domain.Entities
         }
     }
 
+    public class AtualizarDadosPerfilRequest
+    {
+        public string Nome { get; set; }
+        public string CPF { get; set; }
+        public string Telefone { get; set; }
+        public string Email { get; set; }
+    }
+
     public class AtualizarFotoPerfilRequest
     {
         public string UidFotoPerfil { get; set; }

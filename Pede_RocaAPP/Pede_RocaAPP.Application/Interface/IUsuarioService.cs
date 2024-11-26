@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Pede_RocaAPP.Application.DTOs;
+using Pede_RocaAPP.Domain.Entities;
+
 
 namespace Pede_RocaAPP.Application.Interface
 {
@@ -10,6 +12,7 @@ namespace Pede_RocaAPP.Application.Interface
     {
         Task<Guid> AdicionarAsync(UsuarioCreateDTO usuarioDTO);
         Task AtualizarAsync(Guid id, UsuarioDTO usuarioDTO);
+        Task AtualizarDadosPerfilAsync(Guid id, AtualizarDadosPerfilRequest atualizarDadosPerfilRequest);
         Task AtualizarFotoPerfilAsync(Guid id, string uidFotoPerfil);
         Task AtualizarStatusUsuarioAsync(Guid id, bool status);
         Task AtualizarNivelAcessoUsuarioAsync(Guid id, string nivelAcesso);
