@@ -9,17 +9,20 @@ namespace Pede_RocaAPP.Domain.Entities
     {
         public Guid Id { get; set; }
         public int QuantidadeProduto { get; set; }
+        public decimal ValorTotal { get; set; }
         public Guid IdProduto { get; set; }
+
 
         public Produto Produto { get; set; }
         public ICollection<CarrinhoComprasProdutosPedido> CarrinhoComprasProdutosPedido { get; set; } // Relacionamento com CarrinhoCompra
 
         public ProdutosPedido() { }
 
-        public ProdutosPedido(int quantidadeProduto, Guid idProduto)
+        public ProdutosPedido(int quantidadeProduto, Guid idProduto, decimal valorTotal)
         {
             Id = Guid.NewGuid();
             ValidateDomain(quantidadeProduto, idProduto);
+            ValorTotal = valorTotal;
             QuantidadeProduto = quantidadeProduto;
             IdProduto = idProduto;
         }

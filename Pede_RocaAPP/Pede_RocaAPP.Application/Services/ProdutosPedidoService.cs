@@ -9,17 +9,24 @@ namespace Pede_RocaAPP.Application.Services
     public class ProdutosPedidoService : IProdutosPedidoService
     {
         private readonly IProdutosPedidoRepository _produtosPedidoRepository;
+        private readonly IProdutoRepository _produtoRepository;
 
         private readonly IMapper _mapper;
 
-        public ProdutosPedidoService(IProdutosPedidoRepository produtosPedidoRepository, IMapper mapper)
+        public ProdutosPedidoService(IProdutosPedidoRepository produtosPedidoRepository, IProdutoRepository produtoRepository, IMapper mapper)
         {
             _produtosPedidoRepository = produtosPedidoRepository;
             _mapper = mapper;
+            _produtoRepository = produtoRepository;
         }
 
         public async Task<Guid> AdicionarAsync(ProdutosPedidoCreateDTO produtosPedidoDTO)
         {
+            var produtoExistente = await _produtoRepository.GetByIdAsync(produtosPedidoDTO.IdProduto);
+            if (produtoExistente == null) throw new Exception("Produto não encontrado");
+
+            produtosPedidoDTO.ValorTotal = produtoExistente.Preco * produtosPedidoDTO.QuantidadeProduto * produtoExistente.FatorPromocao;
+
             var produtosPedido = _mapper.Map<ProdutosPedido>(produtosPedidoDTO);
             await _produtosPedidoRepository.AdicionarAsync(produtosPedido);
             return produtosPedido.Id;
@@ -31,18 +38,26 @@ namespace Pede_RocaAPP.Application.Services
             await _produtosPedidoRepository.AtualizarAsync(id, produtosPedido);
         }
 
-        public async Task AtualizarEstoqueProdutosAsync(Guid id, int quantidade, bool adicionar)
+        public async Task AtualizarQuantidadeProdutosAsync(Guid id, int quantidade, bool adicionar)
         {
             var produtoPedidoExistente = await _produtosPedidoRepository.GetByIdAsync(id);
             if (produtoPedidoExistente == null) throw new Exception("Produto Pedido não encontrado");
 
+            var produtoExistente = await _produtoRepository.GetByIdAsync(produtoPedidoExistente.IdProduto);
             if (adicionar)
             {
                 produtoPedidoExistente.QuantidadeProduto += quantidade;
+                produtoPedidoExistente.ValorTotal = produtoPedidoExistente.QuantidadeProduto * produtoExistente.Preco * produtoExistente.FatorPromocao;
             }
             else
             {
                 produtoPedidoExistente.QuantidadeProduto -= quantidade;
+                if (produtoPedidoExistente.QuantidadeProduto <= 0)
+                {
+                    await _produtosPedidoRepository.DeleteAsync(produtoPedidoExistente);
+                    return; // Apenas saia do método
+                }
+                produtoPedidoExistente.ValorTotal = produtoPedidoExistente.QuantidadeProduto * produtoExistente.Preco * produtoExistente.FatorPromocao;
             }
 
             await _produtosPedidoRepository.AtualizarAsync(id, produtoPedidoExistente);
