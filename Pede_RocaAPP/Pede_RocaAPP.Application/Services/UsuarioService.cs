@@ -45,16 +45,31 @@ namespace Pede_RocaAPP.Application.Services
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
+        public async Task AtualizarDadosPerfilAsync(Guid id, AtualizarDadosPerfilRequest atualizarDadosPerfilRequest)
+        {
+            var usuario = await _usuarioRepository.GetByIdAsync(id);
+            if (usuario == null)
+                throw new Exception("Usuário não encontrado");
+
+            usuario.Nome = atualizarDadosPerfilRequest.Nome;
+            usuario.CPF = atualizarDadosPerfilRequest.CPF;
+            usuario.Email = atualizarDadosPerfilRequest.Email;
+            usuario.Telefone = atualizarDadosPerfilRequest.Telefone;
+
+            await _usuarioRepository.AtualizarAsync(id, usuario);
+        }
+
+
         public async Task AtualizarFotoPerfilAsync(Guid id, string uidFotoPerfil)
         {
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
             usuarioExistente.UidFotoPerfil = uidFotoPerfil;
-            
+
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
-        
+
         public async Task AtualizarStatusUsuarioAsync(Guid id, bool status)
         {
             // Primeiro, buscar o usuário existente no banco de dados
@@ -62,7 +77,7 @@ namespace Pede_RocaAPP.Application.Services
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
             usuarioExistente.Status = status;
-            
+
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
 
@@ -72,10 +87,10 @@ namespace Pede_RocaAPP.Application.Services
             if (usuarioExistente == null) throw new Exception("Usuário não encontrado");
 
             usuarioExistente.NivelAcesso = nivelAcesso;
-            
+
             await _usuarioRepository.AtualizarAsync(id, usuarioExistente);
         }
-        
+
         public async Task DeleteAsync(Guid id)
         {
             var usuario = await _usuarioRepository.GetByIdAsync(id);

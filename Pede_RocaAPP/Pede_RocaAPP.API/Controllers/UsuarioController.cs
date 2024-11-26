@@ -59,6 +59,39 @@ namespace Pede_RocaAPP.API.Controllers
             return Ok(new { mensagem = $"Usuario com o id {id} foi atualizado com sucesso" });
         }
 
+        [HttpPut("alterar-dados-perfil/{id}", Name = "AtualizarDadosPerfil")]
+        public async Task<ActionResult> PutDadosPerfil(Guid id, [FromBody] AtualizarDadosPerfilRequest atualizarDadosPerfilRequest)
+        {
+            if (atualizarDadosPerfilRequest == null)
+                return BadRequest("Dados inválidos");
+
+            var usuarioExistente = await _usuarioService.GetByIdAsync(id);
+            if (usuarioExistente == null)
+                return NotFound("Usuário não encontrado");
+
+            try
+            {
+                await _usuarioService.AtualizarDadosPerfilAsync(id, atualizarDadosPerfilRequest);
+
+                return Ok(new { message = "Dados do perfil atualizados com sucesso" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = $"Erro ao atualizar os dados do perfil: {ex.Message}" });
+            }
+        }
+
+
+        // [HttpPut("alterar-senha/{id}", Name = "AtualizarSenha")]
+        // public async Task<ActionResult> PutSenha(Guid id, [FromBody] AtualizarSenhaRequest atualizarSenhaRequest)
+        // {
+        //     var usuarioExistente = await _usuarioService.GetByIdAsync(id);
+        //     if (usuarioExistente == null) return NotFound("Usuário não encontrado");
+
+        //     await _usuarioService.AtualizarSenhaAsync(id, atualizarSenhaRequest.Senha);
+        //     return Ok(new { message = "Senha atualizada com sucesso" });
+        // }
+
         [HttpPut("alterar-foto-perfil/{id}", Name = "AtualizarFotoPerfil")]
         public async Task<ActionResult> PutFotoPerfil(Guid id, [FromBody] AtualizarFotoPerfilRequest atualizarProfilePictureRequest)
         {
@@ -94,7 +127,7 @@ namespace Pede_RocaAPP.API.Controllers
         {
             var usuarioDto = await _usuarioService.GetByIdAsync(id);
             if (usuarioDto == null) return NotFound("Usuário não encontrado");
-        
+
             return Ok(usuarioDto);
         }
 
@@ -103,7 +136,7 @@ namespace Pede_RocaAPP.API.Controllers
         {
             var usuariosDto = await _usuarioService.GetAllAsync();
             if (usuariosDto == null && !usuariosDto.Any()) return Ok(new List<UsuarioDTO>());
-        
+
             return Ok(usuariosDto);
         }
 
