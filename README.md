@@ -155,7 +155,7 @@ GET /api/produtos HTTP/1.1
 Host: api.exemplo.com
 
 ### Exemplo Resposta:
-imagem2
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 38 30_636be19b](https://github.com/user-attachments/assets/3f12ce7e-beaa-46e1-a4c0-c4d13a8aaf5d)
 
 ## Status Codes:
 - **200 OK** – Se a requisição for bem-sucedida.
@@ -167,13 +167,13 @@ imagem2
 
 ### Parâmetros:
 - **Body**:
-imagem3
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 40 50_01483d91](https://github.com/user-attachments/assets/7c12b1f9-3fb9-4ed5-bd62-f69ef584427d)
 
 ### Exemplo Requisição:
-imagem4
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 41 33_a8734d48](https://github.com/user-attachments/assets/6531a273-8e8a-437a-ba6e-d54dd6b441a6)
 
 ### Exemplo Resposta:
-imagem5
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 42 06_b74dbcb1](https://github.com/user-attachments/assets/54badf4f-c3b2-47fe-b1a8-8f39daf6bb8a)
 
 ## Status Codes:
 - **201 Created** – Se o produto for criado com sucesso.
@@ -189,13 +189,13 @@ imagem5
   - id (Guid) – Identificador único do produto.
 
 - **Body**:
-imagem6
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 43 00_125ea5c7](https://github.com/user-attachments/assets/e962ae02-7dad-4f1d-8393-63aefab26299)
 
 ### Exemplo Requisição:
-imagem7
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 43 48_4d137f25](https://github.com/user-attachments/assets/d822aed4-8f53-47b4-b48a-a556c19b2b3b)
 
 ### Exemplo Resposta:
-imagem8
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 44 34_58aed1a9](https://github.com/user-attachments/assets/1bf0a13a-1e83-42c0-b35e-4cb9046fb964)
 
 ## Status Codes:
 - **200 OK** – Se o produto for atualizado com sucesso.
@@ -212,10 +212,10 @@ imagem8
   - id (Guid) – Identificador único do produto.
 
 ### Exemplo de Requisição:
-imagem 9
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 45 13_cff0c6bc](https://github.com/user-attachments/assets/7e45052d-aad1-4e15-991e-49fdcd57c36e)
 
 ### Exemplo Resposta:
-imagem10
+![Imagem do WhatsApp de 2024-12-10 à(s) 18 45 38_6512f86e](https://github.com/user-attachments/assets/da72d500-ca59-48b9-b993-5cd8d4330900)
 
 ## Status Codes:
 - **200 OK** – Se o produto for deletado com sucesso.
