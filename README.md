@@ -286,3 +286,76 @@ No portal do Azure, vá até o recurso de Configuração do seu aplicativo e adi
 
 ### Referência no Código:
 No código, utilize as variáveis de ambiente para acessar os valores configurados.
+
+# Documentação dos Testes
+
+## Objetivo
+
+Documentar os testes implementados na camada de domínio, integração e API, incluindo testes unitários, de serviços e de API (usando xUnit). Também incluir instruções sobre como executar os testes e os critérios de sucesso para garantir a qualidade do código.
+
+## Tipos de Testes Implementados
+
+Os testes são fundamentais para garantir a qualidade do código, identificar regressões e validar a lógica do sistema. No projeto, temos três principais tipos de testes implementados:
+
+### 1. Testes Unitários
+
+#### Objetivo
+Validar o comportamento de unidades específicas de código, como métodos de serviço ou lógica de negócios, de forma isolada, sem depender de outras partes do sistema, como banco de dados ou APIs externas.
+
+#### Ferramenta Utilizada
+xUnit é a framework de testes unitários utilizada.
+
+#### Exemplo de Teste Unitário (para a camada de domínio)
+
+public class ProdutoTests
+imagem1
+### Explicação
+O exemplo acima testa a criação de um objeto Produto e verifica se o nome do produto foi corretamente atribuído.
+
+## 2. Testes de Integração
+
+### Objetivo
+Validar a interação entre diferentes partes do sistema, como a comunicação entre a aplicação e o banco de dados, garantindo que os componentes funcionem corretamente em conjunto.
+
+### Ferramenta Utilizada
+xUnit é a framework de testes de integração utilizada.
+
+### Exemplo de Teste de Integração
+imagem2
+## 3. Testes de API
+
+### Objetivo
+Validar os endpoints da API, garantindo que as requisições e respostas estejam corretas e que a API funcione conforme esperado.
+
+### Ferramenta Utilizada
+xUnit é a framework de testes de API utilizada.
+
+### Exemplo de Teste de API
+imagem3
+
+## Instruções para Executar os Testes
+
+### Instalar Dependências
+Certifique-se de que todas as dependências do projeto estão instaladas.
+
+imagem4
+
+## Executar Testes
+Utilize o comando abaixo para executar todos os testes.
+
+imagem5
+
+## Critérios de Sucesso para Garantir Qualidade do Código
+
+Os testes devem ser executados com sucesso em todas as condições abaixo para garantir a qualidade do código:
+
+- **100% de cobertura dos testes unitários**: Todos os métodos e funcionalidades principais devem ser cobertos por testes unitários.
+- **Testes devem ser rápidos e independentes**: Os testes de unidade e integração devem ser rápidos e não depender uns dos outros para garantir que possam ser executados isoladamente.
+
+## Manutenção de Testes
+
+Manter a qualidade dos testes é crucial para a estabilidade do sistema:
+
+- **Adicionar testes conforme novas funcionalidades são implementadas**: Sempre que uma nova funcionalidade ou alteração significativa for feita, os testes correspondentes devem ser criados ou atualizados.
+- **Refatorar testes conforme a evolução do código**: Caso a lógica de negócios ou a estrutura do código seja alterada, os testes devem ser ajustados para refletir essas mudanças.
+- **Monitoramento contínuo**: Utilize ferramentas de integração contínua (CI) como GitHub Actions e Azure Pipelines para garantir que os testes sejam executados automaticamente em todas as branches e pull requests.
