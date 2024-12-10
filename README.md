@@ -126,7 +126,7 @@ O Mediator Pattern auxilia na orquestração de interações entre serviços, si
 
 ## Diagrama ER (Entidades e Relacionamentos)
 
-(Incluir diagrama visual que ilustre as entidades e seus relacionamentos. As principais entidades serão: Produto, Carrinho, Pedido, Plano de Assinatura, Categoria, Unidade, Usuário.)
+![Imagem do WhatsApp de 2024-12-10 à(s) 16 52 54_fe1e9b62](https://github.com/user-attachments/assets/6b34414b-28e7-40b8-8c2e-62c672af8221)
 
 ### Estrutura do Diagrama ER:
 - **Produto** (relacionamento com Categoria, Unidade)
