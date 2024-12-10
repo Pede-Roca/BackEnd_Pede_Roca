@@ -262,8 +262,7 @@ Fornecer um guia completo para configurar o ambiente de desenvolvimento Back-End
 
 #### Configuração da String de Conexão:
 No arquivo `appsettings.json` (ou `appsettings.Development.json` para ambientes de desenvolvimento), configure a string de conexão para o banco de dados Azure SQL Server:
-
-(imagem 1)
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 03 54_bdb246aa](https://github.com/user-attachments/assets/bed89386-694a-4b12-82a7-f4ac12ab0f7f)
 
 ## 3. Execução de Migrations
 
