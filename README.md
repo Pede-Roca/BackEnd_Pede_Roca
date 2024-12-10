@@ -221,3 +221,69 @@ Host: api.exemplo.com
 - **200 OK** – Se o produto for deletado com sucesso.
 - **404 Not Found** – Se o produto não for encontrado.
 - **500 Internal Server Error** – Se ocorrer um erro no servidor.
+
+# Guia de Configuração do Ambiente de Desenvolvimento Back-End
+
+## Objetivo
+
+Fornecer um guia completo para configurar o ambiente de desenvolvimento Back-End, com ênfase na instalação das dependências, execução de migrations e configuração do banco de dados Azure SQL Server. Também será fornecido um conjunto de variáveis de ambiente e instruções de configuração necessárias para o funcionamento adequado do sistema.
+
+## Passo a Passo para Configuração do Ambiente de Desenvolvimento
+
+### 1. Instalação de Dependências
+
+#### Pré-requisitos:
+
+- **.NET SDK**: Certifique-se de que o SDK do .NET (versão recomendada para o projeto) esteja instalado. Caso contrário, faça o download e instale a versão mais recente do site oficial.
+- **Editor de Código**: Utilize um editor de código como Visual Studio ou Visual Studio Code com as extensões necessárias para .NET e C#.
+- **Ferramentas de CLI**: O CLI do .NET é necessário para executar comandos de build, migrations e testes.
+
+#### Instruções:
+
+ **Clone o Repositório**: Se ainda não fez isso, clone o repositório do projeto:
+     bash
+   git clone <url-do-repositorio>
+   cd <diretorio-do-projeto>
+
+ **Abrir e aguardar instalação de dependências**
+
+## 2. Configuração do Banco de Dados Azure SQL Server
+
+### Pré-requisitos:
+- **Conta no Azure**: É necessário ter uma conta no Azure e um banco de dados SQL Server configurado.
+- **Azure SQL Server**: Crie um banco de dados SQL Server no portal do Azure, caso ainda não tenha feito.
+
+### Instruções:
+
+#### Criação do Banco de Dados no Azure:
+- Acesse o Portal do Azure.
+- Crie um novo recurso do tipo SQL Database e siga as etapas para configurar o banco de dados.
+- Anote as informações de conexão: Servidor, Banco de Dados, Usuário e Senha.
+
+#### Configuração da String de Conexão:
+No arquivo `appsettings.json` (ou `appsettings.Development.json` para ambientes de desenvolvimento), configure a string de conexão para o banco de dados Azure SQL Server:
+
+(imagem 1)
+
+## 3. Execução de Migrations
+
+### Pré-requisitos:
+- **Migrations do Entity Framework**: As migrations do EF Core são usadas para criar e atualizar a estrutura do banco de dados a partir das entidades do código.
+
+### Instruções:
+- **Criar Migrations (se necessário)**: Caso você esteja criando ou modificando o modelo de dados.
+- **Aplicar Migrations ao Banco de Dados**: Para aplicar as migrations ao banco de dados configurado (Azure SQL Server).
+- **Verificar a Estrutura do Banco**: Após a execução do comando, verifique no portal do Azure ou utilizando uma ferramenta de gerenciamento SQL como Azure Data Studio se as tabelas foram criadas corretamente.
+
+## 4. Variáveis de Ambiente Específicas do Back-End
+
+As variáveis de ambiente são importantes para configurar comportamentos específicos do ambiente de desenvolvimento, como a configuração de banco de dados, chaves de API e outros parâmetros sensíveis. Para configurar variáveis de ambiente no projeto, siga os passos abaixo:
+
+### Criação de Variáveis de Ambiente (para ambientes locais):
+Para ambientes locais, crie um arquivo chamado `.env` na raiz do projeto com as variáveis necessárias.
+
+### Configuração de Variáveis de Ambiente no Azure:
+No portal do Azure, vá até o recurso de Configuração do seu aplicativo e adicione as variáveis de ambiente necessárias para produção ou outros ambientes.
+
+### Referência no Código:
+No código, utilize as variáveis de ambiente para acessar os valores configurados.
