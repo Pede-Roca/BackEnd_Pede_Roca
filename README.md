@@ -306,9 +306,8 @@ Validar o comportamento de unidades específicas de código, como métodos de se
 xUnit é a framework de testes unitários utilizada.
 
 #### Exemplo de Teste Unitário (para a camada de domínio)
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 30 02_f569e5c8](https://github.com/user-attachments/assets/fb9def25-cb92-406f-8455-2ede491e4d63)
 
-public class ProdutoTests
-imagem1
 ### Explicação
 O exemplo acima testa a criação de um objeto Produto e verifica se o nome do produto foi corretamente atribuído.
 
@@ -321,7 +320,8 @@ Validar a interação entre diferentes partes do sistema, como a comunicação e
 xUnit é a framework de testes de integração utilizada.
 
 ### Exemplo de Teste de Integração
-imagem2
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 30 37_61a0bb57](https://github.com/user-attachments/assets/6cf69d41-836a-4b66-8e12-558b828a3e74)
+
 ## 3. Testes de API
 
 ### Objetivo
@@ -331,19 +331,17 @@ Validar os endpoints da API, garantindo que as requisições e respostas estejam
 xUnit é a framework de testes de API utilizada.
 
 ### Exemplo de Teste de API
-imagem3
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 31 38_a2446f46](https://github.com/user-attachments/assets/21d57e14-9be5-4e7a-8db5-17780435149f)
 
 ## Instruções para Executar os Testes
 
 ### Instalar Dependências
 Certifique-se de que todas as dependências do projeto estão instaladas.
-
-imagem4
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 32 06_17db60b4](https://github.com/user-attachments/assets/6fe04a0d-afd4-4920-9471-70e4250e63e3)
 
 ## Executar Testes
 Utilize o comando abaixo para executar todos os testes.
-
-imagem5
+![Imagem do WhatsApp de 2024-12-10 à(s) 19 32 33_d7ced6bb](https://github.com/user-attachments/assets/d708ab9b-1677-4612-9daf-869791352343)
 
 ## Critérios de Sucesso para Garantir Qualidade do Código
 
