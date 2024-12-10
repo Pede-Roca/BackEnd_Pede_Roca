@@ -138,3 +138,86 @@ O Mediator Pattern auxilia na orquestração de interações entre serviços, si
 - Relacionamentos de 1 para muitos (por exemplo, um Usuário pode ter vários Carrinhos ou Pedidos).
 - Relacionamentos de muitos para muitos (se houver, como entre Carrinho e Produto através de Itens do Carrinho).
 - Detalhamento de chaves primárias (PK) e estrangeiras (FK) para cada relacionamento.
+
+# Documentação dos Endpoints da API
+
+## Produto - Listar Todos os Produtos
+
+### Método HTTP: GET
+### URI: /api/produtos
+
+### Parâmetros:
+- Nenhum parâmetro obrigatório.
+
+### Exemplo de Requisição:
+  http
+GET /api/produtos HTTP/1.1
+Host: api.exemplo.com
+
+### Exemplo Resposta:
+imagem2
+
+## Status Codes:
+- **200 OK** – Se a requisição for bem-sucedida.
+- **500 Internal Server Error** – Se ocorrer um erro no servidor.
+
+## Produto - Adicionar Novo Produto
+### Método HTTP: POST
+### URI: /api/produtos
+
+### Parâmetros:
+- **Body**:
+imagem3
+
+### Exemplo Requisição:
+imagem4
+
+### Exemplo Resposta:
+imagem5
+
+## Status Codes:
+- **201 Created** – Se o produto for criado com sucesso.
+- **400 Bad Request** – Se a requisição contiver dados inválidos.
+- **500 Internal Server Error** – Se ocorrer um erro no servidor.
+
+## Produto - Atualizar Produto
+### Método HTTP: PUT
+### URI: /api/produtos/{id}
+
+### Parâmetros:
+- **Path**:
+  - id (Guid) – Identificador único do produto.
+
+- **Body**:
+imagem6
+
+### Exemplo Requisição:
+imagem7
+
+### Exemplo Resposta:
+imagem8
+
+## Status Codes:
+- **200 OK** – Se o produto for atualizado com sucesso.
+- **400 Bad Request** – Se a requisição contiver dados inválidos.
+- **404 Not Found** – Se o produto não for encontrado.
+- **500 Internal Server Error** – Se ocorrer um erro no servidor.
+
+## Produto - Deletar Produto
+### Método HTTP: DELETE
+### URI: /api/produtos/{id}
+
+### Parâmetros:
+- **Path**:
+  - id (Guid) – Identificador único do produto.
+
+### Exemplo de Requisição:
+imagem 9
+
+### Exemplo Resposta:
+imagem10
+
+## Status Codes:
+- **200 OK** – Se o produto for deletado com sucesso.
+- **404 Not Found** – Se o produto não for encontrado.
+- **500 Internal Server Error** – Se ocorrer um erro no servidor.
