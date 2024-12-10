@@ -69,3 +69,72 @@ Os DTOs são utilizados para transferir dados entre a Application e a API, garan
 
 O Mediator Pattern auxilia na orquestração de interações entre serviços, simplificando o código e mantendo a lógica centralizada.
 
+# Documentação dos Modelos de Dados
+
+## Produto
+
+### Atributos:
+- **id** (Guid, PK) – Identificador único do produto.
+- **nome** (string) – Nome do produto.
+- **descricao** (string) – Descrição detalhada do produto.
+- **preco** (decimal) – Preço do produto.
+- **idCategoria** (Guid, FK) – Relacionamento com a tabela de categorias.
+- **status** (bool) – Status do produto (disponível, indisponível, etc.).
+- **estoque** (int) – Quantidade disponível no estoque.
+- **idUnidade** (Guid, FK) – Relacionamento com a tabela de unidades de medida.
+- **ativo** (bool) – Indica se o produto está ativo ou inativo.
+- **fatorPromocao** (decimal) – Fator de desconto aplicado ao preço, se houver.
+- **uidFotoProduto** (string) – Identificador da foto associada ao produto.
+
+### Relacionamentos:
+- Produto está relacionado a Categoria e Unidade através de chaves estrangeiras.
+
+## Carrinho
+
+### Atributos:
+- **id** (Guid, PK) – Identificador único do carrinho.
+- **idUsuario** (Guid, FK) – Relacionamento com a tabela de usuários.
+- **status** (bool) – Status do carrinho (ativo, inativo).
+- **data** (DateTime) – Data de criação do carrinho.
+
+### Relacionamentos:
+- Carrinho está relacionado a Produto e Usuário. Cada carrinho pode ter vários itens de produto, e cada item do carrinho está vinculado a um produto específico.
+
+## Pedido
+
+### Atributos:
+- **id** (Guid, PK) – Identificador único do pedido.
+- **idUsuario** (Guid, FK) – Relacionamento com a tabela de usuários.
+- **data** (DateTime) – Data de criação do pedido.
+- **status** (string) – Status do pedido (pendente, concluído, etc.).
+- **tipoEntrega** (string) – Tipo de entrega do pedido.
+- **tipoPagamento** (string) – Tipo de pagamento do pedido.
+
+### Relacionamentos:
+- Pedido está relacionado a Usuário e Produto, e cada pedido pode ter múltiplos itens associados, refletindo os produtos adquiridos.
+
+## Plano de Assinatura
+
+### Atributos:
+- **id** (Guid, PK) – Identificador único do plano de assinatura.
+- **idUsuario** (Guid, FK) – Relacionamento com a tabela de usuários.
+- **preco** (decimal) – Preço do plano de assinatura.
+- **ativo** (bool) – Indica se o plano de assinatura está ativo ou inativo.
+
+### Relacionamentos:
+- Plano de Assinatura está relacionado a Usuário, e um usuário pode ter um ou mais planos de assinatura ativos.
+
+## Diagrama ER (Entidades e Relacionamentos)
+
+(Incluir diagrama visual que ilustre as entidades e seus relacionamentos. As principais entidades serão: Produto, Carrinho, Pedido, Plano de Assinatura, Categoria, Unidade, Usuário.)
+
+### Estrutura do Diagrama ER:
+- **Produto** (relacionamento com Categoria, Unidade)
+- **Carrinho** (relacionamento com Usuário, Itens do Carrinho)
+- **Pedido** (relacionamento com Usuário, Itens de Pedido)
+- **Plano de Assinatura** (relacionamento com Usuário)
+
+### Detalhamento dos Relacionamentos:
+- Relacionamentos de 1 para muitos (por exemplo, um Usuário pode ter vários Carrinhos ou Pedidos).
+- Relacionamentos de muitos para muitos (se houver, como entre Carrinho e Produto através de Itens do Carrinho).
+- Detalhamento de chaves primárias (PK) e estrangeiras (FK) para cada relacionamento.
